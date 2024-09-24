@@ -1,0 +1,248 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- Colors and Mathematical Constants -->
+    <xacro:include filename="$(find ecm_description)/urdf/xacros/common.xacro" />
+
+    <!-- Macro for da Vinci Endoscope Camera Manipulator (ECM) -->
+    <xacro:macro name="ecm" params="prefix parent_link xyz rpy">
+
+        <!-- Link 0: Setup Base Link -->
+        <link name="${prefix}_setup_base_link" />
+
+        <!-- Link 1: Setup Link -->
+        <link name="${prefix}_setup_link">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://ecm_description/meshes/ecm/Endo_Arm.stl" />
+                </geometry>
+                <material name="DaVinciRed" />
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://ecm_description/meshes/ecm/Endo_Arm.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Link 2: Base Link -->
+        <link name="${prefix}_base_link" />
+
+        <!-- Link 3: Yaw Link -->
+        <link name="${prefix}_yaw_link">
+            <visual>
+                <origin rpy="0 0 -${PI/2}" xyz="0.0 0 0.603" />
+                <geometry>
+                    <mesh filename="package://ecm_description/meshes/ecm/Endo_Link_5.stl" />
+                </geometry>
+                <material name="DaVinciGreen" />
+            </visual>
+            <collision>
+                <origin rpy="0 0 -${PI/2}" xyz="0.0 0 0.603" />
+                <geometry>
+                    <mesh filename="package://ecm_description/meshes/ecm/Endo_Link_5.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Link 4: Pitch Link -->
+        <link name="${prefix}_pitch_link" />
+
+        <!-- Link 5: Pitch Link 1 -->
+        <link name="${prefix}_pitch_link_1">
+            <visual>
+                <origin rpy="${PI} 0 ${PI*78.5/180}" xyz="0.0 0 0.0" />
+                <geometry>
+                    <mesh filename="package://ecm_description/meshes/ecm/Endo_Link_5_2.stl" />
+                </geometry>
+                <material name="DaVinciMedGray" />
+            </visual>
+            <collision>
+                <origin rpy="${PI} 0 ${PI*78.5/180}" xyz="0.0 0 0.0" />
+                <geometry>
+                    <mesh filename="package://ecm_description/meshes/ecm/Endo_Link_5_2.stl" />
+                </geometry>
+            </collision>
+            <inertial>
+                <mass value=".9" />
+                <inertia ixx="9.0" ixy="0.0" ixz="0.0" iyy="9.0" iyz="0.0" izz="9.0" />
+            </inertial>
+        </link>
+
+        <!-- Link 6: Pitch Link 2 -->
+        <link name="${prefix}_pitch_link_2">
+            <visual>
+                <origin rpy="0 0 0" xyz="0.0 0 -0.0225" />
+                <geometry>
+                    <mesh filename="package://ecm_description/meshes/ecm/Endo_Link_6_2.stl" />
+                </geometry>
+                <material name="DaVinciMedGray" />
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0.0 0 -0.0225" />
+                <geometry>
+                    <mesh filename="package://ecm_description/meshes/ecm/Endo_Link_6_2.stl" />
+                </geometry>
+            </collision>
+            <inertial>
+                <mass value=".9" />
+                <inertia ixx="9.0" ixy="0.0" ixz="0.0" iyy="9.0" iyz="0.0" izz="9.0" />
+            </inertial>
+        </link>
+
+        <!-- Link 7: Pitch Link 3 -->
+        <link name="${prefix}_pitch_link_3">
+            <visual>
+                <origin rpy="0 0 -${PI/2}" xyz="0.0 0 0.025" />
+                <geometry>
+                    <mesh filename="package://ecm_description/meshes/ecm/Endo_Link_7.stl" />
+                </geometry>
+                <material name="DaVinciMedGray" />
+            </visual>
+            <collision>
+                <origin rpy="0 0 -${PI/2}" xyz="0.0 0 0.025" />
+                <geometry>
+                    <mesh filename="package://ecm_description/meshes/ecm/Endo_Link_7.stl" />
+                </geometry>
+            </collision>
+            <inertial>
+                <mass value=".9" />
+                <inertia ixx="9.0" ixy="0.0" ixz="0.0" iyy="9.0" iyz="0.0" izz="9.0" />
+            </inertial>
+        </link>
+
+        <!-- Link 8: Insertion Link -->
+        <link name="${prefix}_insertion_link">
+            <visual>
+                <origin rpy="0 0 -${PI/2}" xyz="0.0 0 -0.015" />
+                <geometry>
+                    <mesh filename="package://ecm_description/meshes/ecm/Endo_Link_8.stl" />
+                </geometry>
+                <material name="DaVinciBlue" />
+            </visual>
+            <collision>
+                <origin rpy="0 0 -${PI/2}" xyz="0.0 0 -0.015" />
+                <geometry>
+                    <mesh filename="package://ecm_description/meshes/ecm/Endo_Link_8.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Link 9: Roll Link -->
+        <link name="${prefix}_roll_link">
+            <visual>
+                <origin rpy="0 0 ${PI/2}" xyz="0.0 0 -0.3979" />
+                <geometry>
+                    <mesh filename="package://ecm_description/meshes/ecm/EndoScope.stl" />
+                </geometry>
+                <material name="DaVinciBlue" />
+            </visual>
+            <collision>
+                <origin rpy="0 0 ${PI/2}" xyz="0.0 0 -0.3979" />
+                <geometry>
+                    <mesh filename="package://ecm_description/meshes/ecm/EndoScope.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Joint 0: Fixed to World: Link Parent to Link 0 -->
+        <joint name="${prefix}_setup_fixed_joint" type="fixed">
+            <parent link="${parent_link}" />
+            <child link="${prefix}_setup_base_link" />
+            <origin rpy="${rpy}" xyz="${xyz}" />
+        </joint>
+
+        <!-- Joint 1: Fixed to Setup Joint: Link 0 to Link 1 -->
+        <joint name="${prefix}_setup_tip_joint" type="fixed">
+            <parent link="${prefix}_setup_base_link" />
+            <child link="${prefix}_setup_link" />
+            <origin rpy="-0.87046370379 0 -${PI/2}" xyz="0.91324 -0.02111 0.03166" />
+            <axis xyz="0 0 1" />
+        </joint>
+
+        <!-- Joint 2: Fixed to Base Joint: Link 1 to Link 2 -->
+        <joint name="${prefix}_fixed_joint" type="fixed">
+            <parent link="${prefix}_setup_link" />
+            <child link="${prefix}_base_link" />
+            <origin rpy="0 0 0" xyz="0 0.603 0" />
+        </joint>
+
+        <!-- Joint 3: Outer Yaw Joint: Link 2 to Link 3 -->
+        <joint name="${prefix}_outer_yaw" type="revolute">
+            <parent link="${prefix}_base_link" />
+            <child link="${prefix}_yaw_link" />
+            <origin rpy="0 -${PI/2} ${PI/2}" xyz="0 0 0" />
+            <!--rotates
+            about z axis-->
+            <axis xyz="0 0 1" />
+            <!--limit
+            effort and velocity picked arbitrarily check-->
+            <limit effort="50.0" lower="${-75/180*PI}" upper="${PI/4}" velocity="2" />
+            <joint_properties damping="1.0" friction="0.0" />
+        </joint>
+
+        <!-- Joint 4: Outer Pitch Joint: Link 3 to Link 4 -->
+        <joint name="${prefix}_outer_pitch" type="revolute">
+            <parent link="${prefix}_yaw_link" />
+            <child link="${prefix}_pitch_link" />
+            <origin rpy="-${PI/2} -${PI/2} 0" xyz="0 0 0" />
+            <axis xyz="0 0 1" />
+            <limit effort="100.0" lower="${-PI/4}" upper="${PI*65/180}" velocity="10" />
+            <joint_properties damping="1.0" friction="0.0" />
+        </joint>
+
+        <!-- Joint 5: Outer Pitch Joint 0: Link 3 to Link 5 -->
+        <joint name="${prefix}_outer_pitch_0" type="continuous">
+            <parent link="${prefix}_yaw_link" />
+            <child link="${prefix}_pitch_link_1" />
+            <origin rpy="-${PI/2} -${PI/2} 0" xyz="0 0 0.378" />
+            <axis xyz="0 0 1" />
+            <joint_properties damping="1.0" friction="0.0" />
+            <mimic joint="${prefix}_outer_pitch" multiplier="1" />
+        </joint>
+
+        <!-- Joint 6: Outer Pitch Joint 1: Link 5 to Link 6 -->
+        <joint name="${prefix}_outer_pitch_1" type="continuous">
+            <parent link="${prefix}_pitch_link_1" />
+            <child link="${prefix}_pitch_link_2" />
+            <origin rpy="0 0 0" xyz="0.0558629 0.274575 0" />
+            <axis xyz="0 0 1" />
+            <joint_properties damping="1.0" friction="0.0" />
+            <mimic joint="${prefix}_outer_pitch" multiplier="-1" />
+        </joint>
+
+        <!-- Joint 7: Outer Pitch Joint 2: Link 6 to Link 7 -->
+        <joint name="${prefix}_outer_pitch_2" type="continuous">
+            <parent link="${prefix}_pitch_link_2" />
+            <child link="${prefix}_pitch_link_3" />
+            <origin rpy="0 0 0" xyz="-0.340 0 0" />
+            <axis xyz="0 0 1" />
+            <joint_properties damping="1.0" friction="0.0" />
+            <mimic joint="${prefix}_outer_pitch" multiplier="1" />
+        </joint>
+
+        <!-- Joint 8: Insertion Joint: Link 4 to Link 8 -->
+        <joint name="${prefix}_insertion" type="prismatic">
+            <parent link="${prefix}_pitch_link" />
+            <child link="${prefix}_insertion_link" />
+            <origin rpy="${PI/2} 0 0" xyz="0 0.3822 0" />
+            <axis xyz="0 0 1" />
+            <joint_properties damping="1.0" friction="0.0" />
+            <limit effort="100.0" lower="0" upper="0.235" velocity="10" />
+        </joint>
+
+        <!-- Joint 9: Outer Roll Joint: Link 8 to Link 9 -->
+        <joint name="${prefix}_outer_roll" type="revolute">
+            <parent link="${prefix}_insertion_link" />
+            <child link="${prefix}_roll_link" />
+            <origin rpy="0 0 0" xyz="0 0 0.3829" />
+            <axis xyz="0 0 1" />
+            <joint_properties damping="1.0" friction="0.0" />
+            <limit effort="100.0" lower="-${PI/2}" upper="${PI/2}" velocity="10" />
+        </joint>
+
+    </xacro:macro>
+
+</robot>

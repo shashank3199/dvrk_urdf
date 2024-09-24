@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<robot name="ecm_base" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- Macros -->
+    <xacro:include filename="$(find ecm_description)/urdf/xacros/ecm.base.xacro" />
+
+    <!-- Parent Link -->
+    <link name="world" />
+
+    <!-- ECM Base -->
+    <xacro:ecm_base
+        prefix="ecm_base"
+        parent_link="world"/>
+
+</robot>

@@ -2,9 +2,12 @@
 <robot name="ecm" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
     <!-- Macros -->
-    <xacro:include filename="$(find ecm_description)/urdf/ecm.xacro" />
+    <xacro:include filename="$(find ecm_description)/urdf/xacros/ecm.xacro" />
 
+    <!-- Parent Link -->
     <link name="world" />
+
+    <!-- ECM -->
     <xacro:ecm
         prefix="ecm"
         parent_link="world"
