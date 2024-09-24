@@ -1,0 +1,154 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- Mathematical Constants -->
+    <xacro:property name="PI" value="3.1415926535897931" />
+
+    <!-- Macro for the column of the PSM 1/2 Joint -->
+    <xacro:macro name="psm12_j" params="prefix parent_link xyz rpy">
+
+        <!-- Link 2: PSM 1/2 Joint Link 0 -->
+        <link name="SUJ_PSM${prefix}_link_0">
+            <inertial>
+                <origin xyz="-0.042353 -4.4531E-08 0.24208" rpy="0 0 0" />
+                <mass value="12.704" />
+                <inertia ixx="0.368" ixy="-6.2028E-09" ixz="-0.021772" iyy="0.3714" iyz="5.3603E-09" izz="0.047463" />
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://suj_description/meshes/Si/PSM/12/link_0.stl" />
+                </geometry>
+                <material name="">
+                    <color rgba="0.79216 0.81961 0.93333 1" />
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://suj_description/meshes/Si/PSM/12/link_0.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Link 3: PSM 1/2 Joint Link 1 -->
+        <link name="SUJ_PSM${prefix}_link_1">
+            <inertial>
+                <origin xyz="0.21712 2.5962E-08 0.072796" rpy="0 0 0" />
+                <mass value="7.0906" />
+                <inertia ixx="0.015346" ixy="-1.6493E-08" ixz="-0.0010396" iyy="0.22426" iyz="8.2106E-09" izz="0.2218" />
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://suj_description/meshes/Si/PSM/12/link_1.stl" />
+                </geometry>
+                <material name="">
+                    <color rgba="0.79216 0.81961 0.93333 1" />
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://suj_description/meshes/Si/PSM/12/link_1.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Link 4: PSM 1/2 Joint Link 2 -->
+        <link name="SUJ_PSM${prefix}_link_2">
+            <inertial>
+                <origin xyz="0.22659 -1.07E-07 0.065498" rpy="0 0 0" />
+                <mass value="5.8282" />
+                <inertia ixx="0.011467" ixy="-2.0133E-09" ixz="0.0026277" iyy="0.19305" iyz="2.1385E-09" izz="0.19056" />
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://suj_description/meshes/Si/PSM/12/link_2.stl" />
+                </geometry>
+                <material name="">
+                    <color rgba="0.79216 0.81961 0.93333 1" />
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://suj_description/meshes/Si/PSM/12/link_2.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Link 5: PSM 1/2 Joint Link 3 -->
+        <link name="SUJ_PSM${prefix}_link_3">
+            <inertial>
+                <origin xyz="0.014738 8.0422E-08 -0.027873" rpy="0 0 0" />
+                <mass value="0.5504" />
+                <inertia ixx="0.00064459" ixy="2.3418E-09" ixz="1.1203E-05" iyy="0.00057105" iyz="-2.8921E-09" izz="0.00085397" />
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://suj_description/meshes/Si/PSM/12/link_3.stl" />
+                </geometry>
+                <material name="">
+                    <color rgba="0.79216 0.81961 0.93333 1" />
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://suj_description/meshes/Si/PSM/12/link_3.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Link 6: PSM 1/2 Joint Mounting Point -->
+        <link name="PSM${prefix}_mounting_point" />
+
+        <!-- Joint 1: PSM 1/2 Joint Prismatic Joint: Link 1 to Link 2 -->
+        <joint name="SUJ_PSM${prefix}_J0" type="prismatic">
+            <origin xyz="${xyz}" rpy="${rpy}" />
+            <parent link="${parent_link}" />
+            <child link="SUJ_PSM${prefix}_link_0" />
+            <axis xyz="0 0 1" />
+            <limit lower="0.0" upper="0.512" effort="0" velocity="0" />
+        </joint>
+
+        <!-- Joint 2: PSM 1/2 Joint Revolute Joint: Link 2 to Link 3 -->
+        <joint name="SUJ_PSM${prefix}_J1" type="revolute">
+            <origin xyz="-0.024998 0 0.59" rpy="0 0 0" />
+            <parent link="SUJ_PSM${prefix}_link_0" />
+            <child link="SUJ_PSM${prefix}_link_1" />
+            <axis xyz="0 0 1" />
+            <limit lower="-${PI}" upper="${PI}" effort="0" velocity="0" />
+        </joint>
+
+        <!-- Joint 3: PSM 1/2 Joint Revolute Joint: Link 3 to Link 4 -->
+        <joint name="SUJ_PSM${prefix}_J2" type="revolute">
+            <origin xyz="0.4575 0 0.144" rpy="0 0 0" />
+            <parent link="SUJ_PSM${prefix}_link_1" />
+            <child link="SUJ_PSM${prefix}_link_2" />
+            <axis xyz="0 0 1" />
+            <limit lower="-${PI}" upper="${PI}" effort="0" velocity="0" />
+        </joint>
+
+        <!-- Joint 4: PSM 1/2 Joint Revolute Joint: Link 4 to Link 5 -->
+        <joint name="SUJ_PSM${prefix}_J3" type="revolute">
+            <origin xyz="0.458 0 -0.01875" rpy="0 0 0" />
+            <parent link="SUJ_PSM${prefix}_link_2" />
+            <child link="SUJ_PSM${prefix}_link_3" />
+            <axis xyz="0 0 -1" />
+            <limit lower="-${PI}" upper="${PI}" effort="0" velocity="0" />
+        </joint>
+
+        <!-- Joint 5: PSM 1/2 Fixed Joint: Link 3 to Link 6 -->
+        <joint name="PSM${prefix}_fixed_psm" type="fixed">
+            <origin xyz="0.045255 0 -0.045255" rpy="0 0.7854 0" />
+            <parent link="SUJ_PSM${prefix}_link_3" />
+            <child link="PSM${prefix}_mounting_point" />
+        </joint>
+
+    </xacro:macro>
+
+</robot>

@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<robot name="suj_si" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- Mathematical Constants -->
+    <xacro:property name="PI" value="3.1415926535897931" />
+
+    <!-- Macros -->
+    <xacro:include filename="$(find suj_description)/urdf/xacros/Si/psm12j.xacro" />
+    <xacro:include filename="$(find suj_description)/urdf/xacros/Si/psm3j.xacro" />
+    <xacro:include filename="$(find suj_description)/urdf/xacros/Si/ecmj.xacro" />
+
+    <!-- Link 0: World -->
+    <link name="world" />
+
+    <!-- Link 1: SUJ Column -->
+    <link name="SUJ_column">
+        <inertial>
+            <origin xyz="-1.969E-09 2.3996E-09 0.80012" rpy="0 0 0" />
+            <mass value="71.07" />
+            <inertia ixx="16.038" ixy="-5.7683E-10" ixz="8.3859E-08" iyy="16.017" iyz="-1.008E-07" izz="0.56653" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://suj_description/meshes/Si/tower.stl" />
+            </geometry>
+            <material name="">
+                <color rgba="0.79216 0.81961 0.93333 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://suj_description/meshes/Si/tower.stl" />
+            </geometry>
+        </collision>
+    </link>
+
+    <!-- Joint 0: World Fixed Joint: Link 0 to Link 1 -->
+    <joint name="world_fixed" type="fixed">
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <parent link="world" />
+        <child link="SUJ_column" />
+    </joint>
+
+    <!-- PSM 1 -->
+    <xacro:psm12_j
+        prefix="1"
+        parent_link="SUJ_column"
+        xyz="0 0.228 0.528"
+        rpy="0 0 ${PI/2}" />
+
+    <!-- PSM 2 -->
+    <xacro:psm12_j
+        prefix="2"
+        parent_link="SUJ_column"
+        xyz="0 -0.228 0.528"
+        rpy="0 0 -${PI/2}" />
+
+    <!-- PSM 3 -->
+    <xacro:psm3_j
+        parent_link="SUJ_column"
+        xyz="-0.223 0 0.528"
+        rpy="0 0 -${PI}" />
+
+    <!-- ECM -->
+    <xacro:ecm_j
+        parent_link="SUJ_column"
+        xyz="0.223 0 0.528"
+        rpy="0 0 0" />
+
+</robot>

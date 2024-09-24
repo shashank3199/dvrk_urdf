@@ -1,0 +1,150 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- Mathematical Constants -->
+    <xacro:property name="PI" value="3.1415926535897931" />
+
+    <!-- Macro for the column of the PSM 2 Joint -->
+    <xacro:macro name="psm2_j" params="parent_link xyz rpy">
+
+        <!-- Link 2: PSM2 Link 0 -->
+        <link name="suj_psm2_L0">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://suj_description/meshes/Classic/suj_psm2_L0.stl" />
+                </geometry>
+                <material name="GrayBrown">
+                    <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://suj_description/meshes/Classic/suj_psm2_L0.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Link 3: PSM2 Link 1 -->
+        <link name="suj_psm2_L1">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://suj_description/meshes/Classic/suj_psm2_L1.stl" />
+                </geometry>
+                <material name="GrayBrown"/>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://suj_description/meshes/Classic/suj_psm2_L1.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Link 4: PSM2 Link 2 -->
+        <link name="suj_psm2_L2">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://suj_description/meshes/Classic/suj_psm2_L2.stl" />
+                </geometry>
+                <material name="GrayBrown"/>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://suj_description/meshes/Classic/suj_psm2_L2.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Link 5: PSM2 Link 3 -->
+        <link name="suj_psm2_L3">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://suj_description/meshes/Classic/suj_psm2_L3.stl" />
+                </geometry>
+                <material name="GrayBrown"/>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://suj_description/meshes/Classic/suj_psm2_L3.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Link 6: PSM2 Link 4 -->
+        <link name="suj_psm2_L4">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://suj_description/meshes/Classic/suj_psm2_L4.stl" />
+                </geometry>
+                <material name="GrayBrown"/>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://suj_description/meshes/Classic/suj_psm2_L4.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Link 7: PSM2 Mounting Point -->
+        <link name="PSM2_mounting_point" />
+
+        <!-- Joint 1: PSM2 Joint 0: Link 1 to Link 2 -->
+        <joint name="SUJ_PSM2_J0" type="prismatic">
+            <origin xyz="${xyz}" rpy="${rpy}" />
+            <parent link="${parent_link}" />
+            <child link="suj_psm2_L0" />
+            <axis xyz="0 0 -1" />
+            <limit lower="-0.3798" upper="0.8425" effort="50" velocity ="50" />
+        </joint>
+
+        <!-- Joint 2: PSM2 Joint 1: Link 2 to Link 3 -->
+        <joint name="SUJ_PSM2_J1" type="continuous">
+            <origin xyz="0 0 0" rpy="0 0 ${PI/2}" />
+            <parent link="suj_psm2_L0" />
+            <child link="suj_psm2_L1" />
+            <axis xyz="0 0 -1" />
+        </joint>
+
+        <!-- Joint 3: PSM2 Joint 2: Link 3 to Link 4 -->
+        <joint name="SUJ_PSM2_J2" type="continuous">
+            <origin xyz="0 0.4318 -0.17125" rpy="${PI} 0.0 ${PI/2}" />
+            <parent link="suj_psm2_L1" />
+            <child link="suj_psm2_L2" />
+            <axis xyz="0 0 1" />
+        </joint>
+
+        <!-- Joint 4: PSM2 Joint 3: Link 4 to Link 5 -->
+        <joint name="SUJ_PSM2_J3" type="continuous">
+            <origin xyz="0.4318 0 0" rpy="-${PI/2} 0 -${PI/2}" />
+            <parent link="suj_psm2_L2" />
+            <child link="suj_psm2_L3" />
+            <axis xyz="0 -1 0" />
+        </joint>
+
+        <!-- Joint 5: PSM2 Joint 4: Link 5 to Link 6 -->
+        <joint name="SUJ_PSM2_J4" type="continuous">
+            <origin xyz="0 0.0730499999999998 0.0609999999999997" rpy="${PI/2} 0.0 ${PI}" />
+            <parent link="suj_psm2_L3" />
+            <child link="suj_psm2_L4" />
+            <axis xyz="0 1 0" />
+        </joint>
+
+        <!-- Joint 6: PSM2 RCM Joint: Link 6 to Link 7 -->
+        <joint name="PSM2_RCM" type="fixed">
+            <origin xyz="0.0 0.8343 -0.04984" rpy="0.0 ${PI} 0.0" />
+            <parent link="suj_psm2_L4" />
+            <child link="PSM2_mounting_point" />
+        </joint>
+
+    </xacro:macro>
+
+</robot>

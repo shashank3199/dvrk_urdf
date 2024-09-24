@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- Mathematical Constants -->
+    <xacro:property name="PI" value="3.1415926535897931" />
+
+    <!-- Macro for the column of the ECM Joint -->
+    <xacro:macro name="ecm_j" params="parent_link xyz rpy">
+
+        <!-- Link 8: ECM Link 0 -->
+        <link name="suj_ecm_L0">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://suj_description/meshes/Classic/suj_ecm_L0.stl" />
+                </geometry>
+                <material name="GrayBrown"/>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://suj_description/meshes/Classic/suj_ecm_L0.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Link 9: ECM Link 1 -->
+        <link name="suj_ecm_L1">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://suj_description/meshes/Classic/suj_ecm_L1.stl" />
+                </geometry>
+                <material name="GrayBrown"/>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://suj_description/meshes/Classic/suj_ecm_L1.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Link 10: ECM Link 2 -->
+        <link name="suj_ecm_L2">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://suj_description/meshes/Classic/suj_ecm_L2.stl" />
+                </geometry>
+                <material name="GrayBrown"/>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://suj_description/meshes/Classic/suj_ecm_L2.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Link 11: ECM Link 3 -->
+        <link name="suj_ecm_L3">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://suj_description/meshes/Classic/suj_ecm_L3.stl" />
+                </geometry>
+                <material name="GrayBrown"/>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://suj_description/meshes/Classic/suj_ecm_L3.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Link 12: ECM Mounting Point -->
+        <link name="ECM_mounting_point" />
+
+        <!-- Joint 7: ECM Joint 0: Link 1 to Link 8 -->
+        <joint name="SUJ_ECM_J0" type="prismatic">
+            <origin xyz="${xyz}" rpy="${rpy}" />
+            <parent link="${parent_link}" />
+            <child link="suj_ecm_L0" />
+            <axis xyz="0 0 -1" />
+            <limit lower="-0.3798" upper="0.8425" effort="50" velocity ="50" />
+        </joint>
+
+        <!-- Joint 8: ECM Joint 1: Link 8 to Link 9 -->
+        <joint name="SUJ_ECM_J1" type="continuous">
+            <origin xyz="0 0 0" rpy="${PI} 0 ${PI/2}" />
+            <parent link="suj_ecm_L0" />
+            <child link="suj_ecm_L1" />
+            <axis xyz="0 0 1" />
+        </joint>
+
+        <!-- Joint 9: ECM Joint 2: Link 9 to Link 10 -->
+        <joint name="SUJ_ECM_J2" type="continuous">
+            <origin xyz="0 -0.4318 0.17125" rpy="${PI} 0 -${PI/2}" />
+            <parent link="suj_ecm_L1" />
+            <child link="suj_ecm_L2" />
+            <axis xyz="0 0 -1" />
+        </joint>
+
+        <!-- Joint 10: ECM Joint 3: Link 10 to Link 11 -->
+        <joint name="SUJ_ECM_J3" type="continuous">
+            <origin xyz="0.4318 0.0 0.052" rpy="${PI/2} 0.0 0.0" />
+            <parent link="suj_ecm_L2" />
+            <child link="suj_ecm_L3" />
+            <axis xyz="0 -1 0" />
+        </joint>
+
+        <!-- Joint 11: ECM RCM Joint: Link 11 to Link 12 -->
+        <joint name="ECM_RCM" type="fixed">
+            <origin xyz="-0.45788 0.55053 0.0" rpy="${PI/2} ${PI} -${PI/4}" />
+            <parent link="suj_ecm_L3" />
+            <child link="ECM_mounting_point" />
+        </joint>
+
+    </xacro:macro>
+
+</robot>

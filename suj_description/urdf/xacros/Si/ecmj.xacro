@@ -1,0 +1,154 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- Mathematical Constants -->
+    <xacro:property name="PI" value="3.1415926535897931" />
+
+    <!-- Macro for the column of the ECM Joint -->
+    <xacro:macro name="ecm_j" params="parent_link xyz rpy">
+
+        <!-- Link 13: ECM Joint Link 0 -->
+        <link name="SUJ_ECM_link_0">
+            <inertial>
+                <origin xyz="0.0067344 -9.5093E-09 0.27368" rpy="0 0 0" />
+                <mass value="12.071" />
+                <inertia ixx="0.28901" ixy="-5.2165E-09" ixz="-0.017716" iyy="0.29221" iyz="3.7314E-09" izz="0.046463" />
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://suj_description/meshes/Si/ECM/link_0.stl" />
+                </geometry>
+                <material name="">
+                    <color rgba="0.79216 0.81961 0.93333 1" />
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://suj_description/meshes/Si/ECM/link_0.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Link 14: ECM Joint Link 1 -->
+        <link name="SUJ_ECM_link_1">
+            <inertial>
+                <origin xyz="0.16039 -1.1995E-08 -3.0498E-05" rpy="0 0 0" />
+                <mass value="5.4226" />
+                <inertia ixx="0.011352" ixy="-4.3087E-09" ixz="-0.00019503" iyy="0.10287" iyz="3.8908E-09" izz="0.10144" />
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://suj_description/meshes/Si/ECM/link_1.stl" />
+                </geometry>
+                <material name="">
+                    <color rgba="0.79216 0.81961 0.93333 1" />
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://suj_description/meshes/Si/ECM/link_1.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Link 15: ECM Joint Link 2 -->
+        <link name="SUJ_ECM_link_2">
+            <inertial>
+                <origin xyz="0.15682 -3.0042E-08 -0.00012776" rpy="0 0 0" />
+                <mass value="5.1363" />
+                <inertia ixx="0.010318" ixy="-1.6915E-09" ixz="-9.5211E-05" iyy="0.099144" iyz="1.2049E-09" izz="0.097899" />
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://suj_description/meshes/Si/ECM/link_2.stl" />
+                </geometry>
+                <material name="">
+                    <color rgba="0.79216 0.81961 0.93333 1" />
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://suj_description/meshes/Si/ECM/link_2.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Link 16: ECM Joint Link 3 -->
+        <link name="SUJ_ECM_link_3">
+            <inertial>
+                <origin xyz="0.062935 -1.674E-07 0.023444" rpy="0 0 0" />
+                <mass value="1.3022" />
+                <inertia ixx="0.0015769" ixy="2.2071E-08" ixz="0.00025775" iyy="0.0049522" iyz="2.5626E-11" izz="0.0056835" />
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://suj_description/meshes/Si/ECM/link_3.stl" />
+                </geometry>
+                <material name="">
+                    <color rgba="0.79216 0.81961 0.93333 1" />
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://suj_description/meshes/Si/ECM/link_3.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Link 17: ECM Mounting Point -->
+        <link name="ECM_mounting_point" />
+
+        <!-- Joint 12: ECM Joint 0: Link 1 to Link 13 -->
+        <joint name="SUJ_ECM_J0" type="prismatic">
+            <origin xyz="${xyz}" rpy="${rpy}" />
+            <parent link="${parent_link}" />
+            <child link="SUJ_ECM_link_0" />
+            <axis xyz="0 0 1" />
+            <limit lower="0.0" upper="0.512" effort="0" velocity="0" />
+        </joint>
+
+        <!-- Joint 13: ECM Joint 1: Link 13 to Link 14 -->
+        <joint name="SUJ_ECM_J1" type="revolute">
+            <origin xyz="-0.025 0.0 0.5232" rpy="0 0 0" />
+            <parent link="SUJ_ECM_link_0" />
+            <child link="SUJ_ECM_link_1" />
+            <axis xyz="0 0 1" />
+            <limit lower="-${PI}" upper="${PI}" effort="0" velocity="0" />
+        </joint>
+
+        <!-- Joint 14: ECM Joint 2: Link 14 to Link 15 -->
+        <joint name="SUJ_ECM_J2" type="revolute">
+            <origin xyz="0.3302 0 0.1313" rpy="0 0 0" />
+            <parent link="SUJ_ECM_link_1" />
+            <child link="SUJ_ECM_link_2" />
+            <axis xyz="0 0 1" />
+            <limit lower="-${PI}" upper="${PI}" effort="0" velocity="0" />
+        </joint>
+
+        <!-- Joint 15: ECM Joint 3: Link 15 to Link 16 -->
+        <joint name="SUJ_ECM_J3" type="revolute">
+            <origin xyz="0.3302 0 0.064" rpy="0 0 0" />
+            <parent link="SUJ_ECM_link_2" />
+            <child link="SUJ_ECM_link_3" />
+            <axis xyz="0 0 1" />
+            <limit lower="-${PI}" upper="${PI}" effort="0" velocity="0" />
+        </joint>
+
+        <!-- Joint 16: ECM Joint 4: Link 16 to Link 17 -->
+        <joint name="ECM_fixed_psm" type="fixed">
+            <origin xyz="0.12857 0 -0.0109" rpy="0 1.2217 0" />
+            <parent link="SUJ_ECM_link_3" />
+            <child link="ECM_mounting_point" />
+        </joint>
+
+    </xacro:macro>
+
+</robot>
