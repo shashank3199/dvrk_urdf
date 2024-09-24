@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<robot name="patient_cart_si" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- Mathematical Constants -->
+    <xacro:property name="PI" value="3.1415926535897931" />
+
+    <!-- Macros -->
+    <xacro:include filename="$(find suj_description)/urdf/xacros/Si/ecmj.xacro" />
+    <xacro:include filename="$(find suj_description)/urdf/xacros/Si/psm12j.xacro" />
+    <xacro:include filename="$(find suj_description)/urdf/xacros/Si/psm3j.xacro" />
+
+    <xacro:include filename="$(find psm_description)/urdf/xacros/Si/psm.base.xacro" />
+    <xacro:include filename="$(find psm_description)/urdf/xacros/Si/psm.tool.xacro" />
+
+    <xacro:include filename="$(find ecm_description)/urdf/xacros/ecm.base.xacro" />
+
+    <!-- Link 0: World -->
+    <link name="world" />
+
+    <!-- Link 1: Base Link -->
+    <link name="base_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://suj_description/meshes/Classic/base_link.stl" />
+            </geometry>
+            <material name="">
+                <color rgba="0.647058823529412 0.619607843137255 0.588235294117647 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://suj_description/meshes/Classic/base_link.stl" />
+            </geometry>
+        </collision>
+    </link>
+
+    <!-- Joint 0: Fixed: Link 0 to Link 1 -->
+    <joint name="fixed" type="fixed">
+        <origin xyz="0 0 0.167458" rpy="0 0 0" />
+        <parent link="world" />
+        <child link="base_link" />
+    </joint>
+
+    <!-- PSM 2 Joint Link -->
+    <xacro:psm12_j
+        prefix="2"
+        parent_link="base_link"
+        xyz="0 -0.228 0.528"
+        rpy="0 0 -${PI/2}" />
+
+    <!-- ECM Joint Link -->
+    <xacro:ecm_j
+        parent_link="base_link"
+        xyz="0.173 0 0.478"
+        rpy="0 0 0" />
+
+    <!-- PSM 1 Joint Link -->
+    <xacro:psm12_j
+        prefix="1"
+        parent_link="base_link"
+        xyz="0 0.228 0.528"
+        rpy="0 0 ${PI/2}" />
+
+    <!-- PSM 3 Joint Link -->
+    <xacro:psm3_j
+        parent_link="base_link"
+        xyz="-0.223 0 0.528"
+        rpy="0 0 -${PI}" />
+
+    <!-- ======================================================= -->
+
+    <!-- PSM 2 Link -->
+    <xacro:psm_base
+        prefix="PSM2"
+        parent_link="PSM2_mounting_point"
+        xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+    <xacro:psm_tool
+        tool_name="P420006"
+        prefix="PSM2"
+        parent_link="PSM2_tool_parent"
+        xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+
+    <!-- ECM Link -->
+    <xacro:psm_tool
+        tool_name="SF826001"
+        prefix="ECM"
+        parent_link="ECM_mounting_point"
+        xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+
+    <!-- PSM 1 Link -->
+    <xacro:psm_base
+        prefix="PSM1"
+        parent_link="PSM1_mounting_point"
+        xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+    <xacro:psm_tool
+        tool_name="P420006"
+        prefix="PSM1"
+        parent_link="PSM1_tool_parent"
+        xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+
+    <!-- PSM 3 Link -->
+    <xacro:psm_base
+        prefix="PSM3"
+        parent_link="PSM3_mounting_point"
+        xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+    <xacro:psm_tool
+        tool_name="P420006"
+        prefix="PSM3"
+        parent_link="PSM3_tool_parent"
+        xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+
+</robot>
