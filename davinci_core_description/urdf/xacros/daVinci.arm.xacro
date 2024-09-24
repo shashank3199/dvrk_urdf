@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- Macro for da Vinci Arm -->
+    <xacro:macro name="daVinci_arm" params="arm_name parent X Y Z">
+
+        <!-- Link 0: Mounting Base Link -->
+        <link name="${arm_name}_mounting_base_link">
+            <inertial>
+                <mass value="0.01" />
+                <origin xyz="0 0 0" />
+                <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://davinci_core_description/meshes/mounting_base.stl" />
+                </geometry>
+                <material name="green">
+                    <color rgba="0 1 0 1" />
+                </material>
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://davinci_core_description/meshes/mounting_base.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Link 1: Outer Yaw Link -->
+        <link name="${arm_name}_outer_yaw_link">
+            <inertial>
+                <mass value="0.01" />
+                <origin xyz="0.001 -0.1 -0.1375" />
+                <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0.001 -0.1 -0.1375" />
+                <geometry>
+                    <mesh filename="package://davinci_core_description/meshes/outer_yaw.stl" />
+                </geometry>
+                <material name="red">
+                    <color rgba="1 0 0 1" />
+                </material>
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0.001 -0.1 -0.1375" />
+                <geometry>
+                    <mesh filename="package://davinci_core_description/meshes/outer_yaw.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Link 2: Outer Pitch Base Link -->
+        <link name="${arm_name}_outer_pitch_base_link">
+            <inertial>
+                <mass value="0.01" />
+                <origin xyz="-0.040 -0.130 -0.0901" />
+                <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="-0.040 -0.130 -0.0901" />
+                <geometry>
+                    <mesh filename="package://davinci_core_description/meshes/outer_pitch_base.stl" />
+                </geometry>
+                <material name="blue">
+                    <color rgba="0 0 1 1" />
+                </material>
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="-0.040 -0.130 -0.0901" />
+                <geometry>
+                    <mesh filename="package://davinci_core_description/meshes/outer_pitch_base.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Link 3: Outer Pitch Front Link -->
+        <link name="${arm_name}_outer_pitch_front_link">
+            <inertial>
+                <mass value="0.01" />
+                <origin xyz="0 -0.066 -0.010" />
+                <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0 -0.066 -0.010" />
+                <geometry>
+                    <mesh filename="package://davinci_core_description/meshes/outer_pitch_front.stl" />
+                </geometry>
+                <material name="red" />
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 -0.066 -0.010" />
+                <geometry>
+                    <mesh filename="package://davinci_core_description/meshes/outer_pitch_front.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Link 4: Outer Pitch Bottom Link -->
+        <link name="${arm_name}_outer_pitch_bottom_link">
+            <inertial>
+                <mass value="0.01" />
+                <origin xyz="0 -0.093 -0.010" />
+                <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0 -0.093 -0.010" />
+                <geometry>
+                    <mesh filename="package://davinci_core_description/meshes/outer_pitch_bottom.stl" />
+                </geometry>
+                <material name="green" />
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 -0.093 -0.010" />
+                <geometry>
+                    <mesh filename="package://davinci_core_description/meshes/outer_pitch_bottom.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Link 5: Outer Pitch Top Link -->
+        <link name="${arm_name}_outer_pitch_top_link">
+            <inertial>
+                <mass value="0.01" />
+                <origin xyz="0 -0.093 -0.010" />
+                <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0 -0.093 -0.010" />
+                <geometry>
+                    <mesh filename="package://davinci_core_description/meshes/outer_pitch_top.stl" />
+                </geometry>
+                <material name="green" />
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 -0.093 -0.010" />
+                <geometry>
+                    <mesh filename="package://davinci_core_description/meshes/outer_pitch_top.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Link 6: Outer Insertion Link -->
+        <link name="${arm_name}_outer_insertion_link">
+            <inertial>
+                <mass value="0.01" />
+                <origin xyz="-0.031 -0.086 -0.070" />
+                <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="-0.031 -0.086 -0.070" />
+                <geometry>
+                    <mesh filename="package://davinci_core_description/meshes/outer_insertion.stl" />
+                </geometry>
+                <material name="blue" />
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="-0.031 -0.086 -0.070" />
+                <geometry>
+                    <mesh filename="package://davinci_core_description/meshes/outer_insertion.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Link 7: Tool Adaptor Link -->
+        <link name="${arm_name}_tool_adaptor_link">
+            <inertial>
+                <mass value="0.01" />
+                <origin xyz="0 -0.041 0" />
+                <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0 -0.041 0" />
+                <geometry>
+                    <mesh filename="package://davinci_core_description/meshes/tool_adaptor.stl" />
+                </geometry>
+                <material name="green" />
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 -0.041 0" />
+                <geometry>
+                    <mesh filename="package://davinci_core_description/meshes/tool_adaptor.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Link 8: Tool Link -->
+        <link name="${arm_name}_tool_link">
+            <inertial>
+                <mass value="0.01" />
+                <origin xyz="0 -0.034 0" />
+                <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0 -0.034 0" />
+                <geometry>
+                    <mesh filename="package://davinci_core_description/meshes/tool_asm.stl" />
+                </geometry>
+                <material name="red" />
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 -0.034 0" />
+                <geometry>
+                    <mesh filename="package://davinci_core_description/meshes/tool_asm.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Joint 0: Mounting Base Joint: Macro Parent to Link 0 -->
+        <joint name="${arm_name}_mounting_base_joint" type="fixed">
+            <parent link="${parent}" />
+            <origin rpy="0 0 0" xyz="${X} ${Y} ${Z}" />
+            <child link="${arm_name}_mounting_base_link" />
+        </joint>
+
+        <!-- Joint 1: Outer Yaw Joint: Link 0 to Link 1 -->
+        <joint name="${arm_name}_outer_yaw_joint" type="continuous">
+            <axis xyz="1 0 0" />
+            <parent link="${arm_name}_mounting_base_link" />
+            <origin rpy="0 0 0" xyz="0.094 0.0525 0.147" />
+            <child link="${arm_name}_outer_yaw_link" />
+            <dynamics damping="0.1" />
+        </joint>
+
+        <!-- Joint 2: Outer Pitch Base Joint: Link 1 to Link 2 -->
+        <joint name="${arm_name}_outer_pitch_base_joint" type="continuous">
+            <axis xyz="0 1 0" />
+            <parent link="${arm_name}_outer_yaw_link" />
+            <origin rpy="0 0 0" xyz="0.150 0.085 0" />
+            <child link="${arm_name}_outer_pitch_base_link" />
+            <dynamics damping="0.1" />
+        </joint>
+
+        <!-- Joint 3: Outer Pitch Front Joint: Link 1 to Link 3 -->
+        <joint name="${arm_name}_outer_pitch_front_joint" type="continuous">
+            <axis xyz="0 1 0" />
+            <parent link="${arm_name}_outer_yaw_link" />
+            <origin rpy="0 0 0" xyz="0.245 0.085 0" />
+            <child link="${arm_name}_outer_pitch_front_link" />
+            <dynamics damping="0.1" />
+        </joint>
+
+        <!-- Joint 4: Outer Pitch Bottom Joint: Link 2 to Link 4 -->
+        <joint name="${arm_name}_outer_pitch_bottom_joint" type="continuous">
+            <axis xyz="0 1 0" />
+            <parent link="${arm_name}_outer_pitch_base_link" />
+            <origin rpy="0 0 0" xyz="-0.03 -0.040 0.147" />
+            <child link="${arm_name}_outer_pitch_bottom_link" />
+            <dynamics damping="0.1" />
+        </joint>
+
+        <!-- Joint 5: Outer Pitch Top Joint: Link 2 to Link 5 -->
+        <joint name="${arm_name}_outer_pitch_top_joint" type="continuous">
+            <axis xyz="0 1 0" />
+            <parent link="${arm_name}_outer_pitch_base_link" />
+            <origin rpy="0 0 0" xyz="-0.03 -0.040 0.185" />
+            <child link="${arm_name}_outer_pitch_top_link" />
+            <dynamics damping="0.1" />
+        </joint>
+
+        <!-- Joint 6: Outer Insertion Joint: Link 4 to Link 6 -->
+        <joint name="${arm_name}_outer_insertion_joint" type="continuous">
+            <axis xyz="0 1 0" />
+            <parent link="${arm_name}_outer_pitch_bottom_link" />
+            <origin rpy="0 0 0" xyz="0.510 0.003 0" />
+            <child link="${arm_name}_outer_insertion_link" />
+            <dynamics damping="0.1" />
+        </joint>
+
+        <!-- Joint 7: Tool Insertion Joint: Link 6 to Link 7 -->
+        <joint name="${arm_name}_tool_insertion_joint" type="prismatic">
+            <axis xyz="0 0 1" />
+            <parent link="${arm_name}_outer_insertion_link" />
+            <origin rpy="0 0 0" xyz="0.005 -0.048 -0.200" />
+            <child link="${arm_name}_tool_adaptor_link" />
+            <dynamics damping="0.1" />
+            <limit effort="30" velocity="1.0" lower="-0.5" upper="0.5" />
+        </joint>
+
+        <!-- Joint 8: Tool Joint: Link 7 to Link 8 -->
+        <joint name="${arm_name}_tool_joint" type="fixed">
+            <parent link="${arm_name}_tool_adaptor_link" />
+            <origin rpy="0 0 0" xyz="0.010 0 0" />
+            <child link="${arm_name}_tool_link" />
+        </joint>
+
+        <gazebo reference="${arm_name}_mounting_base_link">
+            <material>Gazebo/Blue</material>
+            <turnGravityOff>false</turnGravityOff>
+        </gazebo>
+
+        <gazebo reference="${arm_name}_outer_yaw_link">
+            <material>Gazebo/Red</material>
+            <turnGravityOff>false</turnGravityOff>
+        </gazebo>
+
+        <gazebo reference="${arm_name}_outer_pitch_base_link">
+            <material>Gazebo/Green</material>
+            <turnGravityOff>false</turnGravityOff>
+        </gazebo>
+
+        <gazebo reference="${arm_name}_outer_pitch_front_link">
+            <material>Gazebo/Blue</material>
+            <turnGravityOff>false</turnGravityOff>
+        </gazebo>
+
+        <gazebo reference="${arm_name}_outer_pitch_bottom_link">
+            <material>Gazebo/Red</material>
+            <turnGravityOff>false</turnGravityOff>
+        </gazebo>
+
+        <gazebo reference="${arm_name}_outer_pitch_top_link">
+            <material>Gazebo/Red</material>
+            <turnGravityOff>false</turnGravityOff>
+        </gazebo>
+
+        <gazebo reference="${arm_name}_outer_insertion_link">
+            <material>Gazebo/Blue</material>
+            <turnGravityOff>false</turnGravityOff>
+        </gazebo>
+
+        <gazebo reference="${arm_name}_tool_adaptor_link">
+            <material>Gazebo/Red</material>
+            <turnGravityOff>false</turnGravityOff>
+        </gazebo>
+
+        <gazebo reference="${arm_name}_tool_link">
+            <material>Gazebo/Green</material>
+            <turnGravityOff>false</turnGravityOff>
+        </gazebo>
+
+    </xacro:macro>
+
+</robot>
