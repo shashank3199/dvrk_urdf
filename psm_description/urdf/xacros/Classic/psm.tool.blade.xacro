@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- Mathematical Constants -->
+    <xacro:property name="PI" value="3.1415926535897931" />
+
+    <!-- Macro for da Vinci PSM with Blade -->
+    <xacro:macro name="psm_tool_blade" params="prefix parent_link">
+
+        <!-- Link 5: Tool Wrist Sca Link -->
+        <link name="${prefix}_tool_wrist_sca_link">
+            <visual>
+                <!-- <origin rpy="0 ${PI} 0" xyz="0 0 0"/> -->
+                <origin rpy="${PI/2} ${PI} 0" xyz="0.0051 0.0032 0" />
+                <geometry>
+                    <mesh filename="package://psm_description/meshes/Classic/tool_wrist_sca_link.stl" />
+                </geometry>
+            </visual>
+            <collision>
+                <!-- <origin rpy="0 ${PI} 0" xyz="0 0 0"/> -->
+                <origin rpy="${PI/2} ${PI} 0" xyz="0.0051 0.0032 0" />
+                <geometry>
+                    <mesh filename="package://psm_description/meshes/Classic/tool_wrist_sca_link.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Link 6: Tool Wrist Sca Shaft Link -->
+        <link name="${prefix}_tool_wrist_sca_shaft_link">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 -0.0002 -0.0025" />
+                <geometry>
+                    <mesh filename="package://psm_description/meshes/Classic/tool_wrist_sca_shaft_link.stl" />
+                </geometry>
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 -0.0002 -0.0025" />
+                <geometry>
+                    <mesh filename="package://psm_description/meshes/Classic/tool_wrist_sca_shaft_link.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Link 7-0: Outer Open Angle Virtual Link -->
+        <link name="${prefix}_tool_wrist_sca_ee_link_0">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <box size="0.45 0.05 0.001" />
+                </geometry>
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <box size="0.45 0.05 0.001" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Link 8: Tool Tip Link -->
+        <link name="${prefix}_tool_tip_link" />
+
+        <!-- Joint 5: Outer Wrist Pitch Joint: Link 4-1 to Link 5 -->
+        <joint name="${prefix}_outer_wrist_pitch" type="revolute">
+            <parent link="${parent_link}" />
+            <child link="${prefix}_tool_wrist_sca_link" />
+            <axis xyz="0 0 1" />
+            <origin rpy="-${PI/2} -${PI/2} 0" xyz="0 0 0" />
+            <limit lower="-${PI/2}" upper="${PI/2}" velocity=".4" effort="1000" />
+        </joint>
+
+        <!-- Joint 6: Outer Wrist Yaw Joint: Link 5 to Link 6 -->
+        <joint name="${prefix}_outer_wrist_yaw" type="revolute">
+            <parent link="${prefix}_tool_wrist_sca_link" />
+            <child link="${prefix}_tool_wrist_sca_shaft_link" />
+            <axis xyz="0 0 1" />
+            <origin rpy="-${PI/2} -${PI/2} 0" xyz="0.0091 0 0" />
+            <!-- +/- 80 deg -->
+            <limit lower="-1.3963" upper="1.3963" velocity=".4" effort="1000" />
+        </joint>
+
+        <!-- Joint 7-0: Outer Open Angle 1 Joint: Link 6 to Link 7-0 -->
+        <joint name="${prefix}_jaw" type="revolute">
+            <parent link="${prefix}_tool_wrist_sca_shaft_link" />
+            <child link="${prefix}_tool_wrist_sca_ee_link_0" />
+            <axis xyz="0 1 0" />
+            <origin rpy="0 0 0" xyz="0 0 0" />
+            <limit lower="0" upper="${PI/2}" velocity=".4" effort="1000" />
+        </joint>
+
+        <!-- Joint 7-1: Tool Tip Joint: Link 7-0 to Link 8 -->
+        <joint name="${prefix}_tool_tip" type="fixed">
+            <parent link="${prefix}_tool_wrist_sca_shaft_link" />
+            <child link="${prefix}_tool_tip_link" />
+            <origin rpy="0 ${PI/2} ${PI/2}" xyz="0 0.45 0" />
+        </joint>
+
+    </xacro:macro>
+
+</robot>

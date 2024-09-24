@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<robot name="psm" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- Macros -->
+    <xacro:include filename="$(find psm_description)/urdf/xacros/Si/psm.base.xacro" />
+    <xacro:include filename="$(find psm_description)/urdf/xacros/Si/psm.tool.xacro" />
+
+    <!-- Tool Arguments -->
+    <!-- Select tool_name from P420006, SF826001 -->
+    <xacro:property name="tool_name" default="P420006" />
+    <xacro:property name="prefix" default="" />
+    <xacro:property name="parent_link" default="world" />
+    <xacro:property name="xyz" default="0.0 0.0 0.0" />
+    <xacro:property name="rpy" default="0.0 0.0 0.0" />
+
+    <!-- Parent Link -->
+    <link name="${parent_link}" />
+
+    <!-- PSM with Tool -->
+    <xacro:psm_base
+        prefix="${prefix}"
+        parent_link="${parent_link}"
+        xyz="${xyz}" rpy="${rpy}" />
+    <xacro:psm_tool
+        tool_name="${tool_name}"
+        prefix="${prefix}"
+        parent_link="${prefix}_tool_parent"
+        xyz="${xyz}" rpy="${rpy}" />
+
+</robot>

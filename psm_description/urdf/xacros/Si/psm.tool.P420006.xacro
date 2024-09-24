@@ -1,0 +1,280 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- Mathematical Constants -->
+    <xacro:property name="PI" value="3.1415926535897931" />
+
+    <!-- Macro for da Vinci PSM Tool P420006 -->
+    <xacro:macro name="P420006" params="prefix parent_link xyz rpy">
+
+        <!-- Link 0: Tool Main Link -->
+        <link name="${prefix}_tool_main_link">
+            <inertial>
+                <origin xyz="0.027084 -1.8218E-18 -0.11317" rpy="0 0 0" />
+                <mass value="0.6606" />
+                <inertia ixx="0.0018902" ixy="6.4481E-20" ixz="7.3606E-06" iyy="0.0016583"
+                    iyz="-1.1311E-19" izz="0.00035114" />
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://psm_description/meshes/P420006/tool_main_link.stl" />
+                </geometry>
+                <material name="">
+                    <color rgba="0.79216 0.81961 0.93333 1" />
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://psm_description/meshes/P420006/tool_main_link.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Link 1: Tool Wrist Link -->
+        <link name="${prefix}_tool_wrist_link">
+            <inertial>
+                <origin xyz="8.2268E-09 -7.7996E-08 0.0036169" rpy="0 0 0" />
+                <mass value="0.00036792" />
+                <inertia ixx="4.0122E-09" ixy="1.7277E-12" ixz="-9.3294E-14" iyy="3.5889E-09"
+                    iyz="2.5109E-13" izz="3.3782E-09" />
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://psm_description/meshes/P420006/tool_wrist_link.stl" />
+                </geometry>
+                <material name="">
+                    <color rgba="0.79216 0.81961 0.93333 1" />
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://psm_description/meshes/P420006/tool_wrist_link.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Link 2: Tool Wrist Shaft Link -->
+        <link name="${prefix}_tool_wrist_shaft_link">
+            <inertial>
+                <origin xyz="9.4759E-17 -1.5613E-16 -4.0735E-06" rpy="0 0 0" />
+                <mass value="4.9567E-05" />
+                <inertia ixx="2.1561E-10" ixy="1.9482E-12" ixz="2.1209E-25" iyy="5.9138E-11"
+                    iyz="-3.4641E-25" izz="2.1706E-10" />
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh
+                        filename="package://psm_description/meshes/P420006/tool_wrist_shaft_link.stl" />
+                </geometry>
+                <material name="">
+                    <color rgba="0.79216 0.81961 0.93333 1" />
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh
+                        filename="package://psm_description/meshes/P420006/tool_wrist_shaft_link.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Link 3: Tool Wrist SCA Link -->
+        <link name="${prefix}_tool_wrist_sca_link">
+            <inertial>
+                <origin xyz="-6.4709E-08 6.9333E-07 0.003884" rpy="0 0 0" />
+                <mass value="0.00016398" />
+                <inertia ixx="1.4976E-09" ixy="-9.1973E-12" ixz="-3.4692E-14" iyy="1.8154E-09"
+                    iyz="-8.7938E-14" izz="9.1518E-10" />
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh
+                        filename="package://psm_description/meshes/P420006/tool_wrist_scal_link.stl" />
+                </geometry>
+                <material name="">
+                    <color rgba="0.79216 0.81961 0.93333 1" />
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh
+                        filename="package://psm_description/meshes/P420006/tool_wrist_scal_link.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Link 4: Tool Wrist SCA Shaft Link -->
+        <link name="${prefix}_tool_wrist_sca_shaft_link">
+            <inertial>
+                <origin xyz="-5.2457E-13 8.882E-07 2.7348E-06" rpy="0 0 0" />
+                <mass value="1.0603E-05" />
+                <inertia ixx="2.9821E-12" ixy="3.8929E-27" ixz="5.5571E-28" iyy="3.33E-11"
+                    iyz="3.1897E-43" izz="3.33E-11" />
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh
+                        filename="package://psm_description/meshes/P420006/tool_wrist_sca_shaft_link.stl" />
+                </geometry>
+                <material name="">
+                    <color rgba="0.79216 0.81961 0.93333 1" />
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh
+                        filename="package://psm_description/meshes/P420006/tool_wrist_sca_shaft_link.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Link 5: Tool Wrist SCA EE Link -->
+        <link name="${prefix}_tool_wrist_sca_ee_link">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <box size="0 0 0" />
+                </geometry>
+            </visual>
+        </link>
+
+        <!-- Link 6: Tool Wrist SCA EE Link 1 -->
+        <link name="${prefix}_tool_wrist_sca_ee_link_1">
+            <inertial>
+                <origin xyz="0.00068905 -0.00017079 0.001575" rpy="0 0 0" />
+                <mass value="0.0002713" />
+                <inertia ixx="2.1945E-09" ixy="-1.9034E-11" ixz="2.4279E-10" iyy="2.0419E-09"
+                    iyz="1.3672E-10" izz="4.0152E-10" />
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh
+                        filename="package://psm_description/meshes/P420006/tool_wrist_sca_ee_link_1.stl" />
+                </geometry>
+                <material name="">
+                    <color rgba="0.77647 0.75686 0.73725 1" />
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh
+                        filename="package://psm_description/meshes/P420006/tool_wrist_sca_ee_link_1.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Link 7: Tool Wrist SCA EE Link 2 -->
+        <link name="${prefix}_tool_wrist_sca_ee_link_2">
+            <inertial>
+                <origin xyz="-0.00068905 0.00017079 0.001575" rpy="0 0 0" />
+                <mass value="0.0002713" />
+                <inertia ixx="2.1945E-09" ixy="-1.9034E-11" ixz="-2.4279E-10" iyy="2.0419E-09"
+                    iyz="-1.3672E-10" izz="4.0152E-10" />
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh
+                        filename="package://psm_description/meshes/P420006/tool_wrist_sca_ee_link_2.stl" />
+                </geometry>
+                <material name="">
+                    <color rgba="0.77647 0.75686 0.73725 1" />
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh
+                        filename="package://psm_description/meshes/P420006/tool_wrist_sca_ee_link_2.stl" />
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- Joint 0: Insertion Joint: Parent Link to Link 0 -->
+        <joint name="${prefix}_insertion" type="prismatic">
+            <origin xyz="${xyz}" rpy="${rpy}" />
+            <parent link="${parent_link}" />
+            <child link="${prefix}_tool_main_link" />
+            <axis xyz="0 0 -1" />
+            <limit lower="0" upper="0.2987" effort="0" velocity="0" />
+        </joint>
+
+        <!-- Joint 1: Roll Joint: Link 0 to Link 1 -->
+        <joint name="${prefix}_roll" type="revolute">
+            <origin xyz="0.05591 0 -0.53559" rpy="-${PI} 0 0" />
+            <parent link="${prefix}_tool_main_link" />
+            <child link="${prefix}_tool_wrist_link" />
+            <axis xyz="0 0 1" />
+            <limit lower="-${PI}" upper="${PI}" effort="0" velocity="0" />
+        </joint>
+
+        <!-- Joint 2: Roll Shaft Joint: Link 1 to Link 2 -->
+        <joint name="${prefix}_${prefix}_outer_roll_shaft" type="fixed">
+            <origin xyz="0 1E-05 0.009" rpy="0 0 0" />
+            <parent link="${prefix}_tool_wrist_link" />
+            <child link="${prefix}_tool_wrist_shaft_link" />
+            <axis xyz="0 0 0" />
+        </joint>
+
+        <!-- Joint 3: Wrist Pitch Joint: Link 2 to Link 3 -->
+        <joint name="${prefix}_wrist_pitch" type="revolute">
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <parent link="${prefix}_tool_wrist_shaft_link" />
+            <child link="${prefix}_tool_wrist_sca_link" />
+            <axis xyz="0 -1 0" />
+            <limit lower="-${PI}" upper="${PI}" effort="0" velocity="0" />
+        </joint>
+
+        <!-- Joint 4: Wrist Yaw Joint: Link 3 to Link 4 -->
+        <joint name="${prefix}_wrist_yaw" type="revolute" multiplier="0.5">
+            <origin xyz="0 0 0.0086973" rpy="0 0 0" />
+            <parent link="${prefix}_tool_wrist_sca_link" />
+            <child link="${prefix}_tool_wrist_sca_shaft_link" />
+            <axis xyz="1 0 0" />
+            <limit lower="-${PI}" upper="${PI}" effort="0" velocity="0" />
+        </joint>
+
+        <!-- Joint 5: Jaw Joint: Link 4 to Link 5 -->
+        <joint name="${prefix}_jaw" type="revolute">
+            <parent link="${prefix}_tool_wrist_sca_shaft_link" />
+            <child link="${prefix}_tool_wrist_sca_ee_link" />
+            <axis xyz="0 0 1" />
+            <origin rpy="0 0 0" xyz="0 0 0" />
+            <limit lower="0" upper="${PI/2}" velocity=".4" effort="1000" />
+        </joint>
+
+        <!-- Joint 6: Jaw 1 Joint: Link 4 to Link 6 -->
+        <joint name="${prefix}_jaw_1" type="revolute">
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <parent link="${prefix}_tool_wrist_sca_shaft_link" />
+            <child link="${prefix}_tool_wrist_sca_ee_link_1" />
+            <axis xyz="1 0 0" />
+            <limit lower="-1.5717" upper="1.5717" effort="0" velocity="0" />
+            <mimic joint="${prefix}_jaw" multiplier="0.5" />
+        </joint>
+
+        <!-- Joint 7: Jaw 2 Joint: Link 4 to Link 7 -->
+        <joint name="${prefix}_jaw_2" type="revolute">
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <parent link="${prefix}_tool_wrist_sca_shaft_link" />
+            <child link="${prefix}_tool_wrist_sca_ee_link_2" />
+            <axis xyz="-1 0 0" />
+            <limit lower="-1.5717" upper="1.5717" effort="0" velocity="0" />
+            <mimic joint="${prefix}_jaw" multiplier="0.5" />
+        </joint>
+
+    </xacro:macro>
+
+</robot>

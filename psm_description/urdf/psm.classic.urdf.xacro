@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<robot name="psm" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- Tool Arguments -->
+    <!-- Select tool_name from blade, caudier_blade, caudier, sca_blade, sca, snake -->
+    <xacro:property name="tool_name" default="sca" />
+    <xacro:property name="prefix" default="" />
+    <xacro:property name="parent_link" default="world" />
+
+    <!-- Tool Origin Arguments: for Caudier tool -->
+    <xacro:if value="${tool_name == 'caudier'}">
+        <xacro:property name="xyz" default="0.25 0.0 0.5" />
+        <xacro:property name="rpy" default="0.0 0.0 -${PI}" />
+    </xacro:if>
+
+    <!-- Tool Origin Arguments: for all other tools -->
+    <xacro:unless value="${tool_name == 'caudier'}">
+        <xacro:property name="xyz" default="-0.25 0.0 0.5" />
+        <xacro:property name="rpy" default="0.0 0.0 ${PI}" />
+    </xacro:unless>
+
+    <!-- Macros -->
+    <xacro:include filename="$(find psm_description)/urdf/xacros/Classic/psm.base.xacro" />
+    <xacro:include filename="$(find psm_description)/urdf/xacros/Classic/psm.tool.xacro" />
+
+    <!-- Parent Link -->
+    <link name="${parent_link}" />
+
+    <!-- PSM with Tool -->
+    <xacro:psm_base
+        prefix="${prefix}"
+        parent_link="${parent_link}"
+        xyz="${xyz}" rpy="${rpy}" />
+    <xacro:psm_tool
+        tool_name="${tool_name}"
+        prefix="${prefix}"
+        parent_link="${prefix}_tool_wrist_shaft_link" />
+
+</robot>

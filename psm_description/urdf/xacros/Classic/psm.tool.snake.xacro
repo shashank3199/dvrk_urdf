@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- Mathematical Constants -->
+    <xacro:property name="PI" value="3.1415926535897931" />
+
+    <!-- Macro for da Vinci PSM with Snake -->
+    <xacro:macro name="psm_tool_snake" params="prefix parent_link">
+
+        <!-- Link 6: Tool Snake Disc 1 Link -->
+        <link name="${prefix}_tool_snake_disc1_link">
+            <visual>
+                <origin rpy="${PI/2} 0 0" xyz="0.0027 0 0" />
+                <geometry>
+                    <mesh filename="package://psm_description/meshes/snake_tool/link_1.stl" />
+                </geometry>
+            </visual>
+        </link>
+
+        <!-- Link 7: Tool Snake Disc 2 Link -->
+        <link name="${prefix}_tool_snake_disc2_link">
+            <visual>
+                <origin rpy="${PI/2} 0 0" xyz="0.0027 0 0" />
+                <geometry>
+                    <mesh filename="package://psm_description/meshes/snake_tool/link_2.stl" />
+                </geometry>
+            </visual>
+        </link>
+
+        <!-- Link 8: Tool Snake Disc 3 Link -->
+        <link name="${prefix}_tool_snake_disc3_link">
+            <visual>
+                <origin rpy="${PI/2} 0 0" xyz="0.0027 0 0" />
+                <geometry>
+                    <mesh filename="package://psm_description/meshes/snake_tool/link_3.stl" />
+                </geometry>
+            </visual>
+        </link>
+
+        <!-- Link 9: Tool Snake End Link -->
+        <link name="${prefix}_tool_snake_end_link">
+            <visual>
+                <origin rpy="0 ${PI/2} 0" xyz="0 -0.0027 0" />
+                <geometry>
+                    <mesh filename="package://psm_description/meshes/snake_tool/link_4.stl" />
+                </geometry>
+            </visual>
+        </link>
+
+        <!-- Link 11-0: Outer Open Angle Virtual Link -->
+        <link name="${prefix}_tool_wrist_snake_ee_link_0">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.0" />
+                <geometry>
+                    <box size="0 0 0" />
+                </geometry>
+            </visual>
+        </link>
+
+        <!-- Link 11-1: Outer Open Angle 1 Link -->
+        <link name="${prefix}_tool_wrist_snake_ee_link_1">
+            <visual>
+                <origin rpy="-${PI/2} -0.7854 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://psm_description/meshes/snake_tool/gripper_2.stl" />
+                </geometry>
+            </visual>
+        </link>
+
+        <!-- Link 11-2: Outer Open Angle 2 Link -->
+        <link name="${prefix}_tool_wrist_snake_ee_link_2">
+            <visual>
+                <origin rpy="-${PI/2} 2.3561 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://psm_description/meshes/snake_tool/gripper_3.stl" />
+                </geometry>
+            </visual>
+        </link>
+
+        <!-- Joint 6: Outer Wrist Pitch 1 Joint: Link 4-1 to Link 6 -->
+        <joint name="${prefix}_outer_wrist_pitch1" type="revolute">
+            <parent link="${parent_link}" />
+            <child link="${prefix}_tool_snake_disc1_link" />
+            <axis xyz="0 0 1" />
+            <origin rpy="-${PI/2} -${PI/2} 0" xyz="0.0 0 0" />
+            <limit lower="-1.3963" upper="1.3963" velocity=".4" effort="1000" />
+        </joint>
+
+        <!-- Joint 7: Outer Wrist Yaw 1 Joint: Link 6 to Link 7 -->
+        <joint name="${prefix}_outer_wrist_yaw1" type="revolute">
+            <parent link="${prefix}_tool_snake_disc1_link" />
+            <child link="${prefix}_tool_snake_disc2_link" />
+            <axis xyz="0 0 1" />
+            <origin rpy="-${PI/2} 0 0" xyz="0.0034 0 0" />
+            <limit lower="-1.3963" upper="1.3963" velocity=".4" effort="1000" />
+        </joint>
+
+        <!-- Joint 8: Outer Wrist Yaw 2 Joint: Link 7 to Link 8 -->
+        <joint name="${prefix}_outer_wrist_yaw2" type="revolute">
+            <parent link="${prefix}_tool_snake_disc2_link" />
+            <child link="${prefix}_tool_snake_disc3_link" />
+            <axis xyz="0 0 1" />
+            <origin rpy="0 0 0" xyz="0.0034 0 0" />
+            <limit lower="-1.3963" upper="1.3963" velocity=".4" effort="1000" />
+        </joint>
+
+        <!-- Joint 9: Outer Wrist Pitch 2 Joint: Link 8 to Link 9 -->
+        <joint name="${prefix}_outer_wrist_pitch2" type="revolute">
+            <parent link="${prefix}_tool_snake_disc3_link" />
+            <child link="${prefix}_tool_snake_end_link" />
+            <axis xyz="0 0 1" />
+            <origin rpy="${PI/2} -${PI/2} 0" xyz="0.0034 0 0" />
+            <limit lower="-1.3963" upper="1.3963" velocity=".4" effort="1000" />
+        </joint>
+
+        <!-- Gripper  -->
+        <!-- Joint 11-0: Outer Open Angle Joint: Link 9 to Link 11-0 -->
+        <joint name="${prefix}_jaw" type="revolute">
+            <parent link="${prefix}_tool_snake_end_link" />
+            <child link="${prefix}_tool_wrist_snake_ee_link_0" />
+            <axis xyz="0 0 1" />
+            <origin rpy="0 0 0" xyz="0 0 0" />
+            <limit lower="0" upper="${PI/2}" velocity=".4" effort="1000" />
+        </joint>
+
+        <!-- Joint 11-1: Outer Open Angle 1 Joint: Link 9 to Link 11-1 -->
+        <joint name="${prefix}_jaw_mimic_1" type="revolute">
+            <parent link="${prefix}_tool_snake_end_link" />
+            <child link="${prefix}_tool_wrist_snake_ee_link_1" />
+            <axis xyz="0 0 1" />
+            <origin rpy="0 2.3562 0" xyz="0 -0.01 0" />
+            <limit lower="-${PI/2}" upper="${PI/2}" velocity=".4" effort="1000" />
+            <mimic joint="${prefix}_jaw" multiplier="0.5" />
+        </joint>
+
+        <!-- Joint 11-2: Outer Open Angle 2 Joint: Link 9 to Link 11-2 -->
+        <joint name="${prefix}_jaw_mimic_2" type="revolute">
+            <parent link="${prefix}_tool_snake_end_link" />
+            <child link="${prefix}_tool_wrist_snake_ee_link_2" />
+            <axis xyz="0 0 1" />
+            <origin rpy="0 2.3562 0" xyz="0 -0.01 0" />
+            <limit lower="-${PI/2}" upper="${PI/2}" velocity=".4" effort="1000" />
+            <mimic joint="${prefix}_jaw" multiplier="-0.5" />
+        </joint>
+
+    </xacro:macro>
+
+</robot>
