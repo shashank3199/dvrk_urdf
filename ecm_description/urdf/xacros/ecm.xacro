@@ -174,11 +174,9 @@
             <parent link="${prefix}_base_link" />
             <child link="${prefix}_yaw_link" />
             <origin rpy="0 -${PI/2} ${PI/2}" xyz="0 0 0" />
-            <!--rotates
-            about z axis-->
+            <!-- Rotates about z axis -->
             <axis xyz="0 0 1" />
-            <!--limit
-            effort and velocity picked arbitrarily check-->
+            <!-- Limit effort and velocity picked arbitrarily check -->
             <limit effort="50.0" lower="${-75/180*PI}" upper="${PI/4}" velocity="2" />
             <joint_properties damping="1.0" friction="0.0" />
         </joint>

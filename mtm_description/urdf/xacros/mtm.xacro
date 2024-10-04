@@ -136,11 +136,9 @@
             <parent link="${prefix}_top_panel" />
             <child link="${prefix}_outer_yaw_link" />
             <origin rpy="0 0 ${PI/2}" xyz="0 0 0" />
-            <!--rotates
-            about z axis-->
+            <!-- Rotates about z axis -->
             <axis xyz="0 0 1" />
-            <!--limit
-            effort and velocity picked arbitrarily check-->
+            <!-- Limit effort and velocity picked arbitrarily check -->
             <limit effort="50.0" lower="${-75/180*PI}" upper="${PI/4}" velocity="2" />
             <joint_properties damping="1.0" friction="0.0" />
         </joint>
@@ -151,8 +149,7 @@
             <child link="${prefix}_back_parallel_link" />  <!-- xyz= 0 0 -.19037-->
             <origin rpy="${-PI/2} ${-PI/2} 0" xyz="0 0 0" />
             <axis xyz="0 0 1" />
-            <!--limit
-            effort and velocity picked arbitrarily check-->
+            <!-- Limit effort and velocity picked arbitrarily check -->
             <limit effort="100.0" lower="${-PI/4}" upper="${PI/4}" velocity="10" />
             <joint_properties damping="1.0" friction="0.0" />
         </joint>
@@ -162,11 +159,9 @@
             <parent link="${prefix}_outer_yaw_link" />
             <child link="${prefix}_top_parallel_link" />
             <origin rpy="${-PI/2} ${-PI/2} 0" xyz="0 0 0" />
-            <!--rotates
-            about x axis-->
+            <!-- Rotates about x axis -->
             <axis xyz="0 0 1" />
-            <!--limit
-            effort and velocity picked arbitrarily check-->
+            <!-- Limit effort and velocity picked arbitrarily check -->
             <limit effort="100.0" lower="${-PI/2}" upper="${PI/2}" velocity="10" />
             <joint_properties damping="1.0" friction="0.0" />
             <mimic joint="${prefix}_shoulder_pitch" multiplier="1" />
@@ -178,8 +173,7 @@
             <child link="${prefix}_bottom_parallel_link" />  <!-- xyz= -->
             <origin rpy="0 0 ${PI/2}" xyz="-0.2794 0 0" />
             <axis xyz="0 0 1" />
-            <!--limit
-            effort and velocity picked arbitrarily check-->
+            <!-- Limit effort and velocity picked arbitrarily check -->
             <limit effort="100.0" lower="${-PI/4}" upper="${PI/4}" velocity="10" />
             <joint_properties damping="1.0" friction="0.0" />
         </joint>
@@ -310,11 +304,9 @@
             <parent link="${prefix}_bottom_parallel_link" />
             <child link="${prefix}_wrist_platform_link" />
             <origin rpy="${PI/2} 0 0" xyz="-0.3645 -0.1506 0.0" />
-            <!--rotates
-            about z axis-->
+            <!-- Rotates about z axis -->
             <axis xyz="0 0 1" />
-            <!--limit
-            effort and velocity picked arbitrarily check-->
+            <!-- Limit effort and velocity picked arbitrarily check -->
             <limit effort="100.0" lower="${-60/180*PI}" upper="${245/180*PI}" velocity="10" />
             <joint_properties damping="1.0" friction="0.0" />
         </joint>
@@ -325,8 +317,7 @@
             <child link="${prefix}_wrist_pitch_link" />
             <origin rpy="${-PI/2} 0 0" xyz="0 0 0" />
             <axis xyz="0 0 1" />
-            <!--limit
-            effort and velocity picked arbitrarily check-->
+            <!-- Limit effort and velocity picked arbitrarily check -->
             <limit effort="100.0" lower="${-PI/2}" upper="${PI}" velocity="10" />
             <joint_properties damping="1.0" friction="0.0" />
         </joint>
@@ -336,11 +327,9 @@
             <parent link="${prefix}_wrist_pitch_link" />
             <child link="${prefix}_wrist_yaw_link" />    <!--  defined from CAD file-->
             <origin rpy="${PI/2} ${-PI/2} 0" xyz="0 0 0" />
-            <!--rotates
-            about z axis-->
+            <!-- Rotates about z axis -->
             <axis xyz="0 0 1" />
-            <!--limit
-            effort and velocity picked arbitrarily check-->
+            <!-- Limit effort and velocity picked arbitrarily check -->
             <limit effort="100.0" lower="${-PI/4}" upper="${PI/4}" velocity="10" />
             <joint_properties damping="1.0" friction="0.0" />
         </joint>
@@ -352,8 +341,7 @@
             <!-- <origin rpy="${-PI/2} ${PI/2} 0" xyz="0 -.039 0"/> -->
             <origin rpy="0 ${-PI/2} ${PI/2}" xyz="0 0 0" />
             <axis xyz="0 0 1" />
-            <!--limit
-            effort and velocity picked arbitrarily check-->
+            <!-- Limit effort and velocity picked arbitrarily check -->
             <limit effort="100.0" lower="${-1.5*PI}" upper="${1.5*PI}" velocity="10" />
             <joint_properties damping="1.0" friction="0.0" />
         </joint>
@@ -481,11 +469,9 @@
             <parent link="${prefix}_bottom_parallel_link" />
             <child link="${prefix}_wrist_platform_link" />
             <origin rpy="${PI/2} 0 0" xyz="-0.3645 -0.1506 0.0" />
-            <!--rotates
-            about z axis-->
+            <!-- Rotates about z axis -->
             <axis xyz="0 0 1" />
-            <!--limit
-            effort and velocity picked arbitrarily check-->
+            <!-- Limit effort and velocity picked arbitrarily check -->
             <limit effort="100.0" lower="${-60/180*PI}" upper="${245/180*PI}" velocity="10" />
             <joint_properties damping="1.0" friction="0.0" />
         </joint>
@@ -496,8 +482,7 @@
             <child link="${prefix}_wrist_pitch_link" />
             <origin rpy="${-PI/2} 0 0" xyz="0 0 0" />
             <axis xyz="0 0 1" />
-            <!--limit
-            effort and velocity picked arbitrarily check-->
+            <!-- Limit effort and velocity picked arbitrarily check -->
             <limit effort="100.0" lower="${-PI/2}" upper="${PI}" velocity="10" />
             <joint_properties damping="1.0" friction="0.0" />
         </joint>
@@ -507,11 +492,9 @@
             <parent link="${prefix}_wrist_pitch_link" />
             <child link="${prefix}_wrist_yaw_link" />    <!--  defined from CAD file-->
             <origin rpy="${PI/2} ${-PI/2} 0" xyz="0 0 0" />
-            <!--rotates
-            about z axis-->
+            <!-- Rotates about z axis -->
             <axis xyz="0 0 1" />
-            <!--limit
-            effort and velocity picked arbitrarily check-->
+            <!-- Limit effort and velocity picked arbitrarily check -->
             <limit effort="100.0" lower="${-PI/4}" upper="${PI/4}" velocity="10" />
             <joint_properties damping="1.0" friction="0.0" />
         </joint>
@@ -523,8 +506,7 @@
             <!-- <origin rpy="${-PI/2} ${PI/2} 0" xyz="0 -.039 0"/> -->
             <origin rpy="0 ${-PI/2} ${PI/2}" xyz="0 0 0" />
             <axis xyz="0 0 1" />
-            <!--limit
-            effort and velocity picked arbitrarily check-->
+            <!-- Limit effort and velocity picked arbitrarily check -->
             <limit effort="100.0" lower="${-1.5*PI}" upper="${1.5*PI}" velocity="10" />
             <joint_properties damping="1.0" friction="0.0" />
         </joint>
