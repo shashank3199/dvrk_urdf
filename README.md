@@ -73,7 +73,7 @@ Use the following ROS 2 commands to launch the URDF models:
   ```
 - **ECM Model**:
   ```bash
-  ros2 launch ecm_description urdf.launch.py file:=ecm.urdf.xacro
+  ros2 launch ecm_description view_robot.launch.py file:=ecm.urdf.xacro
   ```
 - **MTM Models**:
   ```bash

@@ -1,0 +1,21 @@
+# controllers.yaml
+
+controller_manager:
+    ros__parameters:
+        use_sim_time: true
+        update_rate: 100
+
+        joint_state_broadcaster:
+            type: joint_state_broadcaster/JointStateBroadcaster
+
+        forward_position_controller:
+            type: position_controllers/JointGroupPositionController
+
+forward_position_controller:
+    ros__parameters:
+        joints:
+            - ecm_outer_yaw
+            - ecm_outer_pitch
+            - ecm_insertion
+            - ecm_outer_roll
+        interface_name: position

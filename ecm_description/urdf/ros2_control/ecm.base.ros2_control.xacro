@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:macro name="ecm_base_ros2_control" params="prefix">
+
+        <ros2_control name="${prefix}_ros2_control" type="system">
+            <hardware>
+                <!-- <plugin>ecm_ros2_hw/ECMHardwareInterface</plugin> -->
+                <!-- <param name="prefix">${prefix}</param> -->
+                <plugin>fake_components/GenericSystem</plugin>
+            </hardware>
+
+            <!-- Define the joints and their interfaces -->
+            <joint name="${prefix}_yaw">
+                <command_interface name="position" />
+                <state_interface name="position" />
+                <state_interface name="velocity" />
+            </joint>
+
+            <joint name="${prefix}_pitch">
+                <command_interface name="position" />
+                <state_interface name="position" />
+                <state_interface name="velocity" />
+            </joint>
+
+            <joint name="${prefix}_insertion">
+                <command_interface name="position" />
+                <state_interface name="position" />
+                <state_interface name="velocity" />
+            </joint>
+
+            <joint name="${prefix}_roll">
+                <command_interface name="position" />
+                <state_interface name="position" />
+                <state_interface name="velocity" />
+            </joint>
+
+            <!-- Mimic Joints -->
+            <joint name="${prefix}_pitch_bottom">
+                <state_interface name="position" />
+                <state_interface name="velocity" />
+            </joint>
+
+            <joint name="${prefix}_pitch_end">
+                <state_interface name="position" />
+                <state_interface name="velocity" />
+            </joint>
+
+            <joint name="${prefix}_pitch_top">
+                <state_interface name="position" />
+                <state_interface name="velocity" />
+            </joint>
+
+            <joint name="${prefix}_pitch_back">
+                <state_interface name="position" />
+                <state_interface name="velocity" />
+            </joint>
+
+        </ros2_control>
+
+    </xacro:macro>
+
+</robot>

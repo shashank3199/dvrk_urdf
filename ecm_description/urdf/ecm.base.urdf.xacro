@@ -3,13 +3,17 @@
 
     <!-- Macros -->
     <xacro:include filename="$(find ecm_description)/urdf/xacros/ecm.base.xacro" />
+    <xacro:include filename="$(find ecm_description)/urdf/ros2_control/ecm.base.ros2_control.xacro" />
 
     <!-- Parent Link -->
     <link name="world" />
 
     <!-- ECM Base -->
     <xacro:ecm_base
-        prefix="ecm_base"
-        parent_link="world"/>
+        prefix="ecm"
+        parent_link="world" />
+
+    <!-- ROS2 Control -->
+    <xacro:ecm_base_ros2_control prefix="ecm" />
 
 </robot>
