@@ -12,8 +12,6 @@ ros2 launch ecm_description view_robot.launch.py file:=ecm.urdf.xacro
 ros2 launch ecm_description ecm_base_bringup.launch.py
 ```
 
-````bash
-
 ECM Base
 
 ```bash
