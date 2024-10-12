@@ -9,23 +9,22 @@ from launch.substitutions import LaunchConfiguration
 
 def generate_launch_description():
 
-    file_arg = DeclareLaunchArgument(
-        "file",
-        description="Name of the file"
-    )
-
-    mtm_description_content = Command(
-        [
-            PathJoinSubstitution([FindExecutable(name="xacro")]),
-            " ",
-            PathJoinSubstitution(
-                [FindPackageShare("mtm_description"), "urdf", LaunchConfiguration("file")]),
-        ]
+    urdf_arg = DeclareLaunchArgument(
+        "urdf",
+        description="Name of the URDF Xacro file"
     )
 
     mtm_description = {
         "robot_description": ParameterValue(
-            mtm_description_content, value_type=str)
+            Command([
+                PathJoinSubstitution([FindExecutable(name="xacro")]),
+                " ",
+                PathJoinSubstitution(
+                    [FindPackageShare("mtm_description"), "urdf", LaunchConfiguration("urdf")]
+                )
+            ]),
+            value_type=str
+        )
     }
 
     robot_state_publisher_node = Node(
@@ -41,14 +40,20 @@ def generate_launch_description():
         parameters=[mtm_description]
     )
 
+    mtm_rviz_file = PathJoinSubstitution(
+        [FindPackageShare("mtm_description"), "rviz", "mtm_description.rviz"]
+    )
+
+    # RViz2
     rviz_node = Node(
         package="rviz2",
         executable="rviz2",
         name="rviz2",
+        arguments=["-d", mtm_rviz_file],
     )
 
     return LaunchDescription([
-        file_arg,
+        urdf_arg,
         robot_state_publisher_node,
         joint_state_publisher_gui_node,
         rviz_node
