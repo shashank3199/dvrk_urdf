@@ -1,0 +1,31 @@
+# controllers.yaml
+
+controller_manager:
+    ros__parameters:
+        use_sim_time: true
+        update_rate: 100
+
+        joint_state_broadcaster:
+            type: joint_state_broadcaster/JointStateBroadcaster
+
+        forward_position_controller:
+            type: position_controllers/JointGroupPositionController
+
+forward_position_controller:
+    ros__parameters:
+        joints:
+            - MTML_outer_yaw
+            - MTML_shoulder_pitch
+            - MTML_elbow_pitch
+            - MTML_wrist_platform
+            - MTML_wrist_pitch
+            - MTML_wrist_yaw
+            - MTML_wrist_roll
+            - MTMR_outer_yaw
+            - MTMR_shoulder_pitch
+            - MTMR_elbow_pitch
+            - MTMR_wrist_platform
+            - MTMR_wrist_pitch
+            - MTMR_wrist_yaw
+            - MTMR_wrist_roll
+        interface_name: position

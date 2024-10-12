@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:macro name="mtm_ros2_control" params="prefix">
+
+        <ros2_control name="${prefix}_ros2_control" type="system">
+            <hardware>
+                <plugin>fake_components/GenericSystem</plugin>
+            </hardware>
+
+            <!-- Define the joints and their interfaces -->
+
+            <!-- xacro:macro name="mtm" -->
+
+            <joint name="${prefix}_outer_yaw">
+                <command_interface name="position" />
+                <state_interface name="position" />
+                <state_interface name="velocity" />
+            </joint>
+
+            <joint name="${prefix}_shoulder_pitch">
+                <command_interface name="position" />
+                <state_interface name="position" />
+                <state_interface name="velocity" />
+            </joint>
+
+            <joint name="${prefix}_elbow_pitch">
+                <command_interface name="position" />
+                <state_interface name="position" />
+                <state_interface name="velocity" />
+            </joint>
+
+            <!-- xacro:macro name="mtm_platform_<`left` or `right`>" -->
+
+            <joint name="${prefix}_wrist_platform">
+                <command_interface name="position" />
+                <state_interface name="position" />
+                <state_interface name="velocity" />
+            </joint>
+
+            <joint name="${prefix}_wrist_pitch">
+                <command_interface name="position" />
+                <state_interface name="position" />
+                <state_interface name="velocity" />
+            </joint>
+
+            <joint name="${prefix}_wrist_yaw">
+                <command_interface name="position" />
+                <state_interface name="position" />
+                <state_interface name="velocity" />
+            </joint>
+
+            <joint name="${prefix}_wrist_roll">
+                <command_interface name="position" />
+                <state_interface name="position" />
+                <state_interface name="velocity" />
+            </joint>
+
+            <!-- Mimic Joints -->
+
+            <joint name="${prefix}_shoulder_pitch_parallel">
+                <state_interface name="position" />
+                <state_interface name="velocity" />
+            </joint>
+
+        </ros2_control>
+
+    </xacro:macro>
+
+</robot>

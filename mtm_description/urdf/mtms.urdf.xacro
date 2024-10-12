@@ -3,20 +3,25 @@
 
     <!-- Macros -->
     <xacro:include filename="$(find mtm_description)/urdf/xacros/mtm.xacro" />
+    <xacro:include filename="$(find mtm_description)/urdf/ros2_control/mtm.ros2_control.xacro" />
 
     <!-- Parent Link -->
     <link name="world" />
 
     <!-- MTM Left -->
     <xacro:mtm_left
-        prefix="MTML_"
+        prefix="MTML"
         parent_link="world"
         xyz="-0.25 0.0 1.0" rpy="0.0 0.0 0.0" />
 
     <!-- MTM Right -->
     <xacro:mtm_right
-        prefix="MTMR_"
+        prefix="MTMR"
         parent_link="world"
         xyz="0.25 0.0 1.0" rpy="0.0 0.0 0.0" />
+
+    <!-- ROS2 Control -->
+    <xacro:mtm_ros2_control prefix="MTML" />
+    <xacro:mtm_ros2_control prefix="MTMR" />
 
 </robot>
