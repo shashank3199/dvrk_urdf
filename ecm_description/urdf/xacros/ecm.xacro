@@ -192,32 +192,35 @@
         </joint>
 
         <!-- Joint 5: Outer Pitch Joint 0: Link 3 to Link 5 -->
-        <joint name="${prefix}_outer_pitch_0" type="continuous">
+        <joint name="${prefix}_outer_pitch_0" type="revolute">
             <parent link="${prefix}_yaw_link" />
             <child link="${prefix}_pitch_link_1" />
             <origin rpy="-${PI/2} -${PI/2} 0" xyz="0 0 0.378" />
             <axis xyz="0 0 1" />
             <joint_properties damping="1.0" friction="0.0" />
+            <limit effort="100.0" lower="${-PI/4}" upper="${PI*65/180}" velocity="10" />
             <mimic joint="${prefix}_outer_pitch" multiplier="1" />
         </joint>
 
         <!-- Joint 6: Outer Pitch Joint 1: Link 5 to Link 6 -->
-        <joint name="${prefix}_outer_pitch_1" type="continuous">
+        <joint name="${prefix}_outer_pitch_1" type="revolute">
             <parent link="${prefix}_pitch_link_1" />
             <child link="${prefix}_pitch_link_2" />
             <origin rpy="0 0 0" xyz="0.0558629 0.274575 0" />
             <axis xyz="0 0 1" />
             <joint_properties damping="1.0" friction="0.0" />
+            <limit effort="100.0" upper="${PI/4}" lower="${-PI*65/180}" velocity="10" />
             <mimic joint="${prefix}_outer_pitch" multiplier="-1" />
         </joint>
 
         <!-- Joint 7: Outer Pitch Joint 2: Link 6 to Link 7 -->
-        <joint name="${prefix}_outer_pitch_2" type="continuous">
+        <joint name="${prefix}_outer_pitch_2" type="revolute">
             <parent link="${prefix}_pitch_link_2" />
             <child link="${prefix}_pitch_link_3" />
             <origin rpy="0 0 0" xyz="-0.340 0 0" />
             <axis xyz="0 0 1" />
             <joint_properties damping="1.0" friction="0.0" />
+            <limit effort="100.0" lower="${-PI/4}" upper="${PI*65/180}" velocity="10" />
             <mimic joint="${prefix}_outer_pitch" multiplier="1" />
         </joint>
 
