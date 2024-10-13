@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- Macros -->
+    <xacro:include filename="$(find psm_description)/urdf/ros2_control/Classic/psm.tool.blade.ros2_control.xacro" />
+    <xacro:include filename="$(find psm_description)/urdf/ros2_control/Classic/psm.tool.caudier.blade.ros2_control.xacro" />
+    <xacro:include filename="$(find psm_description)/urdf/ros2_control/Classic/psm.tool.caudier.ros2_control.xacro" />
+    <xacro:include filename="$(find psm_description)/urdf/ros2_control/Classic/psm.tool.sca.blade.ros2_control.xacro" />
+    <xacro:include filename="$(find psm_description)/urdf/ros2_control/Classic/psm.tool.sca.ros2_control.xacro" />
+    <xacro:include filename="$(find psm_description)/urdf/ros2_control/Classic/psm.tool.snake.ros2_control.xacro" />
+
+    <!-- Macro for da Vinci PSM tool -->
+    <xacro:macro name="psm_tool_ros2_control" params="tool_name prefix">
+
+        <xacro:if value="${tool_name == 'blade'}">
+            <xacro:psm_tool_blade_ros2_control prefix="${prefix}" />
+        </xacro:if>
+
+        <xacro:if value="${tool_name == 'snake'}">
+            <xacro:psm_tool_snake_ros2_control prefix="${prefix}" />
+        </xacro:if>
+
+        <xacro:if value="${tool_name == 'sca'}">
+            <xacro:psm_tool_sca_ros2_control prefix="${prefix}" />
+        </xacro:if>
+
+        <xacro:if value="${tool_name == 'sca_blade'}">
+            <xacro:psm_tool_sca_blade_ros2_control prefix="${prefix}" />
+        </xacro:if>
+
+        <xacro:if value="${tool_name == 'caudier_blade'}">
+            <xacro:psm_tool_caudier_blade_ros2_control prefix="${prefix}" />
+        </xacro:if>
+
+        <xacro:if value="${tool_name == 'caudier'}">
+            <xacro:psm_tool_caudier_ros2_control prefix="${prefix}" />
+        </xacro:if>
+
+    </xacro:macro>
+
+</robot>

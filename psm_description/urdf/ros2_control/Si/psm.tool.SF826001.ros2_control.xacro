@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:macro name="SF826001_ros2_control" params="prefix">
+
+        <ros2_control name="${prefix}_SF826001_ros2_control" type="system">
+            <hardware>
+                <plugin>fake_components/GenericSystem</plugin>
+            </hardware>
+
+            <joint name="${prefix}_insertion">
+                <command_interface name="position" />
+                <state_interface name="position" />
+                <state_interface name="velocity" />
+            </joint>
+
+            <joint name="${prefix}_roll">
+                <command_interface name="position" />
+                <state_interface name="position" />
+                <state_interface name="velocity" />
+            </joint>
+
+        </ros2_control>
+
+    </xacro:macro>
+
+</robot>

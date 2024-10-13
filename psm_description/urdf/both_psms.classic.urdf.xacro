@@ -3,6 +3,7 @@
 
     <!-- Macros -->
     <xacro:include filename="$(find psm_description)/urdf/xacros/Classic/psm.base.xacro" />
+    <xacro:include filename="$(find psm_description)/urdf/ros2_control/Classic/psm.base.ros2_control.xacro" />
 
     <!-- Parent Link -->
     <link name="world" />
@@ -21,14 +22,18 @@
 
     <!-- PSM Base 1 -->
     <xacro:psm_base
-        prefix="one_"
+        prefix="one"
         parent_link="camera"
         xyz="-0.25 0.0 0.5" rpy="0.0 0.0 ${PI}" />
 
     <!-- PSM Base 2 -->
     <xacro:psm_base
-        prefix="two_"
+        prefix="two"
         parent_link="camera"
         xyz="0.25 0.0 0.5" rpy="0.0 0.0 ${PI}" />
+
+    <!-- ROS2 Control -->
+    <xacro:psm_base_ros2_control prefix="one" />
+    <xacro:psm_base_ros2_control prefix="two" />
 
 </robot>

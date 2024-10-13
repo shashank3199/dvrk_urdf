@@ -4,11 +4,14 @@
     <!-- Macros -->
     <xacro:include filename="$(find psm_description)/urdf/xacros/Si/psm.base.xacro" />
     <xacro:include filename="$(find psm_description)/urdf/xacros/Si/psm.tool.xacro" />
+    <xacro:include filename="$(find psm_description)/urdf/ros2_control/Si/psm.base.ros2_control.xacro" />
+    <xacro:include filename="$(find psm_description)/urdf/ros2_control/Si/psm.tool.ros2_control.xacro" />
 
     <!-- Tool Arguments -->
     <!-- Select tool_name from P420006, SF826001 -->
-    <xacro:property name="tool_name" default="P420006" />
-    <xacro:property name="prefix" default="" />
+    <xacro:arg name="tool" default="P420006" />
+    <xacro:property name="tool_name" default="'$(arg tool)'" />
+    <xacro:property name="prefix" default="PSM" />
     <xacro:property name="parent_link" default="world" />
     <xacro:property name="xyz" default="0.0 0.0 0.0" />
     <xacro:property name="rpy" default="0.0 0.0 0.0" />
@@ -26,5 +29,9 @@
         prefix="${prefix}"
         parent_link="${prefix}_tool_parent"
         xyz="${xyz}" rpy="${rpy}" />
+
+    <!-- ROS2 Control -->
+    <xacro:psm_base_ros2_control prefix="${prefix}" />
+    <xacro:psm_tool_ros2_control tool_name="${tool_name}" prefix="${prefix}" />
 
 </robot>

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:macro name="psm_tool_blade_ros2_control" params="prefix">
+
+        <ros2_control name="${prefix}_psm_tool_blade_ros2_control" type="system">
+            <hardware>
+                <plugin>fake_components/GenericSystem</plugin>
+            </hardware>
+
+            <joint name="${prefix}_outer_wrist_pitch">
+                <command_interface name="position" />
+                <state_interface name="position" />
+                <state_interface name="velocity" />
+            </joint>
+
+            <joint name="${prefix}_outer_wrist_yaw">
+                <command_interface name="position" />
+                <state_interface name="position" />
+                <state_interface name="velocity" />
+            </joint>
+
+            <joint name="${prefix}_jaw">
+                <command_interface name="position" />
+                <state_interface name="position" />
+                <state_interface name="velocity" />
+            </joint>
+
+        </ros2_control>
+
+    </xacro:macro>
+
+</robot>
