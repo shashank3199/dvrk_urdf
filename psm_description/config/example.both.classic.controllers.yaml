@@ -1,0 +1,20 @@
+controller_manager:
+  ros__parameters:
+    use_sim_time: true
+    update_rate: 100
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+    forward_position_controller:
+      type: position_controllers/JointGroupPositionController
+forward_position_controller:
+  ros__parameters:
+    joints:
+    - one_outer_yaw
+    - one_pitch
+    - one_outer_insertion
+    - one_outer_roll
+    - two_outer_yaw
+    - two_pitch
+    - two_outer_insertion
+    - two_outer_roll
+    interface_name: position
