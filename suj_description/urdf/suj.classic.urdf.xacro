@@ -9,6 +9,8 @@
     <xacro:include filename="$(find suj_description)/urdf/xacros/Classic/ecmj.xacro" />
     <xacro:include filename="$(find suj_description)/urdf/xacros/Classic/psm1j.xacro" />
     <xacro:include filename="$(find suj_description)/urdf/xacros/Classic/psm3j.xacro" />
+    <xacro:include filename="$(find suj_description)/urdf/ros2_control/ecmj.ros2_control.xacro" />
+    <xacro:include filename="$(find suj_description)/urdf/ros2_control/psmj.ros2_control.xacro" />
 
     <!-- Link 0: World -->
     <link name="world" />
@@ -43,13 +45,13 @@
     <xacro:psm2_j
         parent_link="base_link"
         xyz="0.1912 -0.101599999999999 0.761099999999999"
-        rpy="-${PI} 0.0 ${PI}"/>
+        rpy="-${PI} 0.0 ${PI}" />
 
     <!-- ECM -->
     <xacro:ecm_j
         parent_link="base_link"
         xyz="0 0.0896 0.7611"
-        rpy="${PI} 0 -${PI/2}"/>
+        rpy="${PI} 0 -${PI/2}" />
 
     <!-- PSM 1 -->
     <xacro:psm1_j
@@ -61,6 +63,10 @@
     <xacro:psm3_j
         parent_link="base_link"
         xyz="0 0.0895999999999999 0.3813"
-        rpy="${PI} 0 -${PI/2}"/>
+        rpy="${PI} 0 -${PI/2}" />
+
+    <!-- ROS2 Control -->
+    <xacro:ecmj_ros2_control />
+    <xacro:psmj_ros2_control />
 
 </robot>

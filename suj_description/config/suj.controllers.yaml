@@ -1,0 +1,36 @@
+# controllers.yaml
+
+controller_manager:
+    ros__parameters:
+        use_sim_time: true
+        update_rate: 100
+
+        joint_state_broadcaster:
+            type: joint_state_broadcaster/JointStateBroadcaster
+
+        forward_position_controller:
+            type: position_controllers/JointGroupPositionController
+
+forward_position_controller:
+    ros__parameters:
+        joints:
+            - SUJ_ECM_J0
+            - SUJ_ECM_J1
+            - SUJ_ECM_J2
+            - SUJ_ECM_J3
+            - SUJ_PSM1_J0
+            - SUJ_PSM1_J1
+            - SUJ_PSM1_J2
+            - SUJ_PSM1_J3
+            - SUJ_PSM1_J4
+            - SUJ_PSM2_J0
+            - SUJ_PSM2_J1
+            - SUJ_PSM2_J2
+            - SUJ_PSM2_J3
+            - SUJ_PSM2_J4
+            - SUJ_PSM3_J0
+            - SUJ_PSM3_J1
+            - SUJ_PSM3_J2
+            - SUJ_PSM3_J3
+            - SUJ_PSM3_J4
+        interface_name: position

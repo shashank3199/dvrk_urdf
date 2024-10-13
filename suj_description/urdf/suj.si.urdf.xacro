@@ -8,6 +8,8 @@
     <xacro:include filename="$(find suj_description)/urdf/xacros/Si/psm12j.xacro" />
     <xacro:include filename="$(find suj_description)/urdf/xacros/Si/psm3j.xacro" />
     <xacro:include filename="$(find suj_description)/urdf/xacros/Si/ecmj.xacro" />
+    <xacro:include filename="$(find suj_description)/urdf/ros2_control/ecmj.ros2_control.xacro" />
+    <xacro:include filename="$(find suj_description)/urdf/ros2_control/psmj.ros2_control.xacro" />
 
     <!-- Link 0: World -->
     <link name="world" />
@@ -17,7 +19,8 @@
         <inertial>
             <origin xyz="-1.969E-09 2.3996E-09 0.80012" rpy="0 0 0" />
             <mass value="71.07" />
-            <inertia ixx="16.038" ixy="-5.7683E-10" ixz="8.3859E-08" iyy="16.017" iyz="-1.008E-07" izz="0.56653" />
+            <inertia ixx="16.038" ixy="-5.7683E-10" ixz="8.3859E-08" iyy="16.017" iyz="-1.008E-07"
+                izz="0.56653" />
         </inertial>
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0" />
@@ -68,5 +71,9 @@
         parent_link="SUJ_column"
         xyz="0.223 0 0.528"
         rpy="0 0 0" />
+
+    <!-- ROS2 Control -->
+    <xacro:ecmj_ros2_control />
+    <xacro:psmj_ros2_control />
 
 </robot>
