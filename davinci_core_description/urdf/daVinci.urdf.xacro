@@ -3,6 +3,7 @@
 
     <!-- Macros -->
     <xacro:include filename="$(find davinci_core_description)/urdf/xacros/daVinci.arm.xacro" />
+    <xacro:include filename="$(find davinci_core_description)/urdf/ros2_control/daVinci.arm.ros2_control.xacro" />
 
     <!-- Parent Link -->
     <link name="world" />
@@ -40,6 +41,10 @@
 
     <!-- Right Arm-->
     <xacro:daVinci_arm arm_name="right_arm" parent="mounting_platform" X="0.38114" Y="1.03237" Z="1.60767" />
+
+    <!-- ROS2 Control -->
+    <xacro:davinci_core_ros2_control arm_name="left_arm" />
+    <xacro:davinci_core_ros2_control arm_name="right_arm" />
 
     <gazebo reference="world">
         <material>Gazebo/WoodFloor</material>
