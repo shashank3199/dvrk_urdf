@@ -73,7 +73,17 @@
         rpy="0 0 0" />
 
     <!-- ROS2 Control -->
-    <xacro:ecmj_ros2_control />
-    <xacro:psmj_ros2_control />
+    <ros2_control name="SUJ_si_ros2_control" type="system">
+
+        <hardware>
+            <plugin>fake_components/GenericSystem</plugin>
+        </hardware>
+
+        <xacro:ecmj_ros2_control />
+        <xacro:psmj_ros2_control prefix="1" />
+        <xacro:psmj_ros2_control prefix="2" />
+        <xacro:psmj_ros2_control prefix="3" />
+
+    </ros2_control>
 
 </robot>
