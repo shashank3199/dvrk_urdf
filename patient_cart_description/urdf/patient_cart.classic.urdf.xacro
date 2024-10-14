@@ -126,16 +126,17 @@
         <xacro:ecm_base_ros2_control prefix="ECM" />
         <xacro:ecmj_ros2_control />
 
-        <xacro:psmj_ros2_control />
-
         <xacro:psm_base_ros2_control prefix="PSM1" />
         <xacro:psm_tool_ros2_control tool_name="sca" prefix="PSM1" />
+        <xacro:psmj_ros2_control prefix="1" />
 
         <xacro:psm_base_ros2_control prefix="PSM2" />
         <xacro:psm_tool_ros2_control tool_name="caudier" prefix="PSM2" />
+        <xacro:psmj_ros2_control prefix="2" />
 
         <xacro:psm_base_ros2_control prefix="PSM3" />
         <xacro:psm_tool_ros2_control tool_name="caudier" prefix="PSM3" />
+        <xacro:psmj_ros2_control prefix="3" />
 
     </ros2_control>
 
