@@ -9,18 +9,13 @@ from launch.substitutions import LaunchConfiguration
 
 def generate_launch_description():
 
-    urdf_arg = DeclareLaunchArgument(
-        "urdf",
-        description="Name of the URDF Xacro file"
-    )
-
     mtm_description = {
         "robot_description": ParameterValue(
             Command([
                 PathJoinSubstitution([FindExecutable(name="xacro")]),
                 " ",
                 PathJoinSubstitution(
-                    [FindPackageShare("mtm_description"), "urdf", LaunchConfiguration("urdf")]
+                    [FindPackageShare("mtm_description"), "urdf", "mtms.urdf.xacro"]
                 )
             ]),
             value_type=str
@@ -53,7 +48,6 @@ def generate_launch_description():
     )
 
     return LaunchDescription([
-        urdf_arg,
         robot_state_publisher_node,
         joint_state_publisher_gui_node,
         rviz_node
