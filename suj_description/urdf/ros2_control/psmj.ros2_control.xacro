@@ -1,8 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-
-    <xacro:macro name="psmj_joint_list" params="prefix">
+    <xacro:macro name="psmj_ros2_control" params="prefix">
 
         <joint name="SUJ_PSM${prefix}_J0">
             <command_interface name="position" />
@@ -33,24 +32,6 @@
             <state_interface name="position" />
             <state_interface name="velocity" />
         </joint>
-
-    </xacro:macro>
-
-
-    <xacro:macro name="psmj_ros2_control">
-
-        <ros2_control name="psmj_ros2_control" type="system">
-            <hardware>
-                <plugin>fake_components/GenericSystem</plugin>
-                <param name="mock_sensor_commands">true</param>
-                <param name="state_following_offset">0.0</param>
-            </hardware>
-
-            <xacro:psmj_joint_list prefix="1" />
-            <xacro:psmj_joint_list prefix="2" />
-            <xacro:psmj_joint_list prefix="3" />
-
-        </ros2_control>
 
     </xacro:macro>
 
