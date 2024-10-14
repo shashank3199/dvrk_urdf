@@ -15,6 +15,14 @@
         xyz="0 0.0 0.0" rpy="0.0 0.0 0.0" />
 
     <!-- ROS2 Control -->
-    <xacro:ecm_ros2_control prefix="ecm" />
+    <ros2_control name="ecm_ros2_control" type="system">
+
+        <hardware>
+            <plugin>fake_components/GenericSystem</plugin>
+        </hardware>
+
+        <xacro:ecm_ros2_control prefix="ecm" />
+
+    </ros2_control>
 
 </robot>

@@ -3,53 +3,46 @@
 
     <xacro:macro name="psm_tool_snake_ros2_control" params="prefix">
 
-        <ros2_control name="${prefix}_psm_tool_snake_ros2_control" type="system">
-            <hardware>
-                <plugin>fake_components/GenericSystem</plugin>
-            </hardware>
+        <joint name="${prefix}_outer_wrist_pitch1">
+            <command_interface name="position" />
+            <state_interface name="position" />
+            <state_interface name="velocity" />
+        </joint>
 
-            <joint name="${prefix}_outer_wrist_pitch1">
-                <command_interface name="position" />
-                <state_interface name="position" />
-                <state_interface name="velocity" />
-            </joint>
+        <joint name="${prefix}_outer_wrist_yaw1">
+            <command_interface name="position" />
+            <state_interface name="position" />
+            <state_interface name="velocity" />
+        </joint>
 
-            <joint name="${prefix}_outer_wrist_yaw1">
-                <command_interface name="position" />
-                <state_interface name="position" />
-                <state_interface name="velocity" />
-            </joint>
+        <joint name="${prefix}_outer_wrist_yaw2">
+            <command_interface name="position" />
+            <state_interface name="position" />
+            <state_interface name="velocity" />
+        </joint>
 
-            <joint name="${prefix}_outer_wrist_yaw2">
-                <command_interface name="position" />
-                <state_interface name="position" />
-                <state_interface name="velocity" />
-            </joint>
+        <joint name="${prefix}_outer_wrist_pitch2">
+            <command_interface name="position" />
+            <state_interface name="position" />
+            <state_interface name="velocity" />
+        </joint>
 
-            <joint name="${prefix}_outer_wrist_pitch2">
-                <command_interface name="position" />
-                <state_interface name="position" />
-                <state_interface name="velocity" />
-            </joint>
+        <joint name="${prefix}_jaw">
+            <command_interface name="position" />
+            <state_interface name="position" />
+            <state_interface name="velocity" />
+        </joint>
 
-            <joint name="${prefix}_jaw">
-                <command_interface name="position" />
-                <state_interface name="position" />
-                <state_interface name="velocity" />
-            </joint>
+        <!-- Mimic joints -->
+        <joint name="${prefix}_jaw_mimic_1">
+            <state_interface name="position" />
+            <state_interface name="velocity" />
+        </joint>
 
-            <!-- Mimic joints -->
-            <joint name="${prefix}_jaw_mimic_1">
-                <state_interface name="position" />
-                <state_interface name="velocity" />
-            </joint>
-
-            <joint name="${prefix}_jaw_mimic_2">
-                <state_interface name="position" />
-                <state_interface name="velocity" />
-            </joint>
-
-        </ros2_control>
+        <joint name="${prefix}_jaw_mimic_2">
+            <state_interface name="position" />
+            <state_interface name="velocity" />
+        </joint>
 
     </xacro:macro>
 

@@ -33,7 +33,15 @@
         xyz="0.25 0.0 0.5" rpy="0.0 0.0 ${PI}" />
 
     <!-- ROS2 Control -->
-    <xacro:psm_base_ros2_control prefix="one" />
-    <xacro:psm_base_ros2_control prefix="two" />
+    <ros2_control name="both_psms_classic_ros2_control" type="system">
+
+        <hardware>
+            <plugin>fake_components/GenericSystem</plugin>
+        </hardware>
+
+        <xacro:psm_base_ros2_control prefix="one" />
+        <xacro:psm_base_ros2_control prefix="two" />
+
+    </ros2_control>
 
 </robot>

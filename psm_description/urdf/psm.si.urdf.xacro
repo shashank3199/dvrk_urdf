@@ -31,7 +31,15 @@
         xyz="${xyz}" rpy="${rpy}" />
 
     <!-- ROS2 Control -->
-    <xacro:psm_base_ros2_control prefix="${prefix}" />
-    <xacro:psm_tool_ros2_control tool_name="${tool_name}" prefix="${prefix}" />
+    <ros2_control name="${prefix}_psm_si_${tool_name}_ros2_control" type="system">
+
+        <hardware>
+            <plugin>fake_components/GenericSystem</plugin>
+        </hardware>
+
+        <xacro:psm_base_ros2_control prefix="${prefix}" />
+        <xacro:psm_tool_ros2_control tool_name="${tool_name}" prefix="${prefix}" />
+
+    </ros2_control>
 
 </robot>

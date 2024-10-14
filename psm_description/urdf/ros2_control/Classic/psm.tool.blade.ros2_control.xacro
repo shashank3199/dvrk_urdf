@@ -3,30 +3,23 @@
 
     <xacro:macro name="psm_tool_blade_ros2_control" params="prefix">
 
-        <ros2_control name="${prefix}_psm_tool_blade_ros2_control" type="system">
-            <hardware>
-                <plugin>fake_components/GenericSystem</plugin>
-            </hardware>
+        <joint name="${prefix}_outer_wrist_pitch">
+            <command_interface name="position" />
+            <state_interface name="position" />
+            <state_interface name="velocity" />
+        </joint>
 
-            <joint name="${prefix}_outer_wrist_pitch">
-                <command_interface name="position" />
-                <state_interface name="position" />
-                <state_interface name="velocity" />
-            </joint>
+        <joint name="${prefix}_outer_wrist_yaw">
+            <command_interface name="position" />
+            <state_interface name="position" />
+            <state_interface name="velocity" />
+        </joint>
 
-            <joint name="${prefix}_outer_wrist_yaw">
-                <command_interface name="position" />
-                <state_interface name="position" />
-                <state_interface name="velocity" />
-            </joint>
-
-            <joint name="${prefix}_jaw">
-                <command_interface name="position" />
-                <state_interface name="position" />
-                <state_interface name="velocity" />
-            </joint>
-
-        </ros2_control>
+        <joint name="${prefix}_jaw">
+            <command_interface name="position" />
+            <state_interface name="position" />
+            <state_interface name="velocity" />
+        </joint>
 
     </xacro:macro>
 

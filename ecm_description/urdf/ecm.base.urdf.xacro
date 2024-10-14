@@ -14,6 +14,14 @@
         parent_link="world" />
 
     <!-- ROS2 Control -->
-    <xacro:ecm_base_ros2_control prefix="ecm" />
+    <ros2_control name="ecm_base_ros2_control" type="system">
+
+        <hardware>
+            <plugin>fake_components/GenericSystem</plugin>
+        </hardware>
+
+        <xacro:ecm_base_ros2_control prefix="ecm" />
+
+    </ros2_control>
 
 </robot>

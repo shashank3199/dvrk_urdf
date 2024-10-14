@@ -40,7 +40,15 @@
         parent_link="${prefix}_tool_wrist_shaft_link" />
 
     <!-- ROS2 Control -->
-    <xacro:psm_base_ros2_control prefix="${prefix}" />
-    <xacro:psm_tool_ros2_control tool_name="${tool_name}" prefix="${prefix}" />
+    <ros2_control name="${prefix}_psm_classic_${tool_name}_ros2_control" type="system">
+
+        <hardware>
+            <plugin>fake_components/GenericSystem</plugin>
+        </hardware>
+
+        <xacro:psm_base_ros2_control prefix="${prefix}" />
+        <xacro:psm_tool_ros2_control tool_name="${tool_name}" prefix="${prefix}" />
+
+    </ros2_control>
 
 </robot>
