@@ -15,8 +15,18 @@
 
     <xacro:include filename="$(find ecm_description)/urdf/xacros/ecm.base.xacro" />
 
+    <!-- ROS2 Macros -->
+    <xacro:include filename="$(find suj_description)/urdf/ros2_control/ecmj.ros2_control.xacro" />
+    <xacro:include filename="$(find suj_description)/urdf/ros2_control/psmj.ros2_control.xacro" />
+
+    <xacro:include filename="$(find psm_description)/urdf/ros2_control/Classic/psm.base.ros2_control.xacro" />
+    <xacro:include filename="$(find psm_description)/urdf/ros2_control/Classic/psm.tool.ros2_control.xacro" />
+
+    <xacro:include filename="$(find ecm_description)/urdf/ros2_control/ecm.base.ros2_control.xacro" />
+
     <!-- Link 0: World -->
-    <link name="world" />
+    <link
+        name="world" />
 
     <!-- Link 1: Base Link -->
     <link name="base_link">
@@ -105,5 +115,28 @@
         tool_name="caudier"
         prefix="PSM3"
         parent_link="PSM3_tool_wrist_shaft_link" />
+
+    <!-- ROS2 Control -->
+    <ros2_control name="patient_cart_classic_ros2_control" type="system">
+
+        <hardware>
+            <plugin>fake_components/GenericSystem</plugin>
+        </hardware>
+
+        <xacro:ecm_base_ros2_control prefix="ECM" />
+        <xacro:ecmj_ros2_control />
+
+        <xacro:psmj_ros2_control />
+
+        <xacro:psm_base_ros2_control prefix="PSM1" />
+        <xacro:psm_tool_ros2_control tool_name="sca" prefix="PSM1" />
+
+        <xacro:psm_base_ros2_control prefix="PSM2" />
+        <xacro:psm_tool_ros2_control tool_name="caudier" prefix="PSM2" />
+
+        <xacro:psm_base_ros2_control prefix="PSM3" />
+        <xacro:psm_tool_ros2_control tool_name="caudier" prefix="PSM3" />
+
+    </ros2_control>
 
 </robot>

@@ -14,6 +14,15 @@
 
     <xacro:include filename="$(find ecm_description)/urdf/xacros/ecm.base.xacro" />
 
+    <!-- ROS2 Macros -->
+    <xacro:include filename="$(find suj_description)/urdf/ros2_control/ecmj.ros2_control.xacro" />
+    <xacro:include filename="$(find suj_description)/urdf/ros2_control/psmj.ros2_control.xacro" />
+
+    <xacro:include filename="$(find psm_description)/urdf/ros2_control/Si/psm.base.ros2_control.xacro" />
+    <xacro:include filename="$(find psm_description)/urdf/ros2_control/Si/psm.tool.ros2_control.xacro" />
+
+    <xacro:include filename="$(find ecm_description)/urdf/ros2_control/ecm.base.ros2_control.xacro" />
+
     <!-- Link 0: World -->
     <link name="world" />
 
@@ -83,8 +92,7 @@
         xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
 
     <!-- ECM Link -->
-    <xacro:psm_tool
-        tool_name="SF826001"
+    <xacro:ecm_base
         prefix="ECM"
         parent_link="ECM_mounting_point"
         xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
@@ -110,5 +118,28 @@
         prefix="PSM3"
         parent_link="PSM3_tool_parent"
         xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+
+    <!-- ROS2 Control -->
+    <ros2_control name="patient_cart_si_ros2_control" type="system">
+
+        <hardware>
+            <plugin>fake_components/GenericSystem</plugin>
+        </hardware>
+
+        <xacro:ecmj_ros2_control />
+        <xacro:psmj_ros2_control />
+
+        <xacro:ecm_base_ros2_control prefix="ECM" />
+
+        <xacro:psm_base_ros2_control prefix="PSM1" />
+        <xacro:psm_tool_ros2_control tool_name="P420006" prefix="PSM1" />
+
+        <xacro:psm_base_ros2_control prefix="PSM2" />
+        <xacro:psm_tool_ros2_control tool_name="P420006" prefix="PSM2" />
+
+        <xacro:psm_base_ros2_control prefix="PSM3" />
+        <xacro:psm_tool_ros2_control tool_name="P420006" prefix="PSM3" />
+
+    </ros2_control>
 
 </robot>
