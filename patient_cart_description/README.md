@@ -1,89 +1,123 @@
 # Patient Cart Description
 
-Patient Cart Classic
+The Patient Cart Description package provides the URDF descriptions, launch files, and configurations necessary to simulate and visualize the Patient Cart of a surgical robotic system in ROS 2. This package includes models for both the classic and SI (System Intelligence) versions of the Patient Cart.
 
-```bash
-ros2 launch patient_cart_description urdf.launch.py file:=patient_cart.classic.urdf.xacro
+## Table of Contents
+
+-   [Package Structure](#package-structure)
+-   [URDF Files](#urdf-files)
+-   [Controllers](#controllers)
+-   [RViz Configurations](#rviz-configurations)
+-   [Building the Package](#building-the-package)
+-   [Usage Examples](#usage-examples)
+    -   [Simulate the Classic Patient Cart](#simulate-the-classic-patient-cart)
+    -   [Simulate the SI Patient Cart](#simulate-the-si-patient-cart)
+    -   [Visualize and Manipulate the Robot with GUI](#visualize-and-manipulate-the-robot-with-gui)
+-   [Additional Resources](#additional-resources)
+
+## Package Structure
+
+```
+patient_cart_description
+├── CMakeLists.txt
+├── config
+│   ├── patient_cart.classic.controllers.yaml
+│   └── patient_cart.si.controllers.yaml
+├── launch
+│   ├── patient_cart_classic_bringup.launch.py
+│   ├── patient_cart_si_bringup.launch.py
+│   ├── README.md
+│   └── view_robot.launch.py
+├── package.xml
+├── README.md
+├── rviz
+│   └── patient_cart_description.rviz
+├── src
+│   └── patient_cart_joint_controller.cpp
+└── urdf
+    ├── patient_cart.classic.urdf.xacro
+    ├── patient_cart.si.urdf.xacro
+    └── README.md
 ```
 
-Patient Cart Si
+## URDF Files
+
+-   **Classic Patient Cart URDF (`patient_cart.classic.urdf.xacro`)**
+
+    -   Located at `urdf/patient_cart.classic.urdf.xacro`.
+    -   Defines the model for the classic version of the Patient Cart.
+
+-   **SI Patient Cart URDF (`patient_cart.si.urdf.xacro`)**
+
+    -   Located at `urdf/patient_cart.si.urdf.xacro`.
+    -   Defines the model for the SI (System Intelligence) version of the Patient Cart.
+
+-   **URDF README**
+    -   See `urdf/README.md` for detailed information on the URDF files and their structure.
+
+## Controllers
+
+-   **Classic Patient Cart Controllers (`patient_cart.classic.controllers.yaml`)**
+
+    -   Located at `config/patient_cart.classic.controllers.yaml`.
+    -   Defines the controllers for the classic version of the Patient Cart.
+
+-   **SI Patient Cart Controllers (`patient_cart.si.controllers.yaml`)**
+
+    -   Located at `config/patient_cart.si.controllers.yaml`.
+    -   Defines the controllers for the SI version of the Patient Cart.
+
+-   **Custom Joint Controller Source (`patient_cart_joint_controller.cpp`)**
+    -   Located at `src/patient_cart_joint_controller.cpp`.
+    -   Implements specific control logic for the Patient Cart.
+
+## RViz Configurations
+
+-   **RViz Configuration (`patient_cart_description.rviz`)**
+    -   Located at `rviz/patient_cart_description.rviz`.
+    -   Pre-configured settings for RViz visualization of the Patient Cart.
+
+## Building the Package
+
+Ensure you have a ROS 2 workspace set up. Clone the `patient_cart_description` package into the `src` directory of your workspace, and then build the workspace:
 
 ```bash
-ros2 launch patient_cart_description urdf.launch.py file:=patient_cart.si.urdf.xacro
+colcon build
 ```
 
----
+Source your workspace after building:
 
-## Patient Cart Classic URDF
+```bash
+source install/setup.bash
+```
 
-### Links
+## Usage Examples
 
-| Link Number | Link Name             | Mesh File                                                                     | Origin (`xyz`)              | Orientation (`rpy`)   |
-|-------------|-----------------------|-------------------------------------------------------------------------------|-----------------------------|-----------------------|
-| Link 0      | World                 | N/A                                                                           | N/A                         | N/A                   |
-| Link 1      | Base Link             | [base_link.stl](./meshes/Classic/base_link.stl)                               | `0 0 0`                     | `0 0 0`               |
-| Link 2      | PSM2 Mounting Point   | Defined in [psm2j.xacro](./suj_description/urdf/xacros/Classic/psm2j.xacro)   | `0.1912 -0.1016 0.7611`     | `-π 0 π`              |
-| Link 3      | ECM Mounting Point    | Defined in [ecmj.xacro](./suj_description/urdf/xacros/Classic/ecmj.xacro)     | `0 0.0896 0.7611`           | `π 0 -π/2`            |
-| Link 4      | PSM1 Mounting Point   | Defined in [psm1j.xacro](./suj_description/urdf/xacros/Classic/psm1j.xacro)   | `-0.1912 -0.1016 0.7611`    | `π 0 0`               |
-| Link 5      | PSM3 Mounting Point   | Defined in [psm3j.xacro](./suj_description/urdf/xacros/Classic/psm3j.xacro)   | `0 0.0896 0.3813`           | `π 0 -π/2`            |
-| ...         | ...                   | ...                                                                           | ...                         | ...                   |
+### Simulate the Classic Patient Cart
 
-### Joints
+To simulate the classic version of the Patient Cart with ROS 2 control and visualize it in RViz:
 
-| Joint Number | Joint Name            | Associated Links (Parent to Child)   | Type         | Origin (`xyz`)              | Orientation (`rpy`)   |
-|--------------|-----------------------|--------------------------------------|--------------|-----------------------------|-----------------------|
-| Joint 0      | Fixed                 | `world` to `base_link`               | Fixed        | `0 0 0.167458`              | `0 0 0`               |
-| Joint 1      | PSM2 Joint            | `base_link` to `PSM2_mounting_point` | As per macro | `0.1912 -0.1016 0.7611`     | `-π 0 π`              |
-| Joint 2      | ECM Joint             | `base_link` to `ECM_mounting_point`  | As per macro | `0 0.0896 0.7611`           | `π 0 -π/2`            |
-| Joint 3      | PSM1 Joint            | `base_link` to `PSM1_mounting_point` | As per macro | `-0.1912 -0.1016 0.7611`    | `π 0 0`               |
-| Joint 4      | PSM3 Joint            | `base_link` to `PSM3_mounting_point` | As per macro | `0 0.0896 0.3813`           | `π 0 -π/2`            |
-| ...          | ...                   | ...                                  | ...          | ...                         | ...                   |
+```bash
+ros2 launch patient_cart_description patient_cart_classic_bringup.launch.py
+```
 
-**Note:** The specific definitions of the links and joints for the PSMs and ECM are included via macros. The macros `psm2j.xacro`, `ecmj.xacro`, `psm1j.xacro`, and `psm3j.xacro` define the mounting points and configurations for the PSMs and ECM.
+### Simulate the SI Patient Cart
 
-Each PSM and the ECM also include their own links and joints, defined in their respective description packages (`psm_description` and `ecm_description`), which are included via xacro macros.
+To simulate the SI version of the Patient Cart:
 
----
+```bash
+ros2 launch patient_cart_description patient_cart_si_bringup.launch.py
+```
 
-## Patient Cart Si URDF
+### Visualize and Manipulate the Robot with GUI
 
-### Links
+To launch the robot and manipulate its joints using the Joint State Publisher GUI:
 
-| Link Number | Link Name             | Mesh File                                                                                   | Origin (`xyz`)   | Orientation (`rpy`)   |
-|-------------|-----------------------|---------------------------------------------------------------------------------------------|------------------|-----------------------|
-| Link 0      | World                 | N/A                                                                                         | N/A              | N/A                   |
-| Link 1      | Base Link             | [base_link.stl](./meshes/Classic/base_link.stl)                                             | `0 0 0`          | `0 0 0`               |
-| Link 2      | PSM2 Mounting Point   | Defined in [psm12j.xacro](./suj_description/urdf/xacros/Si/psm12j.xacro) with `prefix="2"`  | `0 -0.228 0.528` | `0 0 -π/2`            |
-| Link 3      | ECM Mounting Point    | Defined in [ecmj.xacro](./suj_description/urdf/xacros/Si/ecmj.xacro)                        | `0.173 0 0.478`  | `0 0 0`               |
-| Link 4      | PSM1 Mounting Point   | Defined in [psm12j.xacro](./suj_description/urdf/xacros/Si/psm12j.xacro) with `prefix="1"`  | `0 0.228 0.528`  | `0 0 π/2`             |
-| Link 5      | PSM3 Mounting Point   | Defined in [psm3j.xacro](./suj_description/urdf/xacros/Si/psm3j.xacro)                      | `-0.223 0 0.528` | `0 0 -π`              |
-| ...         | ...                   | ...                                                                                         | ...              | ...                   |
+```bash
+ros2 launch patient_cart_description view_robot.launch.py
+```
 
-### Joints
+## Additional Resources
 
-| Joint Number | Joint Name            | Associated Links (Parent to Child)   | Type         | Origin (`xyz`)           | Orientation (`rpy`)   |
-|--------------|-----------------------|--------------------------------------|--------------|--------------------------|-----------------------|
-| Joint 0      | Fixed                 | `world` to `base_link`               | Fixed        | `0 0 0.167458`           | `0 0 0`               |
-| Joint 1      | PSM2 Joint            | `base_link` to `PSM2_mounting_point` | As per macro | `0 -0.228 0.528`         | `0 0 -π/2`            |
-| Joint 2      | ECM Joint             | `base_link` to `ECM_mounting_point`  | As per macro | `0.173 0 0.478`          | `0 0 0`               |
-| Joint 3      | PSM1 Joint            | `base_link` to `PSM1_mounting_point` | As per macro | `0 0.228 0.528`          | `0 0 π/2`             |
-| Joint 4      | PSM3 Joint            | `base_link` to `PSM3_mounting_point` | As per macro | `-0.223 0 0.528`         | `0 0 -π`              |
-| ...          | ...                   | ...                                  | ...          | ...                      | ...                   |
-
-**Note:** As with the Classic Patient Cart, the specific definitions of the links and joints for the PSMs and ECM are included via macros. The macros `psm12j.xacro` and `ecmj.xacro` define the mounting points and configurations for the PSMs and ECM.
-
-Each PSM and the ECM also include their own links and joints, defined in their respective description packages (`psm_description` and `ecm_description`), which are included via xacro macros.
-
----
-
-**Notes:**
-
-- The Patient Cart model includes multiple subsystems:
-  - **PSMs (Patient Side Manipulators):** Robotic arms used for surgical procedures.
-  - **ECM (Endoscope Camera Manipulator):** Controls the endoscopic camera.
-
-- The specific configurations and definitions of the PSMs and ECM are included via xacro macros from their respective description packages.
-
-- To fully understand the structure and details of the PSMs and ECM, refer to their individual README files and description packages.
-
----
+-   **URDF README:** `urdf/README.md` - Detailed documentation on the URDF files for both classic and SI versions.
+-   **Launch Files README:** `launch/README.md` - Explanations of the provided launch files and their usage.

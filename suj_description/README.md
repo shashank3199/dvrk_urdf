@@ -1,296 +1,156 @@
-# SUJ (Setup Joint) Description
+# SUJ Description
 
-This README provides a comprehensive overview of the **Setup Joint (SUJ)** models, including their URDF (Unified Robot Description Format) structures, meshes, and configurations. The SUJ serves as the mounting and positioning mechanism for the manipulators (PSMs and ECM).
-
----
+The Setup Joint (SUJ) Description package provides the URDF descriptions, launch files, and configurations necessary to simulate and visualize the Setup Joints of the da Vinci Surgical System in ROS 2. This package includes models for both Classic and Si versions of the SUJ.
 
 ## Table of Contents
 
-- [Meshes](#meshes)
-- [SUJ Classic](#suj-classic)
-  - [Launching the SUJ Classic Model](#launching-the-suj-classic-model)
-  - [SUJ Classic ECMJ](#suj-classic-ecmj)
-    - [Links](#links)
-    - [Joints](#joints)
-  - [SUJ Classic PSM1J](#suj-classic-psm1j)
-    - [Links](#links-1)
-    - [Joints](#joints-1)
-  - [SUJ Classic PSM2J](#suj-classic-psm2j)
-    - [Links](#links-2)
-    - [Joints](#joints-2)
-  - [SUJ Classic PSM3J](#suj-classic-psm3j)
-    - [Links](#links-3)
-    - [Joints](#joints-3)
-- [SUJ Si](#suj-si)
-  - [Launching the SUJ Si Model](#launching-the-suj-si-model)
-  - [SUJ Si PSM12](#suj-si-psm12)
-    - [Links](#links-4)
-    - [Joints](#joints-4)
-  - [SUJ Si PSM3](#suj-si-psm3)
-    - [Links](#links-5)
-    - [Joints](#joints-5)
-  - [SUJ Si ECM](#suj-si-ecm)
-    - [Links](#links-6)
-    - [Joints](#joints-6)
-- [URDF Structures](#urdf-structures)
-- [Notes](#notes)
+-   [Package Structure](#package-structure)
+-   [URDF and Xacro Files](#urdf-and-xacro-files)
+    -   [URDF Directory (`urdf/`)](#urdf-directory-urdf)
+    -   [Main URDF Files](#main-urdf-files)
+    -   [Xacro Macros (`urdf/xacros/`)](#xacro-macros-urdfxacros)
+    -   [ROS 2 Control Configurations (`urdf/ros2_control/`)](#ros-2-control-configurations-urdfros2_control)
+-   [Meshes](#meshes)
+-   [Controllers](#controllers)
+-   [RViz Configurations](#rviz-configurations)
+-   [Building the Package](#building-the-package)
+-   [Usage Examples](#usage-examples)
+    -   [Simulate the SUJ with Controllers](#simulate-the-suj-with-controllers)
+    -   [Visualize and Manipulate the SUJ with GUI](#visualize-and-manipulate-the-suj-with-gui)
+-   [Additional Resources](#additional-resources)
 
----
+## Package Structure
+
+```
+suj_description
+├── CMakeLists.txt
+├── config
+│   └── suj.controllers.yaml
+├── launch
+│   ├── README.md
+│   ├── suj_bringup.launch.py
+│   └── view_robot.launch.py
+├── meshes
+│   ├── Classic
+│   └── Si
+├── package.xml
+├── README.md
+├── rviz
+│   └── suj_description.rviz
+├── src
+│   └── suj_joint_controller.cpp
+└── urdf
+    ├── README.md
+    ├── ros2_control
+    ├── suj.classic.urdf.xacro
+    ├── suj.si.urdf.xacro
+    └── xacros
+        ├── Classic
+        └── Si
+```
+
+## URDF and Xacro Files
+
+### URDF Directory (`urdf/`)
+
+-   Contains the Unified Robot Description Format (URDF) files and Xacro macros defining the SUJ models.
+-   **README:** See [`urdf/README.md`](./urdf/README.md) for detailed information.
+
+### Main URDF Files
+
+-   [`suj.classic.urdf.xacro`](./urdf/suj.classic.urdf.xacro): Main URDF file for the Classic SUJ model.
+-   [`suj.si.urdf.xacro`](./urdf/suj.si.urdf.xacro): Main URDF file for the Si SUJ model.
+
+### Xacro Macros (`urdf/xacros/`)
+
+-   Contains reusable macros for building the SUJ URDF.
+-   Classic SUJ macros:
+    -   [`ecmj.xacro`](./urdf/xacros/Classic/ecmj.xacro): Macro for the ECM SUJ.
+    -   [`psm1j.xacro`](./urdf/xacros/Classic/psm1j.xacro): Macro for PSM1 SUJ.
+    -   [`psm2j.xacro`](./urdf/xacros/Classic/psm2j.xacro): Macro for PSM2 SUJ.
+    -   [`psm3j.xacro`](./urdf/xacros/Classic/psm3j.xacro): Macro for PSM3 SUJ.
+-   Si SUJ macros:
+    -   [`ecmj.xacro`](./urdf/xacros/Si/ecmj.xacro): Macro for the ECM SUJ (Si version).
+    -   [`psm12j.xacro`](./urdf/xacros/Si/psm12j.xacro): Macro for PSM1 and PSM2 SUJ (Si version).
+    -   [`psm3j.xacro`](./urdf/xacros/Si/psm3j.xacro): Macro for PSM3 SUJ (Si version).
+-   **README:** See [`urdf/xacros/Classic/README.md`](./urdf/xacros/Classic/README.md) and [`urdf/xacros/Si/README.md`](./urdf/xacros/Si/README.md) for more details on Xacro macros.
+
+### ROS 2 Control Configurations (`urdf/ros2_control/`)
+
+-   Contains Xacro files defining the ROS 2 control interfaces.
+-   Files:
+    -   [`ecmj.ros2_control.xacro`](./urdf/ros2_control/ecmj.ros2_control.xacro): Defines the control interfaces for the ECM SUJ.
+    -   [`psmj.ros2_control.xacro`](./urdf/ros2_control/psmj.ros2_control.xacro): Defines the control interfaces for the PSM SUJs.
+-   **README:** See [`urdf/ros2_control/README.md`](./urdf/ros2_control/README.md) for more information on ROS 2 control configurations.
 
 ## Meshes
 
-The SUJ models utilize various mesh files located in the `meshes` directory. These meshes represent the physical components of the setup joints and are essential for visualizing the robot in simulations.
+-   **Meshes Directory (`meshes/`)**
+    -   Contains STL files representing the visual and collision geometry of the SUJ components.
+    -   Subdirectories:
+        -   `Classic/`: Meshes for the Classic SUJ model.
+        -   `Si/`: Meshes for the Si SUJ model, further divided into `ECM/` and `PSM/` subdirectories.
 
-```
-meshes
-├── Classic
-│   ├── base_link.stl
-│   ├── suj_ecm_L0.stl
-│   ├── suj_ecm_L1.stl
-│   ├── suj_ecm_L2.stl
-│   ├── suj_ecm_L3.stl
-│   ├── suj_psm1_L0.stl
-│   ├── suj_psm1_L1.stl
-│   ├── suj_psm1_L2.stl
-│   ├── suj_psm1_L3.stl
-│   ├── suj_psm1_L4.stl
-│   ├── suj_psm2_L0.stl
-│   ├── suj_psm2_L1.stl
-│   ├── suj_psm2_L2.stl
-│   ├── suj_psm2_L3.stl
-│   ├── suj_psm2_L4.stl
-│   ├── suj_psm3_L0.stl
-│   ├── suj_psm3_L1.stl
-│   ├── suj_psm3_L2.stl
-│   ├── suj_psm3_L3.stl
-│   └── suj_psm3_L4.stl
-└── Si
-    ├── ECM
-    │   ├── link_0.stl
-    │   ├── link_1.stl
-    │   ├── link_2.stl
-    │   └── link_3.stl
-    ├── PSM
-    │   ├── 12
-    │   │   ├── link_0.stl
-    │   │   ├── link_1.stl
-    │   │   ├── link_2.stl
-    │   │   └── link_3.stl
-    │   └── 3
-    │       ├── link_0.stl
-    │       ├── link_1.stl
-    │       ├── link_2.stl
-    │       ├── link_3.stl
-    │       └── link_4.stl
-    └── tower.stl
+## Controllers
 
-6 directories, 34 files
-```
+-   **Controller Configuration (`suj.controllers.yaml`)**
 
----
+    -   Located at [`config/suj.controllers.yaml`](./config/suj.controllers.yaml).
+    -   Defines the controllers to be used with the SUJ.
 
-## SUJ Classic
+-   **Custom Joint Controller Source (`suj_joint_controller.cpp`)**
+    -   Located at [`src/suj_joint_controller.cpp`](./src/suj_joint_controller.cpp).
+    -   Source code for the custom joint controller node.
+    -   Implements specific control logic for the SUJ.
 
-### Launching the SUJ Classic Model
+## RViz Configurations
 
-To launch the SUJ Classic model, use the following command:
+-   **RViz Configuration (`suj_description.rviz`)**
+    -   Located at [`rviz/suj_description.rviz`](./rviz/suj_description.rviz).
+    -   Pre-configured settings for RViz visualization of the SUJ.
+
+## Building the Package
+
+Ensure you have a ROS 2 workspace set up. Clone the `suj_description` package into the `src` directory of your workspace, and then build the workspace:
 
 ```bash
-ros2 launch suj_description urdf.launch.py file:=suj.classic.urdf.xacro
+colcon build
 ```
 
----
-
-### SUJ Classic ECMJ
-
-#### Links
-
-| Link Number | Link Name           |
-|-------------|---------------------|
-| Link 8      | ECM Link 0          |
-| Link 9      | ECM Link 1          |
-| Link 10     | ECM Link 2          |
-| Link 11     | ECM Link 3          |
-| Link 12     | ECM Mounting Point  |
-
-#### Joints
-
-| Joint Number | Joint Name     | Parent Link | Child Link   | Type       |
-|--------------|----------------|-------------|--------------|------------|
-| Joint 7      | ECM Joint 0    | Link 1      | Link 8       | Prismatic  |
-| Joint 8      | ECM Joint 1    | Link 8      | Link 9       | Continuous |
-| Joint 9      | ECM Joint 2    | Link 9      | Link 10      | Continuous |
-| Joint 10     | ECM Joint 3    | Link 10     | Link 11      | Continuous |
-| Joint 11     | ECM RCM Joint  | Link 11     | Link 12      | Fixed      |
-
----
-
-### SUJ Classic PSM1J
-
-#### Links
-
-| Link Number | Link Name           |
-|-------------|---------------------|
-| Link 13     | PSM1 Link 0         |
-| Link 14     | PSM1 Link 1         |
-| Link 15     | PSM1 Link 2         |
-| Link 16     | PSM1 Link 3         |
-| Link 17     | PSM1 Link 4         |
-| Link 18     | PSM1 Mounting Point |
-
-#### Joints
-
-| Joint Number | Joint Name     | Parent Link | Child Link   | Type       |
-|--------------|----------------|-------------|--------------|------------|
-| Joint 12     | PSM1 Joint 0   | Link 1      | Link 13      | Prismatic  |
-| Joint 13     | PSM1 Joint 1   | Link 13     | Link 14      | Continuous |
-| Joint 14     | PSM1 Joint 2   | Link 14     | Link 15      | Continuous |
-| Joint 15     | PSM1 Joint 3   | Link 15     | Link 16      | Continuous |
-| Joint 16     | PSM1 Joint 4   | Link 16     | Link 17      | Continuous |
-| Joint 17     | PSM1 RCM Joint | Link 17     | Link 18      | Fixed      |
-
----
-
-### SUJ Classic PSM2J
-
-#### Links
-
-| Link Number | Link Name           |
-|-------------|---------------------|
-| Link 2      | PSM2 Link 0         |
-| Link 3      | PSM2 Link 1         |
-| Link 4      | PSM2 Link 2         |
-| Link 5      | PSM2 Link 3         |
-| Link 6      | PSM2 Link 4         |
-| Link 7      | PSM2 Mounting Point |
-
-#### Joints
-
-| Joint Number | Joint Name     | Parent Link | Child Link   | Type       |
-|--------------|----------------|-------------|--------------|------------|
-| Joint 1      | PSM2 Joint 0   | Link 1      | Link 2       | Prismatic  |
-| Joint 2      | PSM2 Joint 1   | Link 2      | Link 3       | Continuous |
-| Joint 3      | PSM2 Joint 2   | Link 3      | Link 4       | Continuous |
-| Joint 4      | PSM2 Joint 3   | Link 4      | Link 5       | Continuous |
-| Joint 5      | PSM2 Joint 4   | Link 5      | Link 6       | Continuous |
-| Joint 6      | PSM2 RCM Joint | Link 6      | Link 7       | Fixed      |
-
----
-
-### SUJ Classic PSM3J
-
-#### Links
-
-| Link Number | Link Name           |
-|-------------|---------------------|
-| Link 19     | PSM3 Link 0         |
-| Link 20     | PSM3 Link 1         |
-| Link 21     | PSM3 Link 2         |
-| Link 22     | PSM3 Link 3         |
-| Link 23     | PSM3 Link 4         |
-| Link 24     | PSM3 Mounting Point |
-
-#### Joints
-
-| Joint Number | Joint Name     | Parent Link | Child Link   | Type       |
-|--------------|----------------|-------------|--------------|------------|
-| Joint 18     | PSM3 Joint 0   | Link 1      | Link 19      | Prismatic  |
-| Joint 19     | PSM3 Joint 1   | Link 19     | Link 20      | Continuous |
-| Joint 20     | PSM3 Joint 2   | Link 20     | Link 21      | Continuous |
-| Joint 21     | PSM3 Joint 3   | Link 21     | Link 22      | Continuous |
-| Joint 22     | PSM3 Joint 4   | Link 22     | Link 23      | Continuous |
-| Joint 23     | PSM3 RCM Joint | Link 23     | Link 24      | Fixed      |
-
----
-
-## SUJ Si
-
-### Launching the SUJ Si Model
-
-To launch the SUJ Si model, use the following command:
+Source your workspace after building:
 
 ```bash
-ros2 launch suj_description urdf.launch.py file:=suj.si.urdf.xacro
+source install/setup.bash
 ```
 
----
+## Usage Examples
 
-### SUJ Si PSM12
+### Simulate the SUJ with Controllers
 
-#### Links
+To simulate the SUJ with ROS 2 control and visualize it in RViz:
 
-| Link Number | Link Name                    |
-|-------------|------------------------------|
-| Link 2      | PSM 1/2 Joint Link 0         |
-| Link 3      | PSM 1/2 Joint Link 1         |
-| Link 4      | PSM 1/2 Joint Link 2         |
-| Link 5      | PSM 1/2 Joint Link 3         |
-| Link 6      | PSM 1/2 Joint Mounting Point |
+```bash
+ros2 launch suj_description suj_bringup.launch.py
+```
 
-#### Joints
+-   **Launch File:** [`launch/suj_bringup.launch.py`](./launch/suj_bringup.launch.py)
+-   **Launch Files README:** See [`launch/README.md`](./launch/README.md) for detailed explanations of the launch files.
 
-| Joint Number | Joint Name                   | Parent Link          | Child Link             | Type       |
-|--------------|------------------------------|----------------------|------------------------|------------|
-| Joint 1      | PSM 1/2 Joint Prismatic      | Link 1               | Link 2                 | Prismatic  |
-| Joint 2      | PSM 1/2 Joint Revolute       | Link 2               | Link 3                 | Revolute   |
-| Joint 3      | PSM 1/2 Joint Revolute       | Link 3               | Link 4                 | Revolute   |
-| Joint 4      | PSM 1/2 Joint Revolute       | Link 4               | Link 5                 | Revolute   |
-| Joint 5      | PSM 1/2 Fixed Joint          | Link 5               | Link 6                 | Fixed      |
+### Visualize and Manipulate the SUJ with GUI
 
----
+To launch the SUJ and manipulate its joints using the Joint State Publisher GUI:
 
-### SUJ Si PSM3
+```bash
+ros2 launch suj_description view_robot.launch.py
+```
 
-#### Links
+-   **Launch File:** [`launch/view_robot.launch.py`](./launch/view_robot.launch.py)
+-   **Launch Files README:** See [`launch/README.md`](./launch/README.md) for detailed explanations of the launch files.
 
-| Link Number | Link Name           |
-|-------------|---------------------|
-| Link 7      | PSM3 Link 0         |
-| Link 8      | PSM3 Link 1         |
-| Link 9      | PSM3 Link 2         |
-| Link 10     | PSM3 Link 3         |
-| Link 11     | PSM3 Link 4         |
-| Link 12     | PSM3 Mounting Point |
+## Additional Resources
 
-#### Joints
-
-| Joint Number | Joint Name        | Parent Link | Child Link   | Type     |
-|--------------|-------------------|-------------|--------------|----------|
-| Joint 6      | PSM3 Joint 0      | Link 1      | Link 7       | Prismatic|
-| Joint 7      | PSM3 Joint 1      | Link 7      | Link 8       | Revolute |
-| Joint 8      | PSM3 Joint 2      | Link 8      | Link 9       | Revolute |
-| Joint 9      | PSM3 Joint 3      | Link 9      | Link 10      | Revolute |
-| Joint 10     | PSM3 Joint 4      | Link 10     | Link 11      | Revolute |
-| Joint 11     | PSM3 Fixed Joint  | Link 11     | Link 12      | Fixed    |
-
----
-
-### SUJ Si ECM
-
-#### Links
-
-| Link Number | Link Name           |
-|-------------|---------------------|
-| Link 13     | ECM Link 0          |
-| Link 14     | ECM Link 1          |
-| Link 15     | ECM Link 2          |
-| Link 16     | ECM Link 3          |
-| Link 17     | ECM Mounting Point  |
-
-#### Joints
-
-| Joint Number | Joint Name       | Parent Link | Child Link   | Type     |
-|--------------|------------------|-------------|--------------|----------|
-| Joint 12     | ECM Joint 0      | Link 1      | Link 13      | Prismatic|
-| Joint 13     | ECM Joint 1      | Link 13     | Link 14      | Revolute |
-| Joint 14     | ECM Joint 2      | Link 14     | Link 15      | Revolute |
-| Joint 15     | ECM Joint 3      | Link 15     | Link 16      | Revolute |
-| Joint 16     | ECM Fixed Joint  | Link 16     | Link 17      | Fixed    |
-
----
-
-## Notes
-
-- **Mounting Points**: The SUJ models include mounting points for the PSMs and ECM, facilitating the connection between the setup joints and the manipulators.
-
----
+-   **URDF README:** [`urdf/README.md`](./urdf/README.md) - Detailed documentation on the URDF files.
+-   **Xacro Macros README (Classic):** [`urdf/xacros/Classic/README.md`](./urdf/xacros/Classic/README.md) - Information on Xacro macros used in the Classic SUJ description.
+-   **Xacro Macros README (Si):** [`urdf/xacros/Si/README.md`](./urdf/xacros/Si/README.md) - Information on Xacro macros used in the Si SUJ description.
+-   **ROS 2 Control README:** [`urdf/ros2_control/README.md`](./urdf/ros2_control/README.md) - Details about the ROS 2 control configurations.
+-   **Launch Files README:** [`launch/README.md`](./launch/README.md) - Explanations of the provided launch files.

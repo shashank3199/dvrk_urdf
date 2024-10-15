@@ -1,53 +1,170 @@
 # daVinci Core Description
 
-The daVinci surgical system model includes two arms (left and right). Below is the detailed description for each arm, including the links, joints, mesh files, and their respective origins and orientations.
+The da Vinci Surgical System model includes two arms (left and right). This package provides the URDF descriptions, launch files, and configurations necessary to simulate and visualize the da Vinci Surgical System's core components in ROS 2.
+
+## Table of Contents
+
+-   [Package Structure](#package-structure)
+-   [URDF and Xacro Files](#urdf-and-xacro-files)
+    -   [URDF Directory (`urdf/`)](#urdf-directory-urdf)
+    -   [Main URDF File (`daVinci.urdf.xacro`)](#main-urdf-file-davinciurdfxacro)
+    -   [Xacro Macros (`urdf/xacros/`)](#xacro-macros-urdfxacros)
+    -   [ROS 2 Control Configurations (`urdf/ros2_control/`)](#ros-2-control-configurations-urdfros2_control)
+-   [Meshes](#meshes)
+-   [Controllers](#controllers)
+-   [RViz Configurations](#rviz-configurations)
+-   [Building the Package](#building-the-package)
+-   [Dependencies](#dependencies)
+-   [Usage Examples](#usage-examples)
+    -   [Simulate the Robot with Controllers](#simulate-the-robot-with-controllers)
+    -   [Visualize and Manipulate the Robot with GUI](#visualize-and-manipulate-the-robot-with-gui)
+-   [Additional Resources](#additional-resources)
+
+## Package Structure
+
+```
+davinci_core_description
+├── CMakeLists.txt
+├── config
+│   └── davinci_core.controllers.yaml
+├── launch
+│   ├── davinci_core_bringup.launch.py
+│   └── view_robot.launch.py
+├── meshes
+│   ├── mounting_base.stl
+│   ├── outer_insertion.stl
+│   ├── outer_pitch_base.stl
+│   ├── outer_pitch_bottom.stl
+│   ├── outer_pitch_front.stl
+│   ├── outer_pitch_top.stl
+│   ├── outer_yaw.stl
+│   ├── slave_frame.stl
+│   ├── tool_adaptor.stl
+│   └── tool_asm.stl
+├── package.xml
+├── README.md
+├── rviz
+│   └── davinci_core_description.rviz
+├── src
+│   └── davinci_core_joint_controller.cpp
+└── urdf
+    ├── daVinci.urdf.xacro
+    ├── README.md
+    ├── ros2_control
+    │   ├── daVinci.arm.ros2_control.xacro
+    │   └── README.md
+    └── xacros
+        ├── daVinci.arm.xacro
+        └── README.md
+```
+
+## URDF and Xacro Files
+
+### URDF Directory (`urdf/`)
+
+-   Contains the Unified Robot Description Format (URDF) files and Xacro macros defining the robot's model.
+-   **README:** See [`urdf/README.md`](./urdf/README.md) for detailed information.
+
+### Main URDF File (`daVinci.urdf.xacro`)
+
+-   Located at [`urdf/daVinci.urdf.xacro`](./urdf/daVinci.urdf.xacro).
+-   Includes robot definitions and integrates macros.
+
+### Xacro Macros (`urdf/xacros/`)
+
+-   Contains reusable macros for building the robot's URDF.
+-   Files:
+    -   [`daVinci.arm.xacro`](./urdf/xacros/daVinci.arm.xacro): Macro defining an arm of the da Vinci robot.
+-   **README:** See [`urdf/xacros/README.md`](./urdf/xacros/README.md) for more details on Xacro macros.
+
+### ROS 2 Control Configurations (`urdf/ros2_control/`)
+
+-   Contains Xacro files defining the ROS 2 control interfaces.
+-   Files:
+    -   [`daVinci.arm.ros2_control.xacro`](./urdf/ros2_control/daVinci.arm.ros2_control.xacro): Defines the control interfaces for the robot's arm.
+-   **README:** See [`urdf/ros2_control/README.md`](./urdf/ros2_control/README.md) for more information on ROS 2 control configurations.
+
+## Meshes
+
+-   **Meshes Directory (`meshes/`)**
+    -   Contains STL files representing the visual and collision geometry of the robot's components.
+    -   Key files include:
+        -   `slave_frame.stl`: Mesh for the mounting platform.
+        -   `mounting_base.stl`, `outer_yaw.stl`, `outer_pitch_base.stl`, etc.: Meshes for various robot parts.
+
+## Controllers
+
+-   **Controller Configuration (`davinci_core.controllers.yaml`)**
+
+    -   Located at [`config/davinci_core.controllers.yaml`](./config/davinci_core.controllers.yaml).
+    -   Defines the controllers to be used with the robot.
+    -   Controllers include:
+        -   `joint_state_broadcaster`: Publishes the joint states.
+        -   `forward_position_controller`: Controls joint positions.
+
+-   **Custom Joint Controller Source (`davinci_core_joint_controller.cpp`)**
+    -   Located at [`src/davinci_core_joint_controller.cpp`](./src/davinci_core_joint_controller.cpp).
+    -   Source code for the custom joint controller node.
+    -   Implements specific control logic for the da Vinci core robot.
+
+## RViz Configurations
+
+-   **RViz Configuration (`davinci_core_description.rviz`)**
+    -   Located at [`rviz/davinci_core_description.rviz`](./rviz/davinci_core_description.rviz).
+    -   Pre-configured settings for RViz visualization.
+    -   Sets up the display to visualize the robot model and its state.
+
+## Building the Package
+
+Ensure you have a ROS 2 workspace set up. Clone the `davinci_core_description` package into the `src` directory of your workspace, and then build the workspace:
 
 ```bash
-ros2 launch davinci_core_description urdf.launch.py file:=daVinci.urdf.xacro
+colcon build
 ```
----
 
-## daVinci Arm Xacro
+Source your workspace after building:
 
-### Links
+```bash
+source install/setup.bash
+```
 
-| Link Number | Link Name                           | Mesh File                                                 | Origin (`xyz`)          | Orientation (`rpy`) |
-|-------------|-------------------------------------|-----------------------------------------------------------|-------------------------|---------------------|
-| Link -1     | Mounting Platform                   | [slave_frame.stl](./meshes/slave_frame.stl)               | `0 0 0`                 | `0 0 0`             |
-| Link 0      | Mounting Base Link                  | [mounting_base.stl](./meshes/mounting_base.stl)           | `0 0 0`                 | `0 0 0`             |
-| Link 1      | Outer Yaw Link                      | [outer_yaw.stl](./meshes/outer_yaw.stl)                   | `0.001 -0.1 -0.1375`    | `0 0 0`             |
-| Link 2      | Outer Pitch Base Link               | [outer_pitch_base.stl](./meshes/outer_pitch_base.stl)     | `-0.040 -0.130 -0.0901` | `0 0 0`             |
-| Link 3      | Outer Pitch Front Link              | [outer_pitch_front.stl](./meshes/outer_pitch_front.stl)   | `0 -0.066 -0.010`       | `0 0 0`             |
-| Link 4      | Outer Pitch Bottom Link             | [outer_pitch_bottom.stl](./meshes/outer_pitch_bottom.stl) | `0 -0.093 -0.010`       | `0 0 0`             |
-| Link 5      | Outer Pitch Top Link                | [outer_pitch_top.stl](./meshes/outer_pitch_top.stl)       | `0 -0.093 -0.010`       | `0 0 0`             |
-| Link 6      | Outer Insertion Link                | [outer_insertion.stl](./meshes/outer_insertion.stl)       | `-0.031 -0.086 -0.070`  | `0 0 0`             |
-| Link 7      | Tool Adaptor Link                   | [tool_adaptor.stl](./meshes/tool_adaptor.stl)             | `0 -0.041 0`            | `0 0 0`             |
-| Link 8      | Tool Link                           | [tool_asm.stl](./meshes/tool_asm.stl)                     | `0 -0.034 0`            | `0 0 0`             |
+## Dependencies
 
-### Joints
+Ensure that you have the following dependencies installed:
 
-| Joint Number | Joint Name               | Associated Links (Parent to Child)     | Type        | Origin (`xyz`)           | Orientation (`rpy`) |
-|--------------|--------------------------|----------------------------------------|-------------|--------------------------|---------------------|
-| Joint -1     | Wall Joint               | `world` to Mounting Platform           | Fixed       | `0 -0.762 0`             | `0 0 0`             |
-| Joint 0      | Mounting Base Joint      | Mounting Platform to Link 0            | Fixed       | `X Y Z`                  | `0 0 0`             |
-| Joint 1      | Outer Yaw Joint          | Link 0 to Link 1                       | Continuous  | `0.094 0.0525 0.147`     | `0 0 0`             |
-| Joint 2      | Outer Pitch Base Joint   | Link 1 to Link 2                       | Continuous  | `0.150 0.085 0`          | `0 0 0`             |
-| Joint 3      | Outer Pitch Front Joint  | Link 1 to Link 3                       | Continuous  | `0.245 0.085 0`          | `0 0 0`             |
-| Joint 4      | Outer Pitch Bottom Joint | Link 2 to Link 4                       | Continuous  | `-0.03 -0.040 0.147`     | `0 0 0`             |
-| Joint 5      | Outer Pitch Top Joint    | Link 2 to Link 5                       | Continuous  | `-0.03 -0.040 0.185`     | `0 0 0`             |
-| Joint 6      | Outer Insertion Joint    | Link 4 to Link 6                       | Continuous  | `0.510 0.003 0`          | `0 0 0`             |
-| Joint 7      | Tool Insertion Joint     | Link 6 to Link 7                       | Prismatic   | `0.005 -0.048 -0.200`    | `0 0 0`             |
-| Joint 8      | Tool Joint               | Link 7 to Link 8                       | Fixed       | `0.010 0 0`              | `0 0 0`             |
+-   **ROS 2 (Foxy/Galactic/Humble)**
+-   **robot_state_publisher**
+-   **joint_state_publisher_gui**
+-   **ros2_control**
+-   **rviz2**
 
-**Note:** In Joint 0, `X`, `Y`, and `Z` represent the mounting position of each arm:
+## Usage Examples
 
-- **Left Arm:**
-  - `X = 0.38114`
-  - `Y = 0.48531`
-  - `Z = 1.60767`
-- **Right Arm:**
-  - `X = 0.38114`
-  - `Y = 1.03237`
-  - `Z = 1.60767`
+### Simulate the Robot with Controllers
 
----
+To simulate the da Vinci core robot with ROS 2 control and visualize it in RViz:
+
+```bash
+ros2 launch davinci_core_description davinci_core_bringup.launch.py
+```
+
+-   **Launch File:** [`launch/davinci_core_bringup.launch.py`](./launch/davinci_core_bringup.launch.py)
+-   **Launch Files README:** See [`launch/README.md`](./launch/README.md) for detailed explanations of the launch files.
+
+### Visualize and Manipulate the Robot with GUI
+
+To launch the robot and manipulate its joints using the Joint State Publisher GUI:
+
+```bash
+ros2 launch davinci_core_description view_robot.launch.py
+```
+
+-   **Launch File:** [`launch/view_robot.launch.py`](./launch/view_robot.launch.py)
+-   **Launch Files README:** See [`launch/README.md`](./launch/README.md) for detailed explanations of the launch files.
+
+## Additional Resources
+
+-   **URDF README:** [`urdf/README.md`](./urdf/README.md) - Detailed documentation on the URDF files.
+-   **Xacro Macros README:** [`urdf/xacros/README.md`](./urdf/xacros/README.md) - Information on Xacro macros used in the robot description.
+-   **ROS 2 Control README:** [`urdf/ros2_control/README.md`](./urdf/ros2_control/README.md) - Details about the ROS 2 control configurations.
+-   **Launch Files README:** [`launch/README.md`](./launch/README.md) - Explanations of the provided launch files.

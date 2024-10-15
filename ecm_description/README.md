@@ -1,106 +1,163 @@
-# ECM: Endoscope Camera Manipulator
+# ECM Description
 
-The ECM (Endoscope Camera Manipulator) model includes the full manipulator with its joints and links. Below is the detailed description, including the links, joints, mesh files, and their respective origins and orientations.
+The Endoscopic Camera Manipulator (ECM) package provides the URDF descriptions, launch files, and configurations necessary to simulate and visualize the ECM in ROS 2. This package includes both the ECM base and the endoscopic arm components.
 
-ECM
+## Table of Contents
 
-```bash
-ros2 launch ecm_description view_robot.launch.py file:=ecm.urdf.xacro
+-   [Package Structure](#package-structure)
+-   [URDF and Xacro Files](#urdf-and-xacro-files)
+    -   [URDF Directory (`urdf/`)](#urdf-directory-urdf)
+    -   [Main URDF Files](#main-urdf-files)
+    -   [Xacro Macros (`urdf/xacros/`)](#xacro-macros-urdfxacros)
+    -   [ROS 2 Control Configurations (`urdf/ros2_control/`)](#ros-2-control-configurations-urdfros2_control)
+-   [Meshes](#meshes)
+-   [Controllers](#controllers)
+-   [RViz Configurations](#rviz-configurations)
+-   [Building the Package](#building-the-package)
+-   [Usage Examples](#usage-examples)
+    -   [Simulate the ECM with Controllers](#simulate-the-ecm-with-controllers)
+    -   [Visualize and Manipulate the ECM with GUI](#visualize-and-manipulate-the-ecm-with-gui)
+-   [Additional Resources](#additional-resources)
+
+## Package Structure
+
+```
+ecm_description
+├── CMakeLists.txt
+├── config
+│   ├── ecm.base.controllers.yaml
+│   └── ecm.controllers.yaml
+├── launch
+│   ├── ecm_base_bringup.launch.py
+│   ├── ecm_bringup.launch.py
+│   ├── README.md
+│   └── view_robot.launch.py
+├── meshes
+│   ├── ecm
+│   │   └── [ECM arm mesh files]
+│   └── ecm_base
+│       └── [ECM base mesh files]
+├── package.xml
+├── README.md
+├── rviz
+│   └── ecm_description.rviz
+├── src
+│   └── ecm_joint_controller.cpp
+└── urdf
+    ├── ecm.base.urdf.xacro
+    ├── ecm.urdf.xacro
+    ├── README.md
+    ├── ros2_control
+    │   ├── ecm.base.ros2_control.xacro
+    │   ├── ecm.ros2_control.xacro
+    │   └── README.md
+    └── xacros
+        ├── common.xacro
+        ├── ecm.base.xacro
+        ├── ecm.xacro
+        └── README.md
 ```
 
+## URDF and Xacro Files
+
+### URDF Directory (`urdf/`)
+
+-   Contains the Unified Robot Description Format (URDF) files and Xacro macros defining the ECM model.
+-   **README:** See [`urdf/README.md`](./urdf/README.md) for detailed information.
+
+### Main URDF Files
+
+-   [`ecm.base.urdf.xacro`](./urdf/ecm.base.urdf.xacro): Defines the ECM base structure.
+-   [`ecm.urdf.xacro`](./urdf/ecm.urdf.xacro): Defines the complete ECM structure, including the base and arm.
+
+### Xacro Macros (`urdf/xacros/`)
+
+-   Contains reusable macros for building the ECM's URDF.
+-   Files:
+    -   [`common.xacro`](./urdf/xacros/common.xacro): Common macros used across the ECM description.
+    -   [`ecm.base.xacro`](./urdf/xacros/ecm.base.xacro): Macros for the ECM base.
+    -   [`ecm.xacro`](./urdf/xacros/ecm.xacro): Macros for the ECM arm.
+-   **README:** See [`urdf/xacros/README.md`](./urdf/xacros/README.md) for more details on Xacro macros.
+
+### ROS 2 Control Configurations (`urdf/ros2_control/`)
+
+-   Contains Xacro files defining the ROS 2 control interfaces for the ECM.
+-   Files:
+    -   [`ecm.base.ros2_control.xacro`](./urdf/ros2_control/ecm.base.ros2_control.xacro): Defines control interfaces for the ECM base.
+    -   [`ecm.ros2_control.xacro`](./urdf/ros2_control/ecm.ros2_control.xacro): Defines control interfaces for the complete ECM.
+-   **README:** See [`urdf/ros2_control/README.md`](./urdf/ros2_control/README.md) for more information on ROS 2 control configurations.
+
+## Meshes
+
+-   **ECM Base Meshes (`meshes/ecm_base/`)**
+    -   Contains STL files for the ECM base components (e.g., `ecm_base_link.stl`, `ecm_yaw_link.stl`, etc.).
+-   **ECM Arm Meshes (`meshes/ecm/`)**
+    -   Contains STL files for the ECM arm components (e.g., `Endo_Arm.stl`, `EndoScope.stl`, etc.).
+
+## Controllers
+
+-   **Controller Configurations**
+
+    -   [`config/ecm.base.controllers.yaml`](./config/ecm.base.controllers.yaml): Defines controllers for the ECM base.
+    -   [`config/ecm.controllers.yaml`](./config/ecm.controllers.yaml): Defines controllers for the complete ECM.
+
+-   **Custom Joint Controller Source (`ecm_joint_controller.cpp`)**
+    -   Located at [`src/ecm_joint_controller.cpp`](./src/ecm_joint_controller.cpp).
+    -   Implements specific control logic for the ECM.
+
+## RViz Configurations
+
+-   **RViz Configuration (`ecm_description.rviz`)**
+    -   Located at [`rviz/ecm_description.rviz`](./rviz/ecm_description.rviz).
+    -   Pre-configured settings for visualizing the ECM in RViz.
+
+## Building the Package
+
+Ensure you have a ROS 2 workspace set up. Clone the `ecm_description` package into the `src` directory of your workspace, and then build the workspace:
+
 ```bash
-ros2 launch ecm_description ecm_base_bringup.launch.py
+colcon build
 ```
 
-ECM Base
+Source your workspace after building:
 
 ```bash
-ros2 launch ecm_description view_robot.launch.py file:=ecm.base.urdf.xacro
-````
+source install/setup.bash
+```
+
+## Usage Examples
+
+### Simulate the ECM with Controllers
+
+To simulate the ECM with ROS 2 control and visualize it in RViz:
 
 ```bash
 ros2 launch ecm_description ecm_bringup.launch.py
 ```
 
----
+For the ECM base only:
 
-## ECM Xacro
+```bash
+ros2 launch ecm_description ecm_base_bringup.launch.py
+```
 
-### Links
+-   **Launch Files:** [`launch/ecm_bringup.launch.py`](./launch/ecm_bringup.launch.py) and [`launch/ecm_base_bringup.launch.py`](./launch/ecm_base_bringup.launch.py)
+-   **Launch Files README:** See [`launch/README.md`](./launch/README.md) for detailed explanations of the launch files.
 
-| Link Number | Link Name       | Mesh File                                           | Origin (`xyz`)  | Orientation (`rpy`) |
-| ----------- | --------------- | --------------------------------------------------- | --------------- | ------------------- |
-| Link 0      | Setup Base Link | N/A                                                 | N/A             | N/A                 |
-| Link 1      | Setup Link      | [Endo_Arm.stl](./meshes/ecm/Endo_Arm.stl)           | `0 0 0`         | `0 0 0`             |
-| Link 2      | Base Link       | N/A                                                 | N/A             | N/A                 |
-| Link 3      | Yaw Link        | [Endo_Link_5.stl](./meshes/ecm/Endo_Link_5.stl)     | `0.0 0 0.603`   | `0 0 -1.5708`       |
-| Link 4      | Pitch Link      | N/A                                                 | N/A             | N/A                 |
-| Link 5      | Pitch Link 1    | [Endo_Link_5_2.stl](./meshes/ecm/Endo_Link_5_2.stl) | `0.0 0 0.0`     | `3.1416 0 1.3708`   |
-| Link 6      | Pitch Link 2    | [Endo_Link_6_2.stl](./meshes/ecm/Endo_Link_6_2.stl) | `0.0 0 -0.0225` | `0 0 0`             |
-| Link 7      | Pitch Link 3    | [Endo_Link_7.stl](./meshes/ecm/Endo_Link_7.stl)     | `0.0 0 0.025`   | `0 0 -1.5708`       |
-| Link 8      | Insertion Link  | [Endo_Link_8.stl](./meshes/ecm/Endo_Link_8.stl)     | `0.0 0 -0.015`  | `0 0 -1.5708`       |
-| Link 9      | Roll Link       | [EndoScope.stl](./meshes/ecm/EndoScope.stl)         | `0.0 0 -0.3979` | `0 0 1.5708`        |
+### Visualize and Manipulate the ECM with GUI
 
-### Joints
+To launch the ECM and manipulate its joints using the Joint State Publisher GUI:
 
-| Joint Number | Joint Name          | Associated Links (Parent to Child) | Type       | Origin (`xyz`)             | Orientation (`rpy`)     |
-| ------------ | ------------------- | ---------------------------------- | ---------- | -------------------------- | ----------------------- |
-| Joint 0      | Setup Fixed Joint   | Macro Parent Link to Link 0        | Fixed      | As per macro parameters    | As per macro parameters |
-| Joint 1      | Setup Tip Joint     | Link 0 to Link 1                   | Fixed      | `0.91324 -0.02111 0.03166` | `-0.870464 0 -1.5708`   |
-| Joint 2      | Fixed Joint         | Link 1 to Link 2                   | Fixed      | `0 0 0`                    | `0 0 0`                 |
-| Joint 3      | Outer Yaw           | Link 2 to Link 3                   | Revolute   | `0 0 0`                    | `0 -1.5708 1.5708`      |
-| Joint 4      | Outer Pitch         | Link 3 to Link 4                   | Revolute   | `0 0 0`                    | `-1.5708 -1.5708 0`     |
-| Joint 5      | Outer Pitch Joint 0 | Link 3 to Link 5                   | Continuous | `0 0 0.378`                | `-1.5708 -1.5708 0`     |
-| Joint 6      | Outer Pitch Joint 1 | Link 5 to Link 6                   | Continuous | `0.0558629 0.274575 0`     | `0 0 0`                 |
-| Joint 7      | Outer Pitch Joint 2 | Link 6 to Link 7                   | Continuous | `-0.340 0 0`               | `0 0 0`                 |
-| Joint 8      | Insertion           | Link 4 to Link 8                   | Prismatic  | `0 0.3822 0`               | `1.5708 0 0`            |
-| Joint 9      | Outer Roll          | Link 8 to Link 9                   | Revolute   | `0 0 0.3829`               | `0 0 0`                 |
+```bash
+ros2 launch ecm_description view_robot.launch.py
+```
 
----
+-   **Launch File:** [`launch/view_robot.launch.py`](./launch/view_robot.launch.py)
+-   **Launch Files README:** See [`launch/README.md`](./launch/README.md) for detailed explanations of the launch files.
 
-**Note:** In Joint 0, the `xyz` and `rpy` values represent the mounting position and orientation of the ECM, defined by macro parameters:
+## Additional Resources
 
--   **ECM (`ecm`):**
-    -   **Parent Link:** `world`
-    -   **Position (`xyz`):** `0 0.0 0.0`
-    -   **Orientation (`rpy`):** `0.0 0.0 0.0`
-
----
-
-## ECM Base Xacro
-
-The ECM Base model includes the base structure of the ECM manipulator. Below is the detailed description, including the links, joints, mesh files, and their respective origins and orientations.
-
-### Links
-
-| Link Number | Link Name           | Mesh File                                                                    | Origin (`xyz`) | Orientation (`rpy`) |
-| ----------- | ------------------- | ---------------------------------------------------------------------------- | -------------- | ------------------- |
-| Link 0      | Base Link           | [ecm_base_link.stl](./meshes/ecm_base/ecm_base_link.stl)                     | `0 0 0`        | `0 0 0`             |
-| Link 1      | Yaw Link            | [ecm_yaw_link.stl](./meshes/ecm_base/ecm_yaw_link.stl)                       | `0 0 0`        | `0 0 0`             |
-| Link 2      | Pitch Front Link    | [ecm_pitch_front_link.stl](./meshes/ecm_base/ecm_pitch_front_link.stl)       | `0 0 0`        | `0 0 0`             |
-| Link 3      | Pitch Bottom Link   | [ecm_pitch_bottom_link.stl](./meshes/ecm_base/ecm_pitch_bottom_link.stl)     | `0 0 0`        | `0 0 0`             |
-| Link 4      | Pitch End Link      | [ecm_pitch_end_link.stl](./meshes/ecm_base/ecm_pitch_end_link.stl)           | `0 0 0`        | `0 0 0`             |
-| Link 5      | Main Insertion Link | [ecm_main_insertion_link.stl](./meshes/ecm_base/ecm_main_insertion_link.stl) | `0 0 0`        | `0 0 0`             |
-| Link 6      | Tool Link           | [ecm_tool_link.stl](./meshes/ecm_base/ecm_tool_link.stl)                     | `0 0 0`        | `0 0 0`             |
-| Link 7      | Pitch Top Link      | [ecm_pitch_top_link.stl](./meshes/ecm_base/ecm_pitch_top_link.stl)           | `0 0 0`        | `0 0 0`             |
-| Link 8      | Pitch Back Link     | [ecm_pitch_back_link.stl](./meshes/ecm_base/ecm_pitch_back_link.stl)         | `0 0 0`        | `0 0 0`             |
-| Link 9      | Remote Center Link  | [ecm_remote_center_link.stl](./meshes/ecm_base/ecm_remote_center_link.stl)   | `0 0 0`        | `0 0 0`             |
-| Link 10     | End Link            | N/A                                                                          | N/A            | N/A                 |
-
-### Joints
-
-| Joint Number | Joint Name          | Associated Links (Parent to Child)    | Type      | Origin (`xyz`)          | Orientation (`rpy`)     |
-| ------------ | ------------------- | ------------------------------------- | --------- | ----------------------- | ----------------------- |
-| Joint 0      | Fixed Joint         | Parent Link to Base Link              | Fixed     | As per macro parameters | As per macro parameters |
-| Joint 1      | Yaw Joint           | Base Link to Yaw Link                 | Revolute  | `0.0732 0 0.10146`      | `1.5708 0 1.5708`       |
-| Joint 2      | Pitch Joint         | Yaw Link to Pitch Front Link          | Revolute  | `0 0 0.199`             | `3.1416 -1.5708 0`      |
-| Joint 3      | Pitch Bottom Joint  | Pitch Front Link to Pitch Bottom Link | Revolute  | `-0.1030 -0.2868 0`     | `0 0 0`                 |
-| Joint 4      | Pitch End Joint     | Pitch Bottom Link to Pitch End Link   | Revolute  | `0.3404 -0.0001356 0`   | `0 0 0`                 |
-| Joint 5      | Insertion Joint     | Pitch End Link to Main Insertion Link | Prismatic | `0.042 -0.086143 0`     | `-1.5708 0 0`           |
-| Joint 6      | Roll Joint          | Main Insertion Link to Tool Link      | Revolute  | `0.061 0 0`             | `0 0 0`                 |
-| Joint 7      | Pitch Top Joint     | Pitch Front Link to Pitch Top Link    | Revolute  | `-0.1085 -0.3243 0`     | `0 0 0`                 |
-| Joint 8      | Pitch Back Joint    | Yaw Link to Pitch Back Link           | Revolute  | `0 -0.0098 0.16243`     | `3.1416 -1.5708 0`      |
-| Joint 9      | Remote Center Joint | Base Link to Remote Center Link       | Fixed     | `0.6126 0 0.1016`       | `0 0 -1.5708`           |
-| Joint 10     | End Joint           | Tool Link to End Link                 | Fixed     | `0 0 0.37364`           | `0 0 0`                 |
-
----
+-   **URDF README:** [`urdf/README.md`](./urdf/README.md) - Detailed documentation on the URDF files.
+-   **Xacro Macros README:** [`urdf/xacros/README.md`](./urdf/xacros/README.md) - Information on Xacro macros used in the robot description.
+-   **ROS 2 Control README:** [`urdf/ros2_control/README.md`](./urdf/ros2_control/README.md) - Details about the ROS 2 control configurations.
+-   **Launch Files README:** [`launch/README.md`](./launch/README.md) - Explanations of the provided launch files.

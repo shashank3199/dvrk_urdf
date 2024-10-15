@@ -1,435 +1,140 @@
-# PSM (Patient Side Manipulator) Description
+# PSM Description Package
 
-This README provides a comprehensive overview of the **Patient Side Manipulator (PSM)** models, including their URDF (Unified Robot Description Format) structures, meshes, and configurations.
-
----
+This package provides the URDF descriptions, launch files, and configurations necessary to simulate and visualize the Patient Side Manipulator (PSM) in ROS 2. It includes support for both Classic and Si versions of the PSM, as well as various tool configurations.
 
 ## Table of Contents
 
-- [Meshes](#meshes)
-- [PSM Classic](#psm-classic)
-  - [Launching the PSM Classic Model](#launching-the-psm-classic-model)
-  - [Changing the Tool Type](#changing-the-tool-type)
-  - [PSM Base Xacro](#psm-base-xacro)
-    - [Links](#links)
-    - [Joints](#joints)
-  - [PSM Tool Xacros](#psm-tool-xacros)
-    - [Blade Tool](#blade-tool)
-    - [Caudier Blade Tool](#caudier-blade-tool)
-    - [Caudier Tool](#caudier-tool)
-    - [SCA Blade Tool](#sca-blade-tool)
-    - [SCA Tool](#sca-tool)
-    - [Snake Tool](#snake-tool)
-- [PSM Si](#psm-si)
-  - [Launching the PSM Si Model](#launching-the-psm-si-model)
-  - [Changing the Tool Type](#changing-the-tool-type-1)
-  - [PSM Si Base Xacro](#psm-si-base-xacro)
-    - [Links](#links-1)
-    - [Joints](#joints-1)
-  - [PSM Si Tool Xacros](#psm-si-tool-xacros)
-    - [P420006 Tool](#p420006-tool)
-    - [SF826001 Tool](#sf826001-tool)
-- [URDF Structures](#urdf-structures)
-- [Notes](#notes)
+-   [Package Structure](#package-structure)
+-   [URDF and Xacro Files](#urdf-and-xacro-files)
+-   [Meshes](#meshes)
+-   [Controllers](#controllers)
+-   [RViz Configurations](#rviz-configurations)
+-   [Scripts](#scripts)
+-   [Building the Package](#building-the-package)
+-   [Usage Examples](#usage-examples)
+-   [Additional Resources](#additional-resources)
 
----
+## Package Structure
+
+```
+psm_description
+├── CMakeLists.txt
+├── config/
+├── launch/
+├── meshes/
+├── package.xml
+├── README.md
+├── rviz/
+├── scripts/
+├── src/
+└── urdf/
+```
+
+## URDF and Xacro Files
+
+### URDF Directory (`urdf/`)
+
+-   Contains the Unified Robot Description Format (URDF) files and Xacro macros defining the robot's model.
+-   **README:** See `urdf/README.md` for detailed information.
+
+### Main URDF Files
+
+-   `psm.classic.urdf.xacro`: Classic PSM configuration
+-   `psm.si.urdf.xacro`: Si PSM configuration
+-   `both_psms.classic.urdf.xacro`: Configuration for both Classic PSMs
+
+### Xacro Macros
+
+-   Located in `urdf/xacros/` directory
+-   Separate directories for Classic and Si versions
+-   **README:** See `urdf/xacros/Classic/README.md` and `urdf/xacros/Si/README.md` for more details
+
+### ROS 2 Control Configurations
+
+-   Located in `urdf/ros2_control/` directory
+-   Separate directories for Classic and Si versions
+-   **README:** See `urdf/ros2_control/Classic/README.md` and `urdf/ros2_control/Si/README.md` for more information
 
 ## Meshes
 
-The PSM models utilize various mesh files located in the `meshes` directory. These meshes represent the physical components of the manipulators and tools.
+-   **Meshes Directory (`meshes/`)**
+    -   Contains STL and DAE files for various PSM components
+    -   Subdirectories:
+        -   `Classic/`: Meshes for Classic PSM
+        -   `Si/`: Meshes for Si PSM
+        -   `P420006/`: Specific tool meshes
+        -   `SF826001/`: Specific tool meshes
+        -   `snake_tool/`: Snake tool meshes
 
-```
-meshes
-├── Classic
-│   ├── knife.stl
-│   ├── outer_insertion.dae
-│   ├── outer_insertion.stl
-│   ├── outer_pitch_back.dae
-│   ├── outer_pitch_back.stl
-│   ├── outer_pitch_bottom.dae
-│   ├── outer_pitch_bottom.stl
-│   ├── outer_pitch_front.dae
-│   ├── outer_pitch_front.stl
-│   ├── outer_pitch_top.dae
-│   ├── outer_pitch_top.stl
-│   ├── outer_yaw.dae
-│   ├── outer_yaw.stl
-│   ├── psm_base.dae
-│   ├── psm_base.stl
-│   ├── tool_adapter.dae
-│   ├── tool_adapter.stl
-│   ├── tool_main.dae
-│   ├── tool_main.stl
-│   ├── tool_wrist_caudier_link_1_shaft.stl
-│   ├── tool_wrist_caudier_link_1.stl
-│   ├── tool_wrist_caudier_link_2.stl
-│   ├── tool_wrist_link.dae
-│   ├── tool_wrist_link.stl
-│   ├── tool_wrist_sca_link_2.dae
-│   ├── tool_wrist_sca_link_2.stl
-│   ├── tool_wrist_sca_link.dae
-│   ├── tool_wrist_sca_link.stl
-│   ├── tool_wrist_sca_shaft_link.dae
-│   ├── tool_wrist_sca_shaft_link.stl
-│   ├── tool_wrist_shaft_link.dae
-│   └── tool_wrist_shaft_link.stl
-├── P420006
-│   ├── tool_main_link.stl
-│   ├── tool_wrist_link.stl
-│   ├── tool_wrist_sca_ee_link_1.stl
-│   ├── tool_wrist_sca_ee_link_2.stl
-│   ├── tool_wrist_sca_link.stl
-│   ├── tool_wrist_scal_link.stl
-│   ├── tool_wrist_sca_shaft_link.stl
-│   └── tool_wrist_shaft_link.stl
-├── SF826001
-│   ├── tool_main_link.stl
-│   └── tool_roll_link.stl
-├── Si
-│   ├── link_0.stl
-│   ├── link_1.stl
-│   ├── link_2.stl
-│   ├── link_3.stl
-│   └── link_4.stl
-└── snake_tool
-    ├── gripper_2.stl
-    ├── gripper_3.stl
-    ├── link_0.stl
-    ├── link_1.stl
-    ├── link_2.stl
-    ├── link_3.stl
-    └── link_4.stl
+## Controllers
 
-5 directories, 54 files
-```
+-   **Controller Configurations**
 
----
+    -   Located in `config/` directory
+    -   Files:
+        -   `example.both.classic.controllers.yaml`
+        -   `example.psm.classic.controllers.yaml`
+        -   `example.psm.si.controllers.yaml`
 
-## PSM Classic
+-   **Custom Joint Controller Source**
+    -   Located at `src/psm_joint_controller.cpp`
+    -   Implements specific control logic for the PSM
 
-### Launching the PSM Classic Model
+## RViz Configurations
 
-To launch the PSM Classic model with both PSMs, use the following command:
+-   **RViz Configuration File**
+    -   Located at `rviz/psm_description.rviz`
+    -   Pre-configured settings for RViz visualization
+
+## Scripts
+
+-   **Controller Generation Script**
+    -   Located at `scripts/generate_controller.py`
+    -   Utility for generating controller configurations
+
+## Building the Package
+
+Ensure you have a ROS 2 workspace set up. Clone the `psm_description` package into the `src` directory of your workspace, and then build the workspace:
 
 ```bash
-ros2 launch psm_description urdf.launch.py file:=both_psms.classic.urdf.xacro
+colcon build
 ```
 
-For a single PSM, use:
+Source your workspace after building:
 
 ```bash
-ros2 launch psm_description urdf.launch.py file:=psm.classic.urdf.xacro
+source install/setup.bash
 ```
 
-### Changing the Tool Type
+## Usage Examples
 
-You can change the type of tool mounted on the PSM by modifying the `tool_name` parameter in the `psm.classic.urdf.xacro` file:
+### Launch PSM with Controllers
 
-```xml
-<!-- Tool Arguments -->
-<!-- Select tool_name from blade, caudier_blade, caudier, sca_blade, sca, snake -->
-<xacro:property name="tool_name" default="sca" />
-```
-
----
-
-### PSM Base Xacro
-
-#### Links
-
-| Link Number | Link Name                       | Mesh File                                                                 |
-|-------------|---------------------------------|---------------------------------------------------------------------------|
-| Link 0      | PSM Base Link                   | [psm_base.stl](./meshes/Classic/psm_base.stl)                             |
-| Link 1      | Outer Yaw Link                  | [outer_yaw.stl](./meshes/Classic/outer_yaw.stl)                           |
-| Link 2      | Outer Pitch Link                | [outer_pitch.stl](./meshes/Classic/outer_pitch_front.stl)                 |
-| Link 2-1    | Outer Pitch Back Link           | [outer_pitch_back.stl](./meshes/Classic/outer_pitch_back.stl)             |
-| Link 2-2    | Outer Pitch Front Link          | [outer_pitch_front.stl](./meshes/Classic/outer_pitch_front.stl)           |
-| Link 2-3    | Outer Pitch Bottom Link         | [outer_pitch_bottom.stl](./meshes/Classic/outer_pitch_bottom.stl)         |
-| Link 2-4    | Outer Pitch Top Link            | [outer_pitch_top.stl](./meshes/Classic/outer_pitch_top.stl)               |
-| Link 2-5    | Outer Insertion Link            | [outer_insertion.stl](./meshes/Classic/outer_insertion.stl)               |
-| Link 3      | Tool Main Link                  | [tool_main.stl](./meshes/Classic/tool_main.stl)                           |
-| Link 4      | Tool Wrist Link                 | [tool_wrist_link.stl](./meshes/Classic/tool_wrist_link.stl)               |
-| Link 4-1    | Tool Wrist Shaft Link           | [tool_wrist_shaft_link.stl](./meshes/Classic/tool_wrist_shaft_link.stl)   |
-
-#### Joints
-
-| Joint Number | Joint Name              | Parent Link              | Child Link                   | Type       |
-|--------------|-------------------------|--------------------------|------------------------------|------------|
-| Joint 0      | Fixed Joint             | Parent Link              | Link 0                       | Fixed      |
-| Joint 1      | Outer Yaw Joint         | Link 0                   | Link 1                       | Revolute   |
-| Joint 2      | Outer Pitch Joint       | Link 1                   | Link 2                       | Revolute   |
-| Joint 2-1    | Outer Pitch 1 Joint     | Link 1                   | Link 2-1                     | Continuous |
-| Joint 2-2    | Outer Pitch 2 Joint     | Link 1                   | Link 2-2                     | Continuous |
-| Joint 2-3    | Outer Pitch 3 Joint     | Link 2-1                 | Link 2-3                     | Continuous |
-| Joint 2-4    | Outer Pitch 4 Joint     | Link 2-1                 | Link 2-4                     | Continuous |
-| Joint 2-5    | Outer Pitch 5 Joint     | Link 2-3                 | Link 2-5                     | Continuous |
-| Joint 3      | Outer Insertion Joint   | Link 2                   | Link 3                       | Prismatic  |
-| Joint 4      | Outer Roll Joint        | Link 3                   | Link 4                       | Revolute   |
-| Joint 4-1    | Outer Roll Shaft Joint  | Link 4                   | Link 4-1                     | Fixed      |
-
----
-
-### PSM Tool Xacros
-
-#### Blade Tool
-
-##### Links
-
-| Link Number | Link Name                       | Mesh File                                                                         |
-|-------------|---------------------------------|-----------------------------------------------------------------------------------|
-| Link 5      | Tool Wrist SCA Link             | [tool_wrist_sca_link.stl](./meshes/Classic/tool_wrist_sca_link.stl)               |
-| Link 6      | Tool Wrist SCA Shaft Link       | [tool_wrist_sca_shaft_link.stl](./meshes/Classic/tool_wrist_sca_shaft_link.stl)   |
-| Link 7-0    | Outer Open Angle Virtual Link   | N/A                                                                               |
-| Link 8      | Tool Tip Link                   | N/A                                                                               |
-
-##### Joints
-
-| Joint Number | Joint Name              | Parent Link              | Child Link                   | Type       |
-|--------------|-------------------------|--------------------------|------------------------------|------------|
-| Joint 5      | Outer Wrist Pitch Joint | Link 4-1                 | Link 5                       | Revolute   |
-| Joint 6      | Outer Wrist Yaw Joint   | Link 5                   | Link 6                       | Revolute   |
-| Joint 7-0    | Outer Open Angle Joint  | Link 6                   | Link 7-0                     | Revolute   |
-| Joint 7-1    | Tool Tip Joint          | Link 7-0                 | Link 8                       | Fixed      |
-
----
-
-#### Caudier Blade Tool
-
-##### Links
-
-| Link Number | Link Name                       | Mesh File                                                                         |
-|-------------|---------------------------------|-----------------------------------------------------------------------------------|
-| Link 5      | Tool Wrist Caudier Link         | [tool_wrist_caudier_link_1.stl](./meshes/Classic/tool_wrist_caudier_link_1.stl)   |
-| Link 6      | Tool Wrist Caudier Shaft Link   | N/A                                                                               |
-| Link 7-0    | Outer Open Angle Virtual Link   | N/A                                                                               |
-| Link 7-1    | Tool Tip Link                   | N/A                                                                               |
-
-##### Joints
-
-| Joint Number | Joint Name              | Parent Link              | Child Link                   | Type       |
-|--------------|-------------------------|--------------------------|------------------------------|------------|
-| Joint 5      | Outer Wrist Pitch Joint | Link 4-1                 | Link 5                       | Revolute   |
-| Joint 6      | Tool Wrist Yaw Joint    | Link 5                   | Link 6                       | Revolute   |
-| Joint 7-0    | Outer Open Angle Joint  | Link 6                   | Link 7-0                     | Fixed      |
-| Joint 7-1    | Tool Tip Joint          | Link 6                   | Link 6-3                     | Fixed      |
-
----
-
-#### Caudier Tool
-
-##### Links
-
-| Link Number | Link Name                       |
-|-------------|---------------------------------|
-| Link 5      | Tool Wrist Caudier Link         |
-| Link 6      | Tool Wrist Caudier Shaft Link   |
-| Link 7-0    | Outer Open Angle Virtual Link   |
-| Link 7-1    | Outer Open Angle 1 Link         |
-| Link 7-2    | Outer Open Angle 2 Link         |
-| Link 6-3    | Tool Wrist Caudier EE Link      |
-
-##### Joints
-
-| Joint Number | Joint Name              | Parent Link              | Child Link                   | Type       |
-|--------------|-------------------------|--------------------------|------------------------------|------------|
-| Joint 5      | Outer Wrist Pitch Joint | Link 4-1                 | Link 5                       | Revolute   |
-| Joint 6      | Tool Wrist Yaw Joint    | Link 5                   | Link 6                       | Revolute   |
-| Joint 7-0    | Outer Open Angle Joint  | Link 6                   | Link 7-0                     | Revolute   |
-| Joint 7-1    | Outer Open Angle 1      | Link 6                   | Link 7-1                     | Revolute   |
-| Joint 7-2    | Outer Open Angle 2      | Link 6                   | Link 7-2                     | Revolute   |
-| Joint 7-3    | Tool Tip Joint          | Link 6                   | Link 6-3                     | Fixed      |
-
----
-
-#### SCA Blade Tool
-
-##### Links
-
-| Link Number | Link Name                       |
-|-------------|---------------------------------|
-| Link 5      | Tool Wrist SCA Link             |
-| Link 6      | Tool Wrist SCA Shaft Link       |
-| Link 7-0    | Outer Open Angle Virtual Link   |
-| Link 8      | Tool Tip Link                   |
-
-##### Joints
-
-| Joint Number | Joint Name              | Parent Link              | Child Link                   | Type       |
-|--------------|-------------------------|--------------------------|------------------------------|------------|
-| Joint 5      | Outer Wrist Pitch Joint | Link 4-1                 | Link 5                       | Revolute   |
-| Joint 6      | Outer Wrist Yaw Joint   | Link 5                   | Link 6                       | Revolute   |
-| Joint 7-0    | Outer Open Angle Joint  | Link 6                   | Link 7-0                     | Fixed      |
-| Joint 7-1    | Tool Tip Joint          | Link 7-0                 | Link 8                       | Fixed      |
-
----
-
-#### SCA Tool
-
-##### Links
-
-| Link Number | Link Name                       |
-|-------------|---------------------------------|
-| Link 5      | Tool Wrist SCA Link             |
-| Link 6      | Tool Wrist SCA Shaft Link       |
-| Link 7-0    | Outer Open Angle Virtual Link   |
-| Link 7-1    | Outer Open Angle 1 Link         |
-| Link 7-2    | Outer Open Angle 2 Link         |
-| Link 8      | Tool Tip Link                   |
-
-##### Joints
-
-| Joint Number | Joint Name              | Parent Link              | Child Link                   | Type       |
-|--------------|-------------------------|--------------------------|------------------------------|------------|
-| Joint 5      | Outer Wrist Pitch Joint | Link 4-1                 | Link 5                       | Revolute   |
-| Joint 6      | Outer Wrist Yaw Joint   | Link 5                   | Link 6                       | Revolute   |
-| Joint 7-0    | Outer Open Angle Joint  | Link 6                   | Link 7-0                     | Revolute   |
-| Joint 7-1    | Outer Open Angle 1 Joint| Link 6                   | Link 7-1                     | Revolute   |
-| Joint 7-2    | Outer Open Angle 2 Joint| Link 6                   | Link 7-2                     | Revolute   |
-| Joint 7-3    | Tool Tip Joint          | Link 6                   | Link 8                       | Fixed      |
-
----
-
-#### Snake Tool
-
-##### Links
-
-| Link Number | Link Name                       |
-|-------------|---------------------------------|
-| Link 6      | Tool Snake Disc 1 Link          |
-| Link 7      | Tool Snake Disc 2 Link          |
-| Link 8      | Tool Snake Disc 3 Link          |
-| Link 9      | Tool Snake End Link             |
-| Link 11-0   | Outer Open Angle Virtual Link   |
-| Link 11-1   | Outer Open Angle 1 Link         |
-| Link 11-2   | Outer Open Angle 2 Link         |
-
-##### Joints
-
-| Joint Number | Joint Name              | Parent Link              | Child Link                   | Type       |
-|--------------|-------------------------|--------------------------|------------------------------|------------|
-| Joint 6      | Outer Wrist Pitch 1 Joint| Link 4-1                | Link 6                       | Revolute   |
-| Joint 7      | Outer Wrist Yaw 1 Joint | Link 6                   | Link 7                       | Revolute   |
-| Joint 8      | Outer Wrist Yaw 2 Joint | Link 7                   | Link 8                       | Revolute   |
-| Joint 9      | Outer Wrist Pitch 2 Joint| Link 8                  | Link 9                       | Revolute   |
-| Joint 11-0   | Outer Open Angle Joint  | Link 9                   | Link 11-0                    | Revolute   |
-| Joint 11-1   | Outer Open Angle 1 Joint| Link 9                   | Link 11-1                    | Revolute   |
-| Joint 11-2   | Outer Open Angle 2 Joint| Link 9                   | Link 11-2                    | Revolute   |
-
----
-
-## PSM Si
-
-### Launching the PSM Si Model
-
-To launch the PSM Si model, use the following command:
+To launch the PSM with ROS 2 control and visualize it in RViz:
 
 ```bash
-ros2 launch psm_description urdf.launch.py file:=psm.si.urdf.xacro
+ros2 launch psm_description psm_bringup.launch.py
 ```
 
-### Changing the Tool Type
+-   **Launch File:** `launch/psm_bringup.launch.py`
+-   **Launch Files README:** See `launch/README.md` for detailed explanations of the launch files.
 
-Change the tool type in the `psm.si.urdf.xacro` file:
+### Visualize and Manipulate the Robot with GUI
 
-```xml
-<!-- Tool Arguments -->
-<!-- Select tool_name from P420006, SF826001 -->
-<xacro:property name="tool_name" default="P420006" />
+To launch the robot and manipulate its joints using the Joint State Publisher GUI:
+
+```bash
+ros2 launch psm_description view_robot.launch.py
 ```
 
----
+-   **Launch File:** `launch/view_robot.launch.py`
+-   **Launch Files README:** See `launch/README.md` for detailed explanations of the launch files.
 
-### PSM Si Base Xacro
+## Additional Resources
 
-#### Links
-
-| Link Number | Link Name           | Mesh File                            |
-|-------------|---------------------|--------------------------------------|
-| Link 0      | Link 0              | [link_0.stl](./meshes/Si/link_0.stl) |
-| Link 1      | Link 1              | [link_1.stl](./meshes/Si/link_1.stl) |
-| Link 2      | Link 2              | [link_2.stl](./meshes/Si/link_2.stl) |
-| Link 3      | Link 3              | [link_3.stl](./meshes/Si/link_3.stl) |
-| Link 4      | Link 4              | [link_4.stl](./meshes/Si/link_4.stl) |
-| Link 5      | Tool Parent Link    | N/A                                  |
-| Link 6      | RCM Link            | N/A                                  |
-
-#### Joints
-
-| Joint Number | Joint Name                      | Parent Link          | Child Link         | Type    |
-|--------------|---------------------------------|----------------------|--------------------|---------|
-| Joint 0      | Fixed Joint                     | Macro Parent Link    | Link 0             | Fixed   |
-| Joint 1      | Yaw Joint                       | Link 0               | Link 1             | Revolute|
-| Joint 2      | Pitch Joint                     | Link 1               | Link 2             | Revolute|
-| Joint 3      | Pitch Joint                     | Link 2               | Link 3             | Revolute|
-| Joint 4      | Pitch Joint                     | Link 3               | Link 4             | Revolute|
-| Joint 5      | Outer Insertion Reference Joint | Link 4               | Link 5             | Fixed   |
-| Joint 6      | RCM Joint                       | Link 4               | Link 6             | Fixed   |
-
----
-
-### PSM Si Tool Xacros
-
-#### P420006 Tool
-
-##### Links
-
-| Link Number | Link Name                   | Mesh File                                                     |
-|-------------|-----------------------------|---------------------------------------------------------------|
-| Link 0      | Tool Main Link              | [tool_main_link.stl](./meshes/P420006/tool_main_link.stl)     |
-| Link 1      | Tool Wrist Link             | [tool_wrist_link.stl](./meshes/P420006/tool_wrist_link.stl)   |
-| Link 2      | Tool Wrist Shaft Link       | N/A                                                           |
-| Link 3      | Tool Wrist SCA Link         | N/A                                                           |
-| Link 4      | Tool Wrist SCA Shaft Link   | N/A                                                           |
-| Link 5      | Tool Wrist SCA EE Link      | N/A                                                           |
-| Link 6      | Tool Wrist SCA EE Link 1    | N/A                                                           |
-| Link 7      | Tool Wrist SCA EE Link 2    | N/A                                                           |
-
-##### Joints
-
-| Joint Number | Joint Name              | Parent Link              | Child Link                   | Type       |
-|--------------|-------------------------|--------------------------|------------------------------|------------|
-| Joint 0      | Insertion Joint         | Parent Link              | Link 0                       | Prismatic  |
-| Joint 1      | Roll Joint              | Link 0                   | Link 1                       | Revolute   |
-| Joint 2      | Roll Shaft Joint        | Link 1                   | Link 2                       | Fixed      |
-| Joint 3      | Wrist Pitch Joint       | Link 2                   | Link 3                       | Revolute   |
-| Joint 4      | Wrist Yaw Joint         | Link 3                   | Link 4                       | Revolute   |
-| Joint 5      | Jaw Joint               | Link 4                   | Link 5                       | Revolute   |
-| Joint 6      | Jaw 1 Joint             | Link 4                   | Link 6                       | Revolute   |
-| Joint 7      | Jaw 2 Joint             | Link 4                   | Link 7                       | Revolute   |
-
----
-
-#### SF826001 Tool
-
-##### Links
-
-| Link Number | Link Name                   | Mesh File                                                     |
-|-------------|-----------------------------|---------------------------------------------------------------|
-| Link 0      | Tool Main Link              | [tool_main_link.stl](./meshes/SF826001/tool_main_link.stl)    |
-| Link 1      | Tool Roll Link              | [tool_roll_link.stl](./meshes/SF826001/tool_roll_link.stl)    |
-
-##### Joints
-
-| Joint Number | Joint Name              | Parent Link              | Child Link                   | Type       |
-|--------------|-------------------------|--------------------------|------------------------------|------------|
-| Joint 0      | Insertion Joint         | Parent Link              | Link 0                       | Prismatic  |
-| Joint 1      | Roll Joint              | Link 0                   | Link 1                       | Revolute   |
-
----
-
-## URDF Structures
-
-The URDF files define the robot models using XML and XACRO macros. They include definitions for links, joints, and other robot properties.
-
-- **`both_psms.classic.urdf.xacro`**: Defines a model with two PSM Classic manipulators.
-- **`psm.classic.urdf.xacro`**: Defines a single PSM Classic manipulator with configurable tools.
-- **`psm.si.urdf.xacro`**: Defines a PSM Si manipulator with configurable tools.
-
----
-
-## Notes
-
-- **Tool Configurations**: Different tools can be mounted on the PSMs by changing the `tool_name` parameter in the URDF files.
-- **Meshes**: All meshes are stored in the `meshes` directory and are referenced in the URDF files.
-
----
+-   **URDF README:** `urdf/README.md` - Detailed documentation on the URDF files.
+-   **Xacro Macros README (Classic):** `urdf/xacros/Classic/README.md` - Information on Xacro macros used for the Classic PSM.
+-   **Xacro Macros README (Si):** `urdf/xacros/Si/README.md` - Information on Xacro macros used for the Si PSM.
+-   **ROS 2 Control README (Classic):** `urdf/ros2_control/Classic/README.md` - Details about the ROS 2 control configurations for Classic PSM.
+-   **ROS 2 Control README (Si):** `urdf/ros2_control/Si/README.md` - Details about the ROS 2 control configurations for Si PSM.
+-   **Launch Files README:** `launch/README.md` - Explanations of the provided launch files.
