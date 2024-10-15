@@ -1,4 +1,4 @@
-# controllers.yaml
+# davinci_core.controllers.yaml
 
 controller_manager:
     ros__parameters:
