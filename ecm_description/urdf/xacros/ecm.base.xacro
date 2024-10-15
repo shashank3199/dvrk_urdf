@@ -5,8 +5,7 @@
     <xacro:include filename="$(find ecm_description)/urdf/xacros/common.xacro" />
 
     <!-- Macro for da Vinci Endoscope Camera Manipulator (ECM) Base -->
-    <xacro:macro name="ecm_base"
-        params="prefix parent_link xyz:='-0.612599 0.0 -0.101595' rpy:='0.0 0.0 0.0'">
+    <xacro:macro name="ecm_base" params="prefix parent_link xyz:='-0.612599 0.0 -0.101595' rpy:='0.0 0.0 0.0'">
 
         <!-- Link 0: Base Link -->
         <link name="${prefix}_base_link">

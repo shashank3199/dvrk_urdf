@@ -8,8 +8,11 @@
     ================================================================================================ -->
     <!-- Macro for the da Vinci Master Console -->
     <xacro:macro name="master_console" params="prefix parent_link xyz rpy">
+
+        <!-- Link -1: Master Base Link -->
         <link name="${prefix}_master_base_link" />
 
+        <!-- Joint -1: Fixed to World: Parent Link to Link -1 -->
         <joint name="base_fixed" type="fixed">
             <parent link="${parent_link}" />
             <child link="${prefix}_master_base_link" />
