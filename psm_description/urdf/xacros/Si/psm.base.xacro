@@ -7,7 +7,7 @@
     <!-- Macro for da Vinci Si PSM Base -->
     <xacro:macro name="psm_base" params="prefix parent_link xyz:='0.0 0.0 0.0' rpy:='0.0 0.0 0.0'">
 
-        <!-- Link 0: -->
+        <!-- Link 0: Link 0 -->
         <link name="${prefix}_link_0">
             <inertial>
                 <origin xyz="-0.080771 2.1131E-08 1.8613E-07" rpy="0 0 0" />
@@ -31,7 +31,7 @@
             </collision>
         </link>
 
-        <!-- Link 1: -->
+        <!-- Link 1: Link 1 -->
         <link name="${prefix}_link_1">
             <inertial>
                 <origin xyz="0.1461 0.090363 -0.024957" rpy="0 0 0" />
@@ -43,7 +43,7 @@
                 <geometry>
                     <mesh filename="package://psm_description/meshes/Si/link_1.stl" />
                 </geometry>
-                <material name="Lavender"/>
+                <material name="Lavender" />
             </visual>
             <collision>
                 <origin xyz="0 0 0" rpy="0 0 0" />
@@ -53,7 +53,7 @@
             </collision>
         </link>
 
-        <!-- Link 2: -->
+        <!-- Link 2: Link 2 -->
         <link name="${prefix}_link_2">
             <inertial>
                 <origin xyz="0.083895 -0.00073113 -0.028998" rpy="0.0 0.0 0.0" />
@@ -65,7 +65,7 @@
                 <geometry>
                     <mesh filename="package://psm_description/meshes/Si/link_2.stl" />
                 </geometry>
-                <material name="Lavender"/>
+                <material name="Lavender" />
             </visual>
             <collision>
                 <origin xyz="0 0 0" rpy="0 0 0" />
@@ -75,7 +75,7 @@
             </collision>
         </link>
 
-        <!-- Link 3: -->
+        <!-- Link 3: Link 3 -->
         <link name="${prefix}_link_3">
             <inertial>
                 <origin xyz="0.11824 1.9336E-19 0.12932" rpy="0 0 0" />
@@ -87,7 +87,7 @@
                 <geometry>
                     <mesh filename="package://psm_description/meshes/Si/link_3.stl" />
                 </geometry>
-                <material name="Lavender"/>
+                <material name="Lavender" />
             </visual>
             <collision>
                 <origin xyz="0 0 0" rpy="0 0 0" />
@@ -97,7 +97,7 @@
             </collision>
         </link>
 
-        <!-- Link 4: -->
+        <!-- Link 4: Link 4 -->
         <link name="${prefix}_link_4">
             <inertial>
                 <origin xyz="0.041219 -9.0734E-08 0.13651" rpy="0 0 0" />
@@ -109,7 +109,7 @@
                 <geometry>
                     <mesh filename="package://psm_description/meshes/Si/link_4.stl" />
                 </geometry>
-                <material name="Lavender"/>
+                <material name="Lavender" />
             </visual>
             <collision>
                 <origin xyz="0 0 0" rpy="0 0 0" />
@@ -119,7 +119,7 @@
             </collision>
         </link>
 
-        <!-- Link 5: -->
+        <!-- Link 5: Tool Parent Link -->
         <link name="${prefix}_tool_parent" />
 
         <!-- Link 6: RCM Link -->
