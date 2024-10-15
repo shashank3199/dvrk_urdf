@@ -7,6 +7,7 @@ from launch_ros.descriptions import ParameterValue
 
 def generate_launch_description():
 
+    # Get robot description via xacro
     daVinciCore_description = {
         "robot_description": ParameterValue(
             Command([
@@ -19,12 +20,14 @@ def generate_launch_description():
         )
     }
 
+    # For robot_state_publisher Node
     robot_state_publisher_node = Node(
         package="robot_state_publisher",
         executable="robot_state_publisher",
         parameters=[daVinciCore_description]
     )
 
+    # For joint_state_publisher_gui Node
     joint_state_publisher_gui_node = Node(
         package="joint_state_publisher_gui",
         executable="joint_state_publisher_gui",
@@ -32,10 +35,12 @@ def generate_launch_description():
         parameters=[daVinciCore_description]
     )
 
+    # For rviz2 Node
     davinci_core_rviz_file = PathJoinSubstitution(
         [FindPackageShare("davinci_core_description"), "rviz", "davinci_core_description.rviz"]
     )
 
+    # For rviz2 Node
     rviz_node = Node(
         package="rviz2",
         executable="rviz2",

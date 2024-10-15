@@ -9,12 +9,14 @@ from launch.event_handlers import OnProcessExit
 
 def generate_launch_description():
 
+    # Get the URDF Xacro file
     urdf_arg = DeclareLaunchArgument(
         "urdf",
         default_value="psm.classic.urdf.xacro",
         description="Name of the URDF file",
     )
 
+    # Get the tool name
     tool_arg = DeclareLaunchArgument(
         "tool",
         default_value="sca",
@@ -96,6 +98,7 @@ def generate_launch_description():
         parameters=[{'use_sim_time': True}]
     )
 
+    # Path to the RViz file
     psm_rviz_file = PathJoinSubstitution(
         [FindPackageShare("psm_description"), "rviz", "psm_description.rviz"]
     )
@@ -118,7 +121,7 @@ def generate_launch_description():
         )
     )
 
-
+    # Delay till controller.yaml is generated
     delay_till_controller_yaml_generator = RegisterEventHandler(
         event_handler=OnProcessExit(
             target_action=controller_yaml_generator,

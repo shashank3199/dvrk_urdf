@@ -73,18 +73,19 @@ def generate_launch_description():
         parameters=[{'use_sim_time': True}]
     )
 
-    mtms_rviz_file = PathJoinSubstitution(
+    # Path to the RViz configuration file
+    davinci_core_rviz_file = PathJoinSubstitution(
         [FindPackageShare("davinci_core_description"), "rviz", "davinci_core_description.rviz"]
     )
 
-    # For RViz
+    # RViz Node
     rviz_node = Node(
         package='rviz2',
         executable='rviz2',
         name='rviz2',
         output='screen',
         parameters=[{'use_sim_time': True}],
-        arguments=['-d', mtms_rviz_file],
+        arguments=['-d', davinci_core_rviz_file],
     )
 
     # Delay rviz start after `joint_state_broadcaster`

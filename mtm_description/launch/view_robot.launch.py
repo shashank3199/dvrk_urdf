@@ -9,6 +9,7 @@ from launch.substitutions import LaunchConfiguration
 
 def generate_launch_description():
 
+    # Get the URDF Xacro file
     mtm_description = {
         "robot_description": ParameterValue(
             Command([
@@ -22,12 +23,14 @@ def generate_launch_description():
         )
     }
 
+    # For robot_state_publisher Node
     robot_state_publisher_node = Node(
         package="robot_state_publisher",
         executable="robot_state_publisher",
         parameters=[mtm_description]
     )
 
+    # For joint_state_publisher_gui Node
     joint_state_publisher_gui_node = Node(
         package="joint_state_publisher_gui",
         executable="joint_state_publisher_gui",
@@ -35,6 +38,7 @@ def generate_launch_description():
         parameters=[mtm_description]
     )
 
+    # Path to the RViz file
     mtm_rviz_file = PathJoinSubstitution(
         [FindPackageShare("mtm_description"), "rviz", "mtm_description.rviz"]
     )

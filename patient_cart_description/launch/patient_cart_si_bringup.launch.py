@@ -73,6 +73,7 @@ def generate_launch_description():
         parameters=[{'use_sim_time': True}]
     )
 
+    # Path to the RViz file
     ecm_rviz_file = PathJoinSubstitution(
         [FindPackageShare("patient_cart_description"), "rviz", "patient_cart_description.rviz"]
     )

@@ -10,6 +10,7 @@ from launch.substitutions import LaunchConfiguration
 
 def generate_launch_description():
 
+    # Get the URDF Xacro file
     urdf_arg = DeclareLaunchArgument(
         "urdf",
         description="Name of the URDF Xacro file"
@@ -79,6 +80,7 @@ def generate_launch_description():
         parameters=[{'use_sim_time': True}]
     )
 
+    # Path to the RViz file
     suj_rviz_file = PathJoinSubstitution(
         [FindPackageShare("suj_description"), "rviz", "suj_description.rviz"]
     )

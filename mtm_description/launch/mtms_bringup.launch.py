@@ -73,6 +73,7 @@ def generate_launch_description():
         parameters=[{'use_sim_time': True}]
     )
 
+    # Path to the RViz file
     mtms_rviz_file = PathJoinSubstitution(
         [FindPackageShare("mtm_description"), "rviz", "mtm_description.rviz"]
     )
