@@ -9,7 +9,7 @@
     <xacro:include filename="$(find psm_description)/urdf/ros2_control/Classic/psm.tool.sca.ros2_control.xacro" />
     <xacro:include filename="$(find psm_description)/urdf/ros2_control/Classic/psm.tool.snake.ros2_control.xacro" />
 
-    <!-- Macro for da Vinci PSM tool -->
+    <!-- ROS2 Control Macro for the PSM Tool -->
     <xacro:macro name="psm_tool_ros2_control" params="tool_name prefix">
 
         <xacro:if value="${tool_name == 'blade'}">

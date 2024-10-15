@@ -1,32 +1,37 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
+    <!-- ROS2 Control Macro for the PSM Tool SCA -->
     <xacro:macro name="psm_tool_sca_ros2_control" params="prefix">
 
+        <!-- Command Joint 0 -->
         <joint name="${prefix}_outer_wrist_pitch">
             <command_interface name="position" />
             <state_interface name="position" />
             <state_interface name="velocity" />
         </joint>
 
+        <!-- Command Joint 1 -->
         <joint name="${prefix}_outer_wrist_yaw">
             <command_interface name="position" />
             <state_interface name="position" />
             <state_interface name="velocity" />
         </joint>
 
+        <!-- Command Joint 2 -->
         <joint name="${prefix}_jaw">
             <command_interface name="position" />
             <state_interface name="position" />
             <state_interface name="velocity" />
         </joint>
 
-        <!-- Mimic joints -->
+        <!-- Mimic Joint 0: Command Joint 2 -->
         <joint name="${prefix}_jaw_mimic_1">
             <state_interface name="position" />
             <state_interface name="velocity" />
         </joint>
 
+        <!-- Mimic Joint 1: Command Joint 2 -->
         <joint name="${prefix}_jaw_mimic_2">
             <state_interface name="position" />
             <state_interface name="velocity" />

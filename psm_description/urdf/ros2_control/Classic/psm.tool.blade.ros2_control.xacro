@@ -1,20 +1,24 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
+    <!-- ROS2 Control Macro for the PSM Tool Blade -->
     <xacro:macro name="psm_tool_blade_ros2_control" params="prefix">
 
+        <!-- Command Joint 0 -->
         <joint name="${prefix}_outer_wrist_pitch">
             <command_interface name="position" />
             <state_interface name="position" />
             <state_interface name="velocity" />
         </joint>
 
+        <!-- Command Joint 1 -->
         <joint name="${prefix}_outer_wrist_yaw">
             <command_interface name="position" />
             <state_interface name="position" />
             <state_interface name="velocity" />
         </joint>
 
+        <!-- Command Joint 2 -->
         <joint name="${prefix}_jaw">
             <command_interface name="position" />
             <state_interface name="position" />
