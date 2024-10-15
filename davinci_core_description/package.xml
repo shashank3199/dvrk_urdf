@@ -3,9 +3,9 @@
 <package format="3">
     <name>davinci_core_description</name>
     <version>1.0.0</version>
-    <description>The daVinci model includes the full manipulator with its joints and links.</description>
+    <description> The Da Vinci Core model includes the full manipulator with its joints and links. </description>
     <maintainer email="sgoyal18@jhu.edu">Shashank Goyal</maintainer>
-    <license>TODO: License declaration</license>
+    <license>MIT</license>
 
     <buildtool_depend>ament_cmake</buildtool_depend>
 

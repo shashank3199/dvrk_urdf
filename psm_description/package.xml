@@ -5,7 +5,7 @@
     <version>1.0.0</version>
     <description> The PSM (Patient Side Manipulator) model includes the full manipulator with its joints and links. </description>
     <maintainer email="sgoyal18@jhu.edu">Shashank Goyal</maintainer>
-    <license>TODO: License declaration</license>
+    <license>MIT</license>
 
     <buildtool_depend>ament_cmake</buildtool_depend>
     <buildtool_depend>ament_cmake_python</buildtool_depend>
