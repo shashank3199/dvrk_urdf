@@ -21,7 +21,7 @@ public:
             std::chrono::milliseconds(10),
             std::bind(&MTMSJointController::timer_callback, this));
 
-        // Initialize joint positions: [yaw, pitch, insertion, roll]
+        // Initialize Joint Positions
         joint_positions_.resize(14, 0.0);
         direction_ = 1;
     }
@@ -30,7 +30,6 @@ private:
     void timer_callback()
     {
         // Define joint limits
-
         double outer_yaw_limit = 1.5;       // Approx ±85 degrees
         double shoulder_pitch_limit = 0.5;  // Approx ±30 degrees
         double elbow_pitch_limit = 1.0;     // Approx ±57 degrees
@@ -39,7 +38,7 @@ private:
         double wrist_yaw_limit = 1.5;       // Approx ±85 degrees
         double wrist_roll_limit = 1.0;      // Approx ±57 degrees
 
-        // Update joint positions
+        // Update Joint Positions
         for (int i = 0; i < 14; i++)
         {
             joint_positions_[i] += 0.001 * direction_;
@@ -56,7 +55,7 @@ private:
             }
         }
 
-        // joint_names for MTM-S
+        // Joint Names for MTM-S
         // MTML_outer_yaw, MTML_shoulder_pitch, MTML_elbow_pitch, MTML_wrist_platform,
         // MTML_wrist_pitch, MTML_wrist_yaw, MTML_wrist_roll, MTMR_outer_yaw
 

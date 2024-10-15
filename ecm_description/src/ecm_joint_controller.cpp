@@ -21,7 +21,7 @@ public:
             std::chrono::milliseconds(10),
             std::bind(&ECMJointController::timer_callback, this));
 
-        // Initialize joint positions: [yaw, pitch, insertion, roll]
+        // Initialize Joint Positions
         joint_positions_.resize(4, 0.0);
         direction_ = 1;
     }

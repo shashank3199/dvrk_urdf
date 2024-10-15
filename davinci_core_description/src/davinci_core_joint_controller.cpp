@@ -24,7 +24,7 @@ public:
             std::chrono::milliseconds(10),
             std::bind(&DaVinciCoreJointController::timer_callback, this));
 
-        // Initialize joint positions: [yaw, pitch, insertion, roll]
+        // Initialize Joint Positions
         joint_positions_.resize(num_joints, 0.0);
         direction_ = 1;
     }
@@ -33,8 +33,7 @@ private:
     void timer_callback()
     {
         // Define joint limits
-        // 6 and 13
-        double primatic_limit = 0.1; // Max 10 cm
+        double primatic_limit = 0.1; // Max 10 cm - For Joints 6 and 13
         double revolute_limit = 0.5; // Approx ±28.6 degrees
 
         // Update joint positions
@@ -55,7 +54,7 @@ private:
             }
         }
 
-        // joint_names for DaVinci Core Arms
+        // Joint Names for DaVinci Core Arms
         // left_arm_outer_yaw_joint, left_arm_outer_pitch_base_joint, left_arm_outer_pitch_front_joint, left_arm_outer_pitch_bottom_joint,
         // left_arm_outer_pitch_top_joint, left_arm_outer_insertion_joint, left_arm_tool_insertion_joint
 

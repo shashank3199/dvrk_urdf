@@ -25,6 +25,7 @@ public:
 
     void initialize()
     {
+        // Get the joint names from the parameter server
         auto client = this->create_client<rcl_interfaces::srv::GetParameters>("/forward_position_controller/get_parameters");
 
         // Wait for the service to be available
@@ -33,20 +34,24 @@ public:
             RCLCPP_INFO(this->get_logger(), "Waiting for parameter service to become available...");
         }
 
+        // Create the request
         auto request = std::make_shared<rcl_interfaces::srv::GetParameters::Request>();
         request->names.push_back("joints");
 
         // Call the service
         auto result_future = client->async_send_request(request);
 
+        // Wait for the result
         if (rclcpp::spin_until_future_complete(shared_from_this(), result_future) == rclcpp::FutureReturnCode::SUCCESS)
         {
             auto response = result_future.get();
             RCLCPP_INFO(this->get_logger(), "Got response from service get_parameters");
             if (!response->values.empty())
             {
+                // Get the joint names and number of joints
                 auto joint_names = response->values[0].string_array_value;
                 num_joints = joint_names.size();
+                // Find the insertion joint index
                 insertion_joint_index = 0;
                 for (const auto &joint : joint_names)
                 {
@@ -117,11 +122,11 @@ private:
         clock_publisher_->publish(clock_msg);
 
         // Log the joint positions
-        // RCLCPP_INFO(this->get_logger(), "Publishing joint positions -");
-        // for (int i = 0; i < num_joints; i++)
-        // {
-        //     RCLCPP_INFO(this->get_logger(), "Joint %d: %f", i, joint_positions_[i]);
-        // }
+        RCLCPP_INFO(this->get_logger(), "Publishing joint positions -");
+        for (int i = 0; i < num_joints; i++)
+        {
+            RCLCPP_INFO(this->get_logger(), "Joint %d: %f", i, joint_positions_[i]);
+        }
     }
 
     rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr publisher_;

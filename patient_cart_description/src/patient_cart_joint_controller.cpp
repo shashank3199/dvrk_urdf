@@ -24,6 +24,7 @@ public:
 
     void initialize()
     {
+        // Get the joint names from the parameter server
         auto client = this->create_client<rcl_interfaces::srv::GetParameters>("/forward_position_controller/get_parameters");
 
         // Wait for the service to be available
@@ -31,18 +32,21 @@ public:
         {
         };
 
+        // Create the request
         auto request = std::make_shared<rcl_interfaces::srv::GetParameters::Request>();
         request->names.push_back("joints");
 
         // Call the service
         auto result_future = client->async_send_request(request);
 
+        // Wait for the result
         if (rclcpp::spin_until_future_complete(shared_from_this(), result_future) == rclcpp::FutureReturnCode::SUCCESS)
         {
             auto response = result_future.get();
             RCLCPP_INFO(this->get_logger(), "Got response from service get_parameters");
             if (!response->values.empty())
             {
+                // Get the joint names and number of joints
                 joint_names_ = response->values[0].string_array_value;
                 num_joints = joint_names_.size();
             }
