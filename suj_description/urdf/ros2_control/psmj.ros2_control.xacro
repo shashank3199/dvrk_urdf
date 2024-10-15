@@ -1,32 +1,38 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
+    <!-- ROS2 Control Macro for the PSM Joints -->
     <xacro:macro name="psmj_ros2_control" params="prefix">
 
+        <!-- Command Joint 0 -->
         <joint name="SUJ_PSM${prefix}_J0">
             <command_interface name="position" />
             <state_interface name="position" />
             <state_interface name="velocity" />
         </joint>
 
+        <!-- Command Joint 1 -->
         <joint name="SUJ_PSM${prefix}_J1">
             <command_interface name="position" />
             <state_interface name="position" />
             <state_interface name="velocity" />
         </joint>
 
+        <!-- Command Joint 2 -->
         <joint name="SUJ_PSM${prefix}_J2">
             <command_interface name="position" />
             <state_interface name="position" />
             <state_interface name="velocity" />
         </joint>
 
+        <!-- Command Joint 3 -->
         <joint name="SUJ_PSM${prefix}_J3">
             <command_interface name="position" />
             <state_interface name="position" />
             <state_interface name="velocity" />
         </joint>
 
+        <!-- Command Joint 4 -->
         <joint name="SUJ_PSM${prefix}_J4">
             <command_interface name="position" />
             <state_interface name="position" />

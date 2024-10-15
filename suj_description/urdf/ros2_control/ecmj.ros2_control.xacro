@@ -1,26 +1,31 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
+    <!-- ROS2 Control Macro for the ECM Joints -->
     <xacro:macro name="ecmj_ros2_control">
 
+        <!-- Command Joint 0 -->
         <joint name="SUJ_ECM_J0">
             <command_interface name="position" />
             <state_interface name="position" />
             <state_interface name="velocity" />
         </joint>
 
+        <!-- Command Joint 1 -->
         <joint name="SUJ_ECM_J1">
             <command_interface name="position" />
             <state_interface name="position" />
             <state_interface name="velocity" />
         </joint>
 
+        <!-- Command Joint 2 -->
         <joint name="SUJ_ECM_J2">
             <command_interface name="position" />
             <state_interface name="position" />
             <state_interface name="velocity" />
         </joint>
 
+        <!-- Command Joint 3 -->
         <joint name="SUJ_ECM_J3">
             <command_interface name="position" />
             <state_interface name="position" />

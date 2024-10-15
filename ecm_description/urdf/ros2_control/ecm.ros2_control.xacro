@@ -1,43 +1,50 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
+    <!-- ROS2 Control Macro for the ECM -->
     <xacro:macro name="ecm_ros2_control" params="prefix">
 
+        <!-- Command Joint 0 -->
         <joint name="${prefix}_outer_yaw">
             <command_interface name="position" />
             <state_interface name="position" />
             <state_interface name="velocity" />
         </joint>
 
+        <!-- Command Joint 1 -->
         <joint name="${prefix}_outer_pitch">
             <command_interface name="position" />
             <state_interface name="position" />
             <state_interface name="velocity" />
         </joint>
 
-        <joint name="${prefix}_insertion" type="prismatic">
+        <!-- Command Joint 2 -->
+        <joint name="${prefix}_insertion">
             <command_interface name="position" />
             <state_interface name="position" />
             <state_interface name="velocity" />
         </joint>
 
-        <joint name="${prefix}_outer_roll" type="revolute">
+        <!-- Command Joint 3 -->
+        <joint name="${prefix}_outer_roll">
             <command_interface name="position" />
             <state_interface name="position" />
             <state_interface name="velocity" />
         </joint>
 
-        <!-- Mimic Joints -->
+        <!-- Mimic Joint 0: Command Joint 1 -->
         <joint name="${prefix}_outer_pitch_0">
             <state_interface name="position" />
             <state_interface name="velocity" />
         </joint>
 
+        <!-- Mimic Joint 1: Command Joint 1 -->
         <joint name="${prefix}_outer_pitch_1">
             <state_interface name="position" />
             <state_interface name="velocity" />
         </joint>
 
+        <!-- Mimic Joint 2: Command Joint 1 -->
         <joint name="${prefix}_outer_pitch_2">
             <state_interface name="position" />
             <state_interface name="velocity" />

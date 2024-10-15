@@ -1,49 +1,56 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
+    <!-- ROS2 Control Macro for the ECM base -->
     <xacro:macro name="ecm_base_ros2_control" params="prefix">
 
-        <!-- Define the joints and their interfaces -->
+        <!-- Command Joint 0 -->
         <joint name="${prefix}_yaw">
             <command_interface name="position" />
             <state_interface name="position" />
             <state_interface name="velocity" />
         </joint>
 
+        <!-- Command Joint 1 -->
         <joint name="${prefix}_pitch">
             <command_interface name="position" />
             <state_interface name="position" />
             <state_interface name="velocity" />
         </joint>
 
+        <!-- Command Joint 2 -->
         <joint name="${prefix}_insertion">
             <command_interface name="position" />
             <state_interface name="position" />
             <state_interface name="velocity" />
         </joint>
 
+        <!-- Command Joint 3 -->
         <joint name="${prefix}_roll">
             <command_interface name="position" />
             <state_interface name="position" />
             <state_interface name="velocity" />
         </joint>
 
-        <!-- Mimic Joints -->
+        <!-- Mimic Joint 0: Command Joint 1 -->
         <joint name="${prefix}_pitch_bottom">
             <state_interface name="position" />
             <state_interface name="velocity" />
         </joint>
 
+        <!-- Mimic Joint 1: Command Joint 1 -->
         <joint name="${prefix}_pitch_end">
             <state_interface name="position" />
             <state_interface name="velocity" />
         </joint>
 
+        <!-- Mimic Joint 2: Command Joint 1 -->
         <joint name="${prefix}_pitch_top">
             <state_interface name="position" />
             <state_interface name="velocity" />
         </joint>
 
+        <!-- Mimic Joint 3: Command Joint 1 -->
         <joint name="${prefix}_pitch_back">
             <state_interface name="position" />
             <state_interface name="velocity" />
